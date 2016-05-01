@@ -135,10 +135,10 @@ public class BinDecoder {
      * <strong>(FXY5036)</strong>-This method returns the transect number for
      * the line.
      *
-     * @return<strong>(FXY5036)</strong>-This method returns the transect number
-     * for the line. This is the number assigned to a transect repeated in the
-     * same calendar year. e.g. The second transect would have a value of 2. A
-     * value of -999 is returned when there is no value.
+     * @return <strong>(FXY5036)</strong>-This method returns the transect
+     * number for the line. This is the number assigned to a transect repeated
+     * in the same calendar year. e.g. The second transect would have a value of
+     * 2. A value of -999 is returned when there is no value.
      */
     public int getTransectNumber() {
         int[] start = {-1, -1, 187, 187};

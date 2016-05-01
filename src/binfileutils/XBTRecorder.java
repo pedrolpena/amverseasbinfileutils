@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package binfileutils;
 
 /**
+ * This class contains constants that hold the value for the type of XBT
+ * recorder and the frequency at which the XBT recorder samples.
  *
- * @author pedro
+ * @author Pedro Pena
+ * @version 1.0
+ *
  */
 public final class XBTRecorder {
 

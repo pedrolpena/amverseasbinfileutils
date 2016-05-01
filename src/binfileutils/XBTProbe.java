@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package binfileutils;
 
 /**
+ * This class contains constants that hold the value for the type of XBT Probe
+ * and the A and B coefficients used in the XBT fall rate equation.
  *
- * @author pedro
+ * @author Pedro Pena
+ * @version 1.0
+ *
  */
-
 public final class XBTProbe {
 
- 
     public static final int SIPPICAN_T4_OLD = 1;
     public static final double SIPPICAN_T4_OLD_COEFFICIENT_A = 6.472;
     public static final double SIPPICAN_T4_OLD_COEFFICIENT_B = -2.16;
@@ -45,13 +42,13 @@ public final class XBTProbe {
     public static final double SIPPICAN_T7_COEFFICIENT_A = 6.691;
     public static final double SIPPICAN_T7_COEFFICIENT_B = -2.25;
 
-    public static final int SIPPICAN_DEEP_COEFFICIENT_BLUE_OLD = 51;
-    public static final double SIPPICAN_DEEP_COEFFICIENT_BLUE_OLD_COEFFICIENT_A = 6.472;
-    public static final double SIPPICAN_DEEP_COEFFICIENT_BLUE_OLD_COEFFICIENT_B = -2.16;
+    public static final int SIPPICAN_DEEP_BLUE_OLD = 51;
+    public static final double SIPPICAN_DEEP_BLUE_OLD_COEFFICIENT_A = 6.472;
+    public static final double SIPPICAN_DEEP_BLUE_OLD_COEFFICIENT_B = -2.16;
 
-    public static final int SIPPICAN_DEEP_COEFFICIENT_BLUE = 52;
-    public static final double SIPPICAN_DEEP_COEFFICIENT_BLUE_COEFFICIENT_A = 6.691;
-    public static final double SIPPICAN_DEEP_COEFFICIENT_BLUE_COEFFICIENT_B = -2.25;
+    public static final int SIPPICAN_DEEP_BLUE = 52;
+    public static final double SIPPICAN_DEEP_BLUE_COEFFICIENT_A = 6.691;
+    public static final double SIPPICAN_DEEP_BLUE_COEFFICIENT_B = -2.25;
 
     public static final int SIPPICAN_T10 = 61;
     public static final double SIPPICAN_T10_COEFFICIENT_A = 6.301;

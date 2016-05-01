@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package binfileutils;
 
 ;
@@ -10,8 +5,12 @@ import static binfileutils.XBTProbe.*;
 import static binfileutils.XBTRecorder.*;
 
 /**
+ * This class uses the XBT fall rate equation to generate measurement depths for
+ * an XBT profile.
  *
- * @author pedro
+ * @author Pedro Pena
+ * @version 1.0
+ *
  */
 
 
@@ -22,15 +21,36 @@ public class DepthCalculator {
     private double sampleFrequency = 1.0;
     private int numberOfMeasurements = 0;
 
-    public DepthCalculator(int recorderType,int probeType, int numberOfMeasurements) {
+    /**
+     * The constructor accepts the recorder type, the probe type and the number
+     * of measurements made in order to calculate the measurement depths.
+     *
+     * @param recorderType <strong>(FXY22068)</strong>-a table value that
+     * represents the device that determines the thermistor value in the
+     * XBT.<br>
+     * e.g. a value of 6 refers to any of the different Sippican MK21 models.
+     * @param probeType <strong>(FXY22067)</strong>-a table value that
+     * represents the type of probe used to make the measurement.<br>
+     * e.g. a value of 52 refers to a Deep Blue XBT.
+     * @param numberOfMeasurements The number of measurements made.
+     *
+     */
+    public DepthCalculator(int recorderType, int probeType, int numberOfMeasurements) {
         this.numberOfMeasurements = numberOfMeasurements;
         setRecorderFrequency(recorderType);
         setProbeCoefficients(probeType);
     }//end constructor
 
+    /**
+     * This method returns an array of doubles containing the depths where each
+     * measurement was made.
+     *
+     * @return returns an array of doubles containing the depths where each
+     * measurement was made.
+     */
     public double[] getMeasurementDepths() {
         double[] depths = new double[numberOfMeasurements];
-        double time = 0.0;
+        double time;
         for (int i = 0; i < numberOfMeasurements; i++) {
             time = ((double) i) / sampleFrequency;
             depths[i] = (A * time) + (.001 * B * time * time);
@@ -39,6 +59,11 @@ public class DepthCalculator {
         return depths;
     }//end methos
 
+    /**
+     * This method sets the recorders measurement frequency in Hertz.
+     *
+     * @return None
+     */
     private void setRecorderFrequency(int probeType) {
 
         switch (probeType) {
@@ -51,6 +76,12 @@ public class DepthCalculator {
 
     }//end method
 
+    /**
+     * This method sets the coefficients used y the XBT fall rate equation to
+     * determine the measurement depths.
+     *
+     * @return None
+     */
     private void setProbeCoefficients(int recorderType) {
 
         switch (recorderType) {
@@ -86,13 +117,13 @@ public class DepthCalculator {
                 A = SIPPICAN_T7_COEFFICIENT_A;
                 B = SIPPICAN_T7_COEFFICIENT_B;
                 break;
-            case SIPPICAN_DEEP_COEFFICIENT_BLUE_OLD:
-                A = SIPPICAN_DEEP_COEFFICIENT_BLUE_OLD_COEFFICIENT_A;
-                B = SIPPICAN_DEEP_COEFFICIENT_BLUE_OLD_COEFFICIENT_B;
+            case SIPPICAN_DEEP_BLUE_OLD:
+                A = SIPPICAN_DEEP_BLUE_OLD_COEFFICIENT_A;
+                B = SIPPICAN_DEEP_BLUE_OLD_COEFFICIENT_B;
                 break;
-            case SIPPICAN_DEEP_COEFFICIENT_BLUE:
-                A = SIPPICAN_DEEP_COEFFICIENT_BLUE_COEFFICIENT_A;
-                B = SIPPICAN_DEEP_COEFFICIENT_BLUE_COEFFICIENT_B;
+            case SIPPICAN_DEEP_BLUE:
+                A = SIPPICAN_DEEP_BLUE_COEFFICIENT_A;
+                B = SIPPICAN_DEEP_BLUE_COEFFICIENT_B;
                 break;
             case SIPPICAN_T10:
                 A = SIPPICAN_T10_COEFFICIENT_A;
