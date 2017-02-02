@@ -52,7 +52,7 @@ public class DepthCalculator {
         double[] depths = new double[numberOfMeasurements];
         double time;
         for (int i = 0; i < numberOfMeasurements; i++) {
-            time = ((double) i) / sampleFrequency;
+            time = ((double) i + 1) / sampleFrequency;
             depths[i] = (A * time) + (.001 * B * time * time);
 
         }//end for
