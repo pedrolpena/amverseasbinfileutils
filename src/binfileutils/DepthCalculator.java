@@ -68,8 +68,128 @@ public class DepthCalculator {
 
         switch (probeType) {
 
-            case MK21:
-                sampleFrequency = MK21_SAMPLE_FREQUENCY;
+            case SIPPICAN_STRIP_CHART_RECORDER:
+                sampleFrequency = SIPPICAN_STRIP_CHART_RECORDER_SAMPLE_FREQUENCY;
+                break;
+            case SIPPICAN_MK2A_SSQ61:
+                sampleFrequency = SIPPICAN_MK2A_SSQ61_SAMPLE_FREQUENCY;
+                break;
+
+            case SIPPICAN_MK_9:
+                sampleFrequency = SIPPICAN_MK_9_SAMPLE_FREQUENCY;
+                break;
+
+            case SIPPICAN_AN_BHQ7_MK8:
+                sampleFrequency = SIPPICAN_AN_BHQ7_MK8_SAMPLE_FREQUENCY;
+                break;
+
+            case SIPPICAN_MK_12:
+                sampleFrequency = SIPPICAN_MK_12_SAMPLE_FREQUENCY;
+                break;
+
+            case SIPPICAN_MK_21:
+                sampleFrequency = SIPPICAN_MK_21_SAMPLE_FREQUENCY;
+                break;
+
+            case SPARTON_SOC_BT_SV_PROCESSOR_MODEL10:
+                sampleFrequency = SPARTON_SOC_BT_SV_PROCESSOR_MODEL10_SAMPLE_FREQUENCY;
+                break;
+
+            case LOCKHEED_SANDERS_MODEL_QL5005:
+                sampleFrequency = LOCKHEED_SANDERS_MODEL_QL5005_SAMPLE_FREQUENCY;
+                break;
+
+            case ARGOS_XBT_ST:
+                sampleFrequency = ARGOS_XBT_ST_SAMPLE_FREQUENCY;
+                break;
+
+            case CLS_ARGOS_PROTECNO_XBT_ST_MODEL_1:
+                sampleFrequency = CLS_ARGOS_PROTECNO_XBT_ST_MODEL_1_SAMPLE_FREQUENCY;
+                break;
+
+            case CLS_ARGOS_PROTECNO_XBT_ST_MODEL_2:
+                sampleFrequency = CLS_ARGOS_PROTECNO_XBT_ST_MODEL_2_SAMPLE_FREQUENCY;
+                break;
+
+            case BATHY_SYSTEMS_SA_810:
+                sampleFrequency = BATHY_SYSTEMS_SA_810_SAMPLE_FREQUENCY;
+                break;
+
+            case SCRIPPS_METROBYTE_CONTROLLER:
+                sampleFrequency = SCRIPPS_METROBYTE_CONTROLLER_SAMPLE_FREQUENCY;
+                break;
+
+            case MURAYAMA_DENKI_Z_60_16_III:
+                sampleFrequency = MURAYAMA_DENKI_Z_60_16_III_SAMPLE_FREQUENCY;
+                break;
+
+            case MURAYAMA_DENKI_Z_60_16_II:
+                sampleFrequency = MURAYAMA_DENKI_Z_60_16_II_SAMPLE_FREQUENCY;
+                break;
+
+            case PROTECNO_ETSM2:
+                sampleFrequency = PROTECNO_ETSM2_SAMPLE_FREQUENCY;
+                break;
+
+            case NAUTILUS_MARINE_SERVICE_NMS_XBT:
+                sampleFrequency = NAUTILUS_MARINE_SERVICE_NMS_XBT_SAMPLE_FREQUENCY;
+                break;
+
+            case TSK_MK_2A:
+                sampleFrequency = TSK_MK_2A_SAMPLE_FREQUENCY;
+                break;
+            case TSK_MK_2S:
+                sampleFrequency = TSK_MK_2S_SAMPLE_FREQUENCY;
+                break;
+            case TSK_MK_30:
+                sampleFrequency = TSK_MK_30_SAMPLE_FREQUENCY;
+                break;
+
+            case TSK_MK_30N:
+                sampleFrequency = TSK_MK_30N_SAMPLE_FREQUENCY;
+                break;
+
+            case TSK_MK_100:
+                sampleFrequency = TSK_MK_100_SAMPLE_FREQUENCY;
+                break;
+
+            case TSK_MK_130:
+                sampleFrequency = TSK_MK_130_SAMPLE_FREQUENCY;
+                break;
+
+            case TSK_AXBT_RECEIVER_MK_300:
+                sampleFrequency = TSK_AXBT_RECEIVER_MK_300_SAMPLE_FREQUENCY;
+                break;
+
+            case JMA_ASTOS:
+                sampleFrequency = JMA_ASTOS_SAMPLE_FREQUENCY;
+                break;
+
+            case ARGOS_COMMUNICATIONS_SAMPLING_ON_UP_TRANSIT:
+                sampleFrequency = ARGOS_COMMUNICATIONS_SAMPLING_ON_UP_TRANSIT_SAMPLE_FREQUENCY;
+                break;
+
+            case ARGOS_COMMUNICATIONS_SAMPLING_ON_DOWN_TRANSIT:
+                sampleFrequency = ARGOS_COMMUNICATIONS_SAMPLING_ON_DOWN_TRANSIT_SAMPLE_FREQUENCY;
+                break;
+            case ORBCOMM_COMMUNICATIONS_SAMPLING_ON_UP_TRANSIT:
+                sampleFrequency = ORBCOMM_COMMUNICATIONS_SAMPLING_ON_UP_TRANSIT_SAMPLE_FREQUENCY;
+                break;
+
+            case ORBCOMM_COMMUNICATIONS_SAMPLING_ON_DOWN_TRANSIT:
+                sampleFrequency = ORBCOMM_COMMUNICATIONS_SAMPLING_ON_DOWN_TRANSIT_SAMPLE_FREQUENCY;
+                break;
+
+            case CSIRO_DEVIL_1:
+                sampleFrequency = CSIRO_DEVIL_1_SAMPLE_FREQUENCY;
+                break;
+
+            case CSIRO_DEVIL_2:
+                sampleFrequency = CSIRO_DEVIL_2_SAMPLE_FREQUENCY;
+                break;
+
+            case UNKNOWN:
+                sampleFrequency = UNKNOWN_SAMPLE_FREQUENCY;
                 break;
 
         }//end switch

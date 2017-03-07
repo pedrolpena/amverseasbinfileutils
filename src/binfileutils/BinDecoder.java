@@ -275,11 +275,11 @@ public class BinDecoder {
      * then the bin file is possibly corrupt. A value of -999 is returned when
      * there is no value.
      */
-    public int getUniqueTag() {
+    public long getUniqueTag() {
         int[] start = {-1, 436, 507, 507};
         int[] end = {-1, 467, 538, 538};
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        return (long)toInteger(start[mt], end[mt]);
     }
 
     /**
@@ -1027,7 +1027,7 @@ public class BinDecoder {
                 + "time=" + getHour() + ":" + getMinute() + "\n"
                 + "ShipName=" + getShipName() + "\n"
                 + "Lloyds=" + getLloyds() + "\n"
-                + "Unique tag=" + Integer.toHexString(getUniqueTag()) + "\n"
+                + "Unique tag=" + Long.toHexString(getUniqueTag()) + "\n"
                 + "SeasVersion=" + getSeasVersion() + "\n"
                 + "XBT Serial#=" + getProbeSerialNumber() + "\n"
                 + "ThisDatais=" + getThisDataIs() + "\n"
