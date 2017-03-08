@@ -382,7 +382,7 @@ public class BinDecoder {
      * km/h when the measurement was made.
      *
      * @return <strong>(FXY1013)</strong>-This method returns the speed of the
-     * ship in km/h when the measurement was made. A value of -9.99 is returned
+     * ship in m/s when the measurement was made. A value of -9.99 is returned
      * when there is no value.
      */
     public double getShipSpeed() {
