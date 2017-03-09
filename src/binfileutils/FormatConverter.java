@@ -1,5 +1,7 @@
 package binfileutils;
 
+import static binfileutils.DataQuality.getDataQualityDescription;
+import static binfileutils.DataResolution.getDataResolutionDescription;
 import static binfileutils.XBTProbe.getProbeDescription;
 import static binfileutils.XBTRecorder.getRecorderDescription;
 
@@ -62,8 +64,8 @@ public class FormatConverter {
                 profile.getXBTProbeManufacturedMonth(),
                 profile.getXBTProbeManufacturedDay(),
                 profile.getXBTProbeManufacturedYear());
-        tmp += "Data Type                      | " + profile.getThisDataIs() + " (Full Resolution)\n";
-        tmp += "Data Quality                   | " + profile.getDataQuality() + " (Data Not Suspect)\n";
+        tmp += "Data Type                      | " + profile.getThisDataIs() + " ("+ getDataResolutionDescription(profile.getThisDataIs())+")\n";
+        tmp += "Data Quality                   | " + profile.getDataQuality() + " ("+ getDataQualityDescription(profile.getDataQuality())+")\n";
         tmp += "Deployment Height (meters)     | " + String.format("%4.2f", profile.getLauncherHeight()) + "\n";
         tmp += "Ship Direction                 | " + String.format("%03d", (int) profile.getShipDirection()) + "\n";
         tmp += "Ship Speed (knots)             | " + String.format("%05.2f", profile.getShipSpeed() * 1.94384) + "\n";
