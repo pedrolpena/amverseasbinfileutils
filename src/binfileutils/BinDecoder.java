@@ -354,7 +354,7 @@ public class BinDecoder {
      * height of the autolauncher from the surface of the water. A value of
      * -9.99 is returned when there is no value.
      */
-    public double getLauncherHeight() {
+    public double getLaunchHeight() {
 
         int[] start = {-1, -1, 579, 579};
         int[] end = {-1, -1, 591, 591};
@@ -480,7 +480,7 @@ public class BinDecoder {
      * temperature at the time of the measurement. A value of -99.9 is returned
      * when there is no value.
      */
-    public double getDryBulbTemp() {
+    public double getDryBulbTemperature() {
         int[] start = {-1, 546, 656, 656};
         int[] end = {-1, 557, 667, 667};
         int mt = getNewMessageType();
@@ -494,7 +494,7 @@ public class BinDecoder {
      * @return <strong>(FXY2030)</strong>-This method returns the sea current
      * measurement method. A value of -999 is returned when there is no value.
      */
-    public int getCurrentMeasurementMethod() {
+    public int getSeaSurfaceCurrentMeasurementMethod() {
         int[] start = {-1, 558, 668, 668};
         int[] end = {-1, 560, 670, 670};
         int mt = getNewMessageType();
@@ -508,7 +508,7 @@ public class BinDecoder {
      * @return <strong>(FXY22004)</strong>-This method returns the sea surface
      * current direction . A value of -999 is returned when there is no value.
      */
-    public int getCurrentDirection() {
+    public int getSeaSurfaceCurrentDirection() {
         int[] start = {-1, 561, 671, 671};
         int[] end = {-1, 569, 679, 679};
         int mt = getNewMessageType();
@@ -522,7 +522,7 @@ public class BinDecoder {
      * @return <strong>(FXY22031)</strong>-This method returns the sea surface
      * current speed A value of -999 is returned when there is no value.
      */
-    public double getCurrentSpeed() {
+    public double getSeaSurfaceCurrentSpeed() {
         int[] start = {-1, 570, 680, 680};
         int[] end = {-1, 582, 692, 692};
         int mt = getNewMessageType();
@@ -700,7 +700,7 @@ public class BinDecoder {
      * bit blocks or 5 characters, used to store the riders institution's name.
      * A value of -999 is returned when there is no value.
      */
-    public int getNumberOfRiderInstBlocks() {
+    public int getNumberOfRiderInstitutionBlocks() {
         int[] start = {-1, -1, -1, 849};
         int[] end = {-1, -1, -1, 854};
         int mt = getNewMessageType();
@@ -746,7 +746,7 @@ public class BinDecoder {
      * how many groups of replicated fields follow. Always delayed replication.
      * value of -999 is returned when there is no value.
      */
-    public int getNumberOfRepFields() {
+    public int getNumberOfRepeatedFields() {
         int[] start = {-1, 597, 707, 867};
         int[] end = {-1, 604, 714, 874};
         int mt = getNewMessageType();
@@ -830,7 +830,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * name. A value of "NONE" is returned when there is no value.
      */
-    public String getRiderName() {
+    public String getRiderNames() {
         int[] start = {-1, -1, -1, 891};
         int mt = getNewMessageType();
 
@@ -844,7 +844,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * email. A value of "NONE" is returned when there is no value.
      */
-    public String getRiderEmail() {
+    public String getRiderEmails() {
         int[] start = {-1, -1, -1, 891};
         int mt = getNewMessageType();
 
@@ -859,12 +859,12 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * institution. A value of "NONE" is returned when there is no value.
      */
-    public String getInstituion() {
+    public String getRiderInstituions() {
         int[] start = {-1, -1, -1, 891};
         int mt = getNewMessageType();
 
         int s = start[mt] + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
-        return toString(s, s + getNumberOfRiderInstBlocks() * 40);
+        return toString(s, s + getNumberOfRiderInstitutionBlocks() * 40);
     }// end method
 
     /**
@@ -874,11 +874,11 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * phone number. A value of "NONE" is returned when there is no value.
      */
-    public String getRiderPhone() {
+    public String getRiderPhones() {
         int[] start = {-1, -1, -1, 891};
         int mt = getNewMessageType();
 
-        int s = start[mt] + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstBlocks() * 40;
+        int s = start[mt] + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstitutionBlocks() * 40;
         return toString(s, s + getNumberOfRiderPhoneBlocks() * 40);
     }// end method
 
@@ -1032,7 +1032,7 @@ public class BinDecoder {
                 + "XBT Serial#=" + getProbeSerialNumber() + "\n"
                 + "ThisDatais=" + getThisDataIs() + "\n"
                 + "DataQuality=" + getDataQuality() + "\n"
-                + "LauncherHeight=" + getLauncherHeight() + "\n"
+                + "LauncherHeight=" + getLaunchHeight() + "\n"
                 + "Ship direction=" + getShipDirection() + "\n"
                 + "Ship Speed=" + getShipSpeed() + "\n"
                 + "Instrument type=" + getInstrumentType() + "\n"
@@ -1040,10 +1040,10 @@ public class BinDecoder {
                 + "Wind Instrument type=" + getWindInstrumentType() + "\n"
                 + "Wind Direction=" + getWindDiretion() + "\n"
                 + "Wind Speed=" + getWindSpeed() + "\n"
-                + "Dry bulb temp=" + getDryBulbTemp() + "\n"
-                + "Measure method=" + getCurrentMeasurementMethod() + "\n"
-                + "Current Dir=" + getCurrentDirection() + "\n"
-                + "Current Speed=" + getCurrentSpeed() + "\n"
+                + "Dry bulb temp=" + getDryBulbTemperature() + "\n"
+                + "Measure method=" + getSeaSurfaceCurrentMeasurementMethod() + "\n"
+                + "Current Dir=" + getSeaSurfaceCurrentDirection() + "\n"
+                + "Current Speed=" + getSeaSurfaceCurrentSpeed() + "\n"
                 + "Total water depth=" + getTotalWaterDepth() + "\n"
                 + "Agency Owner=" + getAgencyOwner() + "\n"
                 + "XBT launcher type=" + getXBTLauncherType() + "\n"
@@ -1053,15 +1053,15 @@ public class BinDecoder {
                 + "# of rider blocks=" + getNumberOfRiderBlocks() + "\n"
                 + "# of rider email blocks=" + getNumberOfRiderEmailBlocks() + "\n"
                 + "# of rider phone blocks=" + getNumberOfRiderPhoneBlocks() + "\n"
-                + "# of rider inst blocks=" + getNumberOfRiderInstBlocks() + "\n"
-                + "# of rep fields=" + getNumberOfRepFields() + "\n"
+                + "# of rider inst blocks=" + getNumberOfRiderInstitutionBlocks() + "\n"
+                + "# of rep fields=" + getNumberOfRepeatedFields() + "\n"
                 + "Times replicated=" + getTimesReplicated() + "\n"
                 + "Sea Temperature=" + getSeaTemperature() + "\n"
                 + "SeaDepth=" + getSeaDepth() + "\n"
-                + "Rider=" + getRiderName() + "\n"
-                + "Email=" + getRiderEmail() + "\n"
-                + "Phone=" + getRiderPhone() + "\n"
-                + "Institution=" + getInstituion() + "\n"
+                + "Rider=" + getRiderNames() + "\n"
+                + "Email=" + getRiderEmails() + "\n"
+                + "Phone=" + getRiderPhones() + "\n"
+                + "Institution=" + getRiderInstituions() + "\n"
                 + "index,temperature\n";
         for (int i = 0; i < tempPoints.length; i++) {
             str += i + "," + tempPoints[i] + "\n";

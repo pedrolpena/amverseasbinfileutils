@@ -66,7 +66,7 @@ public class FormatConverter {
                 profile.getXBTProbeManufacturedYear());
         tmp += "Data Type                      | " + profile.getThisDataIs() + " ("+ getDataResolutionDescription(profile.getThisDataIs())+")\n";
         tmp += "Data Quality                   | " + profile.getDataQuality() + " ("+ getDataQualityDescription(profile.getDataQuality())+")\n";
-        tmp += "Deployment Height (meters)     | " + String.format("%4.2f", profile.getLauncherHeight()) + "\n";
+        tmp += "Deployment Height (meters)     | " + String.format("%4.2f", profile.getLaunchHeight()) + "\n";
         tmp += "Ship Direction                 | " + String.format("%03d", (int) profile.getShipDirection()) + "\n";
         tmp += "Ship Speed (knots)             | " + String.format("%05.2f", profile.getShipSpeed() * 1.94384) + "\n";
         tmp += "Instrument Type                | " + getProbeDescription(profile.getInstrumentType())
@@ -76,10 +76,10 @@ public class FormatConverter {
         tmp += "Wind Instrument Type           | " + profile.getWindInstrumentType() + "\n";
         tmp += "Wind Direction                 | " + profile.getWindDiretion() + "\n";
         tmp += "Wind Speed (knots)             | " + profile.getWindSpeed() + "\n";
-        tmp += "Dry Bulb Temperature (celsius) | " + profile.getDryBulbTemp() + "\n";
-        tmp += "Current Measurement Method     | " + profile.getCurrentMeasurementMethod() + "\n";
-        tmp += "Current Direction              | " + profile.getCurrentDirection() + "\n";
-        tmp += "Current Speed (knots)          | " + profile.getCurrentSpeed() + "\n";
+        tmp += "Dry Bulb Temperature (celsius) | " + profile.getDryBulbTemperature() + "\n";
+        tmp += "Current Measurement Method     | " + profile.getSeaSurfaceCurrentMeasurementMethod() + "\n";
+        tmp += "Current Direction              | " + profile.getSeaSurfaceCurrentDirection() + "\n";
+        tmp += "Current Speed (knots)          | " + profile.getSeaSurfaceCurrentSpeed() + "\n";
         tmp += "Total Water Depth (meters)     | " + profile.getTotalWaterDepth() + "\n";
         tmp += "===================================================================\n";
         tmp += "Full Resolution Values\n";
