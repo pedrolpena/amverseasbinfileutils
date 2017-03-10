@@ -29,7 +29,7 @@ public class XBTProfile {
     private int minute = 0;
     private String shipName = "";
     private int lloyds = 0;
-    private long uniqueTag = 0; // is a positive 32 bit integer;
+    private int uniqueTag = 0; // is a positive 32 bit integer;
     private int seasVersion = 0;
     private int probeSerialNumber = 0;
     private int thisDataIs = 0;
@@ -133,7 +133,7 @@ public class XBTProfile {
         return lloyds;
     }
 
-    public long getUniqueTag() {
+    public int getUniqueTag() {
         return uniqueTag;
     }
 
@@ -550,6 +550,9 @@ public class XBTProfile {
     }
 
     private String[] splitRiderBlockStrings(String riderDataString) {
+        if ( riderDataString==null ){
+             return new String[0];
+        }//end if
         String[] tempArray = new String[(riderDataString.length() + 5 - 1) / 5];
         int j = -1;
         for (int i = 0; i < riderDataString.length(); i++) {

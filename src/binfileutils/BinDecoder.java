@@ -937,7 +937,7 @@ public class BinDecoder {
     private String toString(int start, int end) {
         try {
             if (start < 0 || end < 0 || end - start <= 0) {
-                return "NONE";
+                return null;
             }
 
             String str = "";
@@ -950,7 +950,7 @@ public class BinDecoder {
             }
             return str;
         } catch (Exception e) {
-            return "NONE";
+            return null;
         }//end catch
     }//end method
 

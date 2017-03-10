@@ -14,18 +14,20 @@ import java.util.zip.CRC32;
 
 /**
  *
- * @author pena
+ * @author Others and Pedro Pena
  */
 public class BinEncoder {
 
     private XBTBinFormat xformat = new XBTBinFormat();
     private BitSet bits = new BitSet();
     private int newMessageType = 0;
+    XBTProfile xp;
 
     public BinEncoder() {
     }
 
     public BinEncoder(XBTProfile xp) {
+        this.xp = xp;
         bitsInString(xp.getWmoId().getBytes(), xformat.startWmoId());
         bitsInInteger(xp.getOldMessageType(), xformat.startOldMessageType(),
                 xformat.endOldMessageType());
@@ -62,8 +64,8 @@ public class BinEncoder {
                 xformat.startShipName(newMessageType));
         bitsInInteger(xp.getLloyds(), xformat.startLloyds(newMessageType),
                 xformat.endLloyds(newMessageType));
-//        bitsInInteger(xp.getUniqueTag(), xformat.startUniqueTag(newMessageType),
-//                xformat.endUniqueTag(newMessageType));
+        bitsInInteger(xp.getUniqueTag(), xformat.startUniqueTag(newMessageType),
+                xformat.endUniqueTag(newMessageType));
         bitsInInteger(xp.getSeasVersion(),
                 xformat.startSeasVersion(newMessageType),
                 xformat.endSeasVersion(newMessageType));
@@ -187,7 +189,9 @@ public class BinEncoder {
         }
 
         for (int i = 0; i < xp.getTemperaturePoints().length; i++) {
-            double tp = xp.getTemperaturePoints()[i] * 100.00 + 400.00;
+            // we had to round here because the doubles were being
+            // truncated to the wrong value
+            double tp = Math.round(xp.getTemperaturePoints()[i] * 100.00) + 400.00;
             bitsInInteger(Double.valueOf(tp).intValue(),
                     xformat.startTemperaturePoints(newMessageType, i),
                     xformat.endTemperaturePoints(newMessageType, i));
@@ -230,6 +234,7 @@ public class BinEncoder {
         File inputFile = new File(outputFile);
         FileOutputStream fos = null;
         setMessageCRC();
+       
         bits = changeEndian(bits);
 
         try {
@@ -315,11 +320,16 @@ public class BinEncoder {
 
     private void setMessageCRC() {
         CRC32 generator = new CRC32();
-        bitsInLong(0xFFFFFFFF, xformat.startUniqueTag(newMessageType),
+        
+        bitsInInteger(0xFFFFFFFF, xformat.startUniqueTag(newMessageType),
                 xformat.endUniqueTag(newMessageType));
+        //System.out.println(Integer.toHexString(xp.getUniqueTag()).toUpperCase());
         generator.reset();
+        
+        changeEndian(bits);
         generator.update(bits.toByteArray());
-        bitsInLong(generator.getValue(), xformat.startUniqueTag(newMessageType),
+        changeEndian(bits);
+        bitsInInteger((int)(generator.getValue()), xformat.startUniqueTag(newMessageType),
                 xformat.endUniqueTag(newMessageType));
     }
 }
