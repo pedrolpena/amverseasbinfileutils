@@ -1,0 +1,10 @@
+#!/bin/bash
+clear
+java -cp .:../AmverseasBinFileUtils/dist/AmverseasBinFileUtils.jar DecoderTestASCII ./outProfile.bin > outProfile.txt
+java -cp .:../AmverseasBinFileUtils/dist/AmverseasBinFileUtils.jar DecoderTestASCII ./inProfile2.bin > inProfile2.txt
+xxd ./outProfile.bin > outProfile.hex
+xxd ./inProfile2.bin > inProfile2.hex
+
+diff inProfile2.txt outProfile.txt
+
+diff  inProfile2.hex outProfile.hex

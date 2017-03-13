@@ -14,6 +14,8 @@ import java.nio.file.Path;
  *
  */
 public class BinDecoder {
+    
+XBTProfile xBTProfile;    
 
     static BitSet bits; //holds bits from file
 
@@ -29,12 +31,15 @@ public class BinDecoder {
             Path path = Paths.get(filePath);
             byte[] data = Files.readAllBytes(path);
             bits = changeEndian(BitSet.valueOf(data));
+             xBTProfile=decodeXBTProfile();            
 
         } catch (Exception e) {
             System.out.println(e);
         }
 
     }//end constructor
+    
+    
 
     /**
      * <strong>(FXY1011)</strong>-This method returns the ship's WMO ID
@@ -42,8 +47,10 @@ public class BinDecoder {
      * @return    <strong>(FXY1011)</strong>-This method returns a the ship's WMO
      * ID
      */
-    public String getCallsign() {
-        return toString(0, 71);
+    private String getCallsign() {
+        int start = XBTProfileDataRanges.getCallsign(1)[0];
+        int   end = XBTProfileDataRanges.getCallsign(1)[1];
+        return toString(start, end);
     }// end method
 
     /**
@@ -52,10 +59,13 @@ public class BinDecoder {
      * @return  <strong>(FXY48211)</strong>-This method returns the old message
      * type.Returns 0 when there is an exception.
      */
-    public int getOldMessageType() {
+    private int getOldMessageType() {
+        int start = XBTProfileDataRanges.getOldMessageType(1)[0];
+        int   end = XBTProfileDataRanges.getOldMessageType(1)[1]; 
+        
         try {
 
-            return toInteger(72, 77);
+            return toInteger(start, end);
         } catch (Exception e) {
             return 0;
         }
@@ -69,15 +79,13 @@ public class BinDecoder {
      * types used in Amverseas The types can be a value from 1-3. Returns 0 when
      * there is an exception.
      */
-    public int getNewMessageType() {
+    private int getNewMessageType() {
+        int start = XBTProfileDataRanges.getNewMessageType(1)[0];
+        int   end = XBTProfileDataRanges.getNewMessageType(1)[1]; 
+        
         try {
-            int mt = toInteger(78, 87);
 
-            if (mt < 1 || mt > 3) {
-                mt = 0;
-            }
-
-            return mt;
+            return toInteger(start, end);
         } catch (Exception e) {
             return 0;
         }//end catch
@@ -90,12 +98,13 @@ public class BinDecoder {
      * @return  <strong>(FXY5001)</strong>-This method returns the latitude where
      * the measurement was made. The value is returned in decimal degrees.
      */
-    public double getLatitude() {
-        int[] start = {-1, 88, 88, 88};
-        int[] end = {-1, 112, 112, 112};
+    private double getLatitude() {
         int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getLattitude(mt)[0];
+        int end = XBTProfileDataRanges.getLattitude(mt)[1];
+        
 
-        return (toInteger(start[mt], end[mt]) - 9000000) / 100000.0;
+        return (toInteger(start, end) - 9000000) / 100000.0;
 
     }//end method
 
@@ -106,12 +115,12 @@ public class BinDecoder {
      * @return  <strong>(FXY6001)</strong>-This method returns the longitude
      * where the measurement was made. The value is returned in decimal degrees.
      */
-    public double getLongitude() {
-        int[] start = {-1, 113, 113, 113};
-        int[] end = {-1, 138, 138, 138};
+    private double getLongitude() {
+  
         int mt = getNewMessageType();
-
-        return (toInteger(start[mt], end[mt]) - 18000000) / 100000.0;
+        int start = XBTProfileDataRanges.getLongitude(mt)[0];
+        int end = XBTProfileDataRanges.getLongitude(mt)[1];
+        return (toInteger(start, end) - 18000000) / 100000.0;
     }//end method
 
     /**
@@ -122,12 +131,12 @@ public class BinDecoder {
      * the transect. e.g. AX10 This field became available beginning with
      * message type 2
      */
-    public String getSoopLine() {
-        int[] start = {-1, -1, 139, 139};
-        int[] end = {-1, -1, 186, 186};
-        int mt = getNewMessageType();
+    private String getSoopLine() {
 
-        return toString(start[mt], end[mt]);
+        int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getSoopLine(mt)[0];
+        int end = XBTProfileDataRanges.getSoopLine(mt)[1];
+        return toString(start, end);
 
     }
 
@@ -140,12 +149,13 @@ public class BinDecoder {
      * in the same calendar year. e.g. The second transect would have a value of
      * 2. A value of -999 is returned when there is no value.
      */
-    public int getTransectNumber() {
-        int[] start = {-1, -1, 187, 187};
-        int[] end = {-1, -1, 193, 193};
-        int mt = getNewMessageType();
+    private int getTransectNumber() {
 
-        return toInteger(start[mt], end[mt]);
+        int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getTransectNumber(mt)[0];
+        int end = XBTProfileDataRanges.getTransectNumber(mt)[1];
+       
+        return toInteger(start, end);
     }
 
     /**
@@ -153,12 +163,12 @@ public class BinDecoder {
      *
      * @return <strong>(FXY48304)</strong>-This method returns
      */
-    public int getSequenceNumber() {
-        int[] start = {-1, -1, 194, 194};
-        int[] end = {-1, -1, 209, 209};
+    private int getSequenceNumber() {
         int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getSequenceNumber(mt)[0];
+        int end = XBTProfileDataRanges.getSequenceNumber(mt)[1];
 
-        return toInteger(start[mt], end[mt]);
+        return toInteger(start, end);
     }
 
     /**
@@ -169,11 +179,11 @@ public class BinDecoder {
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
-    public int getYear() {
-        int[] start = {-1, 139, 210, 210};
-        int[] end = {-1, 150, 221, 221};
+    private int getYear() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getYear(mt)[0];
+        int end = XBTProfileDataRanges.getYear(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -184,11 +194,11 @@ public class BinDecoder {
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
-    public int getMonth() {
-        int[] start = {-1, 151, 222, 222};
-        int[] end = {-1, 154, 225, 225};
+    private int getMonth() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getMonth(mt)[0];
+        int end = XBTProfileDataRanges.getMonth(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -199,11 +209,11 @@ public class BinDecoder {
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
-    public int getDay() {
-        int[] start = {-1, 155, 226, 226};
-        int[] end = {-1, 160, 231, 231};
+    private int getDay() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getDay(mt)[0];
+        int end = XBTProfileDataRanges.getDay(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -214,11 +224,11 @@ public class BinDecoder {
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
-    public int getHour() {
-        int[] start = {-1, 161, 232, 232};
-        int[] end = {-1, 165, 236, 236};
+    private int getHour() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getHour(mt)[0];
+        int end = XBTProfileDataRanges.getHour(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -229,11 +239,11 @@ public class BinDecoder {
      * when the measurement was made A value of -999 is returned when there is
      * no value.
      */
-    public int getMinute() {
-        int[] start = {-1, 166, 237, 237};
-        int[] end = {-1, 171, 242, 242};
+    private int getMinute() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getMinute(mt)[0];
+        int end = XBTProfileDataRanges.getMinute(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -243,11 +253,11 @@ public class BinDecoder {
      * @return <strong>(FXY1200)</strong>-This method returns the name of the
      * ship. If there is no name then the string "NONE" is returned.
      */
-    public String getShipName() {
-        int[] start = {-1, 172, 243, 243};
-        int[] end = {-1, 411, 482, 482};
+    private String getShipName() {
         int mt = getNewMessageType();
-        return toString(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getShipName(mt)[0];
+        int end = XBTProfileDataRanges.getShipName(mt)[1];
+        return toString(start, end); 
     }
 
     /**
@@ -258,11 +268,11 @@ public class BinDecoder {
      * International Maritime Organization (IMO) number. A value of -999 is
      * returned when there is no value.
      */
-    public int getLloyds() {
-        int[] start = {-1, 412, 483, 483};
-        int[] end = {-1, 435, 506, 506};
+    private int getLloyds() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getLloyds(mt)[0];
+        int end = XBTProfileDataRanges.getLloyds(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -275,11 +285,11 @@ public class BinDecoder {
      * then the bin file is possibly corrupt. A value of -999 is returned when
      * there is no value.
      */
-    public int getUniqueTag() {
-        int[] start = {-1, 436, 507, 507};
-        int[] end = {-1, 467, 538, 538};
+    private int getUniqueTag() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getUniqueTag(mt)[0];
+        int end = XBTProfileDataRanges.getUniqueTag(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -291,11 +301,11 @@ public class BinDecoder {
      * to get the actual version. e.g. 920 must be dived by 100 to get Amverseas
      * version 9.20 A value of -999 is returned when there is no value.
      */
-    public int getSeasVersion() {
-        int[] start = {-1, 468, 539, 539};
-        int[] end = {-1, 477, 548, 548};
+    private int getSeasVersion() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getSeasVersion(mt)[0];
+        int end = XBTProfileDataRanges.getSeasVersion(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -306,11 +316,11 @@ public class BinDecoder {
      * of the XBT used to make the measurement. A value of -999 is returned when
      * there is no value.
      */
-    public int getProbeSerialNumber() {
-        int[] start = {-1, 478, 549, 549};
-        int[] end = {-1, 497, 572, 572};
+    private int getProbeSerialNumber() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getProbeSerialNumber(mt)[0];
+        int end = XBTProfileDataRanges.getProbeSerialNumber(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -322,11 +332,11 @@ public class BinDecoder {
      * resolution and a value of 3 is two meter resolution. A value of -999 is
      * returned when there is no value.
      */
-    public int getThisDataIs() {
-        int[] start = {-1, 498, 573, 573};
-        int[] end = {-1, 500, 575, 575};
+    private int getThisDataIs() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getThisDataIs(mt)[0];
+        int end = XBTProfileDataRanges.getThisDataIs(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -339,11 +349,11 @@ public class BinDecoder {
      * measurement has been made. A value of -999 is returned when there is no
      * value.
      */
-    public int getDataQuality() {
-        int[] start = {-1, 501, 576, 576};
-        int[] end = {-1, 503, 578, 578};
+    private int getDataQuality() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getDataQuality(mt)[0];
+        int end = XBTProfileDataRanges.getDataQuality(mt)[1];
+        return toInteger(start, end);
     }
 
     /**
@@ -354,12 +364,12 @@ public class BinDecoder {
      * height of the autolauncher from the surface of the water. A value of
      * -9.99 is returned when there is no value.
      */
-    public double getLaunchHeight() {
+    private double getLaunchHeight() {
 
-        int[] start = {-1, -1, 579, 579};
-        int[] end = {-1, -1, 591, 591};
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]) / 100.0;
+        int start = XBTProfileDataRanges.getLaunchHeight(mt)[0];
+        int end = XBTProfileDataRanges.getLaunchHeight(mt)[1];
+        return toInteger(start, end)/100.00;
     }
 
     /**
@@ -370,11 +380,11 @@ public class BinDecoder {
      * degrees that the ship was heading when the measurement was made. A value
      * of -999.0 is returned when there is no value.
      */
-    public double getShipDirection() {
-        int[] start = {-1, -1, 592, 592};
-        int[] end = {-1, -1, 600, 600};
+    private double getShipDirection() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getShipDirection(mt)[0];
+        int end = XBTProfileDataRanges.getShipDirection(mt)[1];
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -385,11 +395,11 @@ public class BinDecoder {
      * ship in m/s when the measurement was made. A value of -9.99 is returned
      * when there is no value.
      */
-    public double getShipSpeed() {
-        int[] start = {-1, -1, 601, 601};
-        int[] end = {-1, -1, 613, 613};
+    private double getShipSpeed() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]) / 100.0;
+        int start = XBTProfileDataRanges.getShipSpeed(mt)[0];
+        int end = XBTProfileDataRanges.getShipSpeed(mt)[1];
+        return toInteger(start, end) / 100.0;
     }//end method
 
     /**
@@ -401,11 +411,11 @@ public class BinDecoder {
      * e.g. a value of 52 refers to a Deep Blue XBT. A value of -999 is returned
      * when there is no value.
      */
-    public int getInstrumentType() {
-        int[] start = {-1, 504, 614, 614};
-        int[] end = {-1, 513, 623, 623};
+    private int getInstrumentType() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getInstrumentType(mt)[0];
+        int end = XBTProfileDataRanges.getInstrumentType(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -419,11 +429,11 @@ public class BinDecoder {
      * value of -999 is returned when there is no value.
      *
      */
-    public int getRecorderType() {
-        int[] start = {-1, 514, 624, 624};
-        int[] end = {-1, 520, 630, 630};
+    private int getRecorderType() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getRecorderType(mt)[0];
+        int end = XBTProfileDataRanges.getRecorderType(mt)[1];
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -434,11 +444,11 @@ public class BinDecoder {
      * represents the type of anemometer used. A value of -999 is returned when
      * there is no value.
      */
-    public int getWindInstrumentType() {
-        int[] start = {-1, 521, 631, 631};
-        int[] end = {-1, 524, 634, 634};
+    private int getWindInstrumentType() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getWindInstrumentType(mt)[0];
+        int end = XBTProfileDataRanges.getWindInstrumentType(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -449,12 +459,11 @@ public class BinDecoder {
      * direction in degrees at the time of the measurement. A value of -999 is
      * returned when there is no value.
      */
-    public double getWindDiretion() {
-        int[] start = {-1, 525, 635, 635};
-        int[] end = {-1, 533, 643, 643};
+    private double getWindDirection() {
         int mt = getNewMessageType();
-
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getWindDirection(mt)[0];
+        int end = XBTProfileDataRanges.getWindDirection(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -465,11 +474,11 @@ public class BinDecoder {
      * degrees at the time of the measurement. A value of -99.9 is returned when
      * there is no value.
      */
-    public double getWindSpeed() {
-        int[] start = {-1, 534, 644, 644};
-        int[] end = {-1, 545, 655, 655};
+    private double getWindSpeed() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]) / 10.0;
+        int start = XBTProfileDataRanges.getWindSpeed(mt)[0];
+        int end = XBTProfileDataRanges.getWindSpeed(mt)[1];
+        return toInteger(start, end)/ 10.0;
     }//end method
 
     /**
@@ -480,11 +489,11 @@ public class BinDecoder {
      * temperature at the time of the measurement. A value of -99.9 is returned
      * when there is no value.
      */
-    public double getDryBulbTemperature() {
-        int[] start = {-1, 546, 656, 656};
-        int[] end = {-1, 557, 667, 667};
+    private double getDryBulbTemperature() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]) / 10.0;
+        int start = XBTProfileDataRanges.getDryBulbTemperature(mt)[0];
+        int end = XBTProfileDataRanges.getDryBulbTemperature(mt)[1];
+        return toInteger(start, end) / 10.0;
     }//end method
 
     /**
@@ -494,11 +503,11 @@ public class BinDecoder {
      * @return <strong>(FXY2030)</strong>-This method returns the sea current
      * measurement method. A value of -999 is returned when there is no value.
      */
-    public int getSeaSurfaceCurrentMeasurementMethod() {
-        int[] start = {-1, 558, 668, 668};
-        int[] end = {-1, 560, 670, 670};
+    private int getSeaSurfaceCurrentMeasurementMethod() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getSeaSurfaceCurrentMeasurementMethod(mt)[0];
+        int end = XBTProfileDataRanges.getSeaSurfaceCurrentMeasurementMethod(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -508,11 +517,11 @@ public class BinDecoder {
      * @return <strong>(FXY22004)</strong>-This method returns the sea surface
      * current direction . A value of -999 is returned when there is no value.
      */
-    public int getSeaSurfaceCurrentDirection() {
-        int[] start = {-1, 561, 671, 671};
-        int[] end = {-1, 569, 679, 679};
+    private int getSeaSurfaceCurrentDirection() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getSeaSurfaceCurrentDirection(mt)[0];
+        int end = XBTProfileDataRanges.getSeaSurfaceCurrentDirection(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -522,11 +531,11 @@ public class BinDecoder {
      * @return <strong>(FXY22031)</strong>-This method returns the sea surface
      * current speed A value of -999 is returned when there is no value.
      */
-    public double getSeaSurfaceCurrentSpeed() {
-        int[] start = {-1, 570, 680, 680};
-        int[] end = {-1, 582, 692, 692};
+    private double getSeaSurfaceCurrentSpeed() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]) / 100.00;
+        int start = XBTProfileDataRanges.getSeaSurfaceCurrentSpeed(mt)[0];
+        int end = XBTProfileDataRanges.getSeaSurfaceCurrentSpeed(mt)[1];
+        return toInteger(start, end)   / 100.00;
     }//end method
 
     /**
@@ -537,11 +546,11 @@ public class BinDecoder {
      * depth at the location where the measurement was made. A value of -999 is
      * returned when there is no value.
      */
-    public int getTotalWaterDepth() {
-        int[] start = {-1, 583, 693, 693};
-        int[] end = {-1, 596, 706, 706};
+    private int getTotalWaterDepth() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getTotalWaterDepth(mt)[0];
+        int end = XBTProfileDataRanges.getTotalWaterDepth(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -552,11 +561,11 @@ public class BinDecoder {
      * charge of operating the observation platform. A value of -999 is returned
      * when there is no value.
      */
-    public int getAgencyOwner() {
-        int[] start = {-1, -1, -1, 707};
-        int[] end = {-1, -1, -1, 726};
+    private int getAgencyOwner() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getAgencyOwner(mt)[0];
+        int end = XBTProfileDataRanges.getAgencyOwner(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -567,11 +576,11 @@ public class BinDecoder {
      * that represents the type of launcher used. A value of -999 is returned
      * when there is no value.
      */
-    public int getXBTLauncherType() {
-        int[] start = {-1, -1, -1, 727};
-        int[] end = {-1, -1, -1, 734};
+    private int getXBTLauncherType() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTLauncherType(mt)[0];
+        int end = XBTProfileDataRanges.getXBTLauncherType(mt)[1];
+        return toInteger(start, end);  
     }//end method
 
     /**
@@ -581,11 +590,11 @@ public class BinDecoder {
      * @return <strong>(FXY2171)</strong>-This method returns the serial number
      * of the recorder used. A value of -999 is returned when there is no value.
      */
-    public String getXBTRecorderSerialNumber() {
-        int[] start = {-1, -1, -1, 735};
-        int[] end = {-1, -1, -1, 798};
+    private String getXBTRecorderSerialNumber() {
         int mt = getNewMessageType();
-        return toString(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTRecorderSerialNumber(mt)[0];
+        int end = XBTProfileDataRanges.getXBTRecorderSerialNumber(mt)[1];
+        return toString(start, end);  
     }// end method
 
     /**
@@ -596,11 +605,11 @@ public class BinDecoder {
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
      */
-    public int getXBTRecorderManufacturedYear() {
-        int[] start = {-1, -1, -1, 799};
-        int[] end = {-1, -1, -1, 810};
+    private int getXBTRecorderManufacturedYear() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTRecorderManufacturedYear(mt)[0];
+        int end = XBTProfileDataRanges.getXBTRecorderManufacturedYear(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -611,11 +620,11 @@ public class BinDecoder {
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
      */
-    public int getXBTRecorderManufacturedMonth() {
-        int[] start = {-1, -1, -1, 811};
-        int[] end = {-1, -1, -1, 814};
+    private int getXBTRecorderManufacturedMonth() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTRecorderManufacturedMonth(mt)[0];
+        int end = XBTProfileDataRanges.getXBTRecorderManufacturedMonth(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -626,11 +635,11 @@ public class BinDecoder {
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
      */
-    public int getXBTRecorderManufacturedDay() {
-        int[] start = {-1, -1, -1, 815};
-        int[] end = {-1, -1, -1, 820};
+    private int getXBTRecorderManufacturedDay() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTRecorderManufacturedDay(mt)[0];
+        int end = XBTProfileDataRanges.getXBTRecorderManufacturedDay(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -640,11 +649,11 @@ public class BinDecoder {
      * @return <strong>(FXY4001)</strong>-This method returns the year the XBT
      * was manufactured. A value of -999 is returned when there is no value.
      */
-    public int getXBTProbeManufacturedYear() {
-        int[] start = {-1, -1, -1, 821};
-        int[] end = {-1, -1, -1, 832};
+    private int getXBTProbeManufacturedYear() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTProbeManufacturedYear(mt)[0];
+        int end = XBTProfileDataRanges.getXBTProbeManufacturedYear(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -655,11 +664,11 @@ public class BinDecoder {
      * the XBT was manufactured. A value of -999 is returned when there is no
      * value.
      */
-    public int getXBTProbeManufacturedMonth() {
-        int[] start = {-1, -1, -1, 833};
-        int[] end = {-1, -1, -1, 836};
+    private int getXBTProbeManufacturedMonth() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTProbeManufacturedMonth(mt)[0];
+        int end = XBTProfileDataRanges.getXBTProbeManufacturedMonth(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -670,11 +679,11 @@ public class BinDecoder {
      * the XBT was manufactured. A value of -999 is returned when there is no
      * value.
      */
-    public int getXBTProbeManufacturedDay() {
-        int[] start = {-1, -1, -1, 837};
-        int[] end = {-1, -1, -1, 842};
+    private int getXBTProbeManufacturedDay() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getXBTProbeManufacturedDay(mt)[0];
+        int end = XBTProfileDataRanges.getXBTProbeManufacturedDay(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -685,11 +694,11 @@ public class BinDecoder {
      * bit blocks or 5 characters, used to store the rider name. A value of -999
      * is returned when there is no value.
      */
-    public int getNumberOfRiderBlocks() {
-        int[] start = {-1, -1, -1, 843};
-        int[] end = {-1, -1, -1, 848};
+    private int getNumberOfRiderBlocks() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getNumberOfRiderBlocks(mt)[0];
+        int end = XBTProfileDataRanges.getNumberOfRiderBlocks(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -700,11 +709,11 @@ public class BinDecoder {
      * bit blocks or 5 characters, used to store the riders institution's name.
      * A value of -999 is returned when there is no value.
      */
-    public int getNumberOfRiderInstitutionBlocks() {
-        int[] start = {-1, -1, -1, 849};
-        int[] end = {-1, -1, -1, 854};
+    private int getNumberOfRiderInstitutionBlocks() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(mt)[0];
+        int end = XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -715,11 +724,11 @@ public class BinDecoder {
      * bit blocks or 5 characters, used to store the rider's email address. A
      * value of -999 is returned when there is no value.
      */
-    public int getNumberOfRiderEmailBlocks() {
-        int[] start = {-1, -1, -1, 855};
-        int[] end = {-1, -1, -1, 860};
+    private int getNumberOfRiderEmailBlocks() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getNumberOfRiderEmailBlocks(mt)[0];
+        int end = XBTProfileDataRanges.getNumberOfRiderEmailBlocks(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -730,11 +739,11 @@ public class BinDecoder {
      * bit blocks or 5 characters, used to store the rider's phone number. A
      * value of -999 is returned when there is no value.
      */
-    public int getNumberOfRiderPhoneBlocks() {
-        int[] start = {-1, -1, -1, 861};
-        int[] end = {-1, -1, -1, 866};
+    private int getNumberOfRiderPhoneBlocks() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(mt)[0];
+        int end = XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -746,11 +755,11 @@ public class BinDecoder {
      * how many groups of replicated fields follow. Always delayed replication.
      * value of -999 is returned when there is no value.
      */
-    public int getNumberOfRepeatedFields() {
-        int[] start = {-1, 597, 707, 867};
-        int[] end = {-1, 604, 714, 874};
+    private int getNumberOfRepeatedFields() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getNumberOfRepeatedFields(mt)[0];
+        int end = XBTProfileDataRanges.getNumberOfRepeatedFields(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -761,11 +770,11 @@ public class BinDecoder {
      * temperature measurement points recorded. A value of -999 is returned when
      * there is no value.
      */
-    public int getTimesReplicated() {
-        int[] start = {-1, 605, 715, 875};
-        int[] end = {-1, 620, 730, 890};
+    private int getTimesReplicated() {
         int mt = getNewMessageType();
-        return toInteger(start[mt], end[mt]);
+        int start = XBTProfileDataRanges.getTimesReplicated(mt)[0];
+        int end = XBTProfileDataRanges.getTimesReplicated(mt)[1];
+        return toInteger(start, end);  
     }// end method
 
     /**
@@ -776,11 +785,11 @@ public class BinDecoder {
      * first temperature measurement made. A value of -13.99 is returned when
      * there is no value.
      */
-    public double getSeaTemperature() {
-        int[] start = {-1, 621, 731, 891};
-        int[] end = {-1, 632, 742, 902};
+    private double getSeaTemperature() {
         int mt = getNewMessageType();
-        return (toInteger(start[mt], end[mt]) - 400.00) / 100.00;
+        int start = XBTProfileDataRanges.getSeaTemperature(mt)[0];
+        int end = XBTProfileDataRanges.getSeaTemperature(mt)[1];
+        return (toInteger(start, end) - 400.00) / 100.00;
     }// end method
 
     /**
@@ -790,11 +799,12 @@ public class BinDecoder {
      * @return <strong>(FXY7062S)</strong>-This method returns the depth below
      * the sea/water surface A value of -999 is returned when there is no value.
      */
-    public double getSeaDepth() {
-        int[] start = {-1, 633, -1, -1};
-        int[] end = {-1, 646, -1, -1};
+    private double getSeaDepth() {
         int mt = getNewMessageType();
-        return (double) (toInteger(start[mt], end[mt]));
+        int start = XBTProfileDataRanges.getSeaDepth(mt)[0];
+        int end = XBTProfileDataRanges.getSeaDepth(mt)[1];
+        return (double) toInteger(start, end);  
+    
     }// end method
 
     /**
@@ -805,17 +815,18 @@ public class BinDecoder {
      * containing the temperature measurements made. An empty array is returned
      * when there are no values.
      */
-    public double[] getTemperaturePoints() {
-        int[] start = {-1, 621, 731, 891};
+    private double[] getTemperaturePoints() {
         int mt = getNewMessageType();
-
+        int start = XBTProfileDataRanges.getTemperaturePoints(mt)[0];
         int points = getTimesReplicated();
+        
         if (points < 0) {
             return new double[0];
         }
+        
         double temps[] = new double[points];
         int counter = 0;
-        for (int i = start[mt]; i < start[mt] + points * 12; i += 12) {
+        for (int i = start; i < start + points * 12; i += 12) {
             temps[counter] = (toInteger(i, i + 11) - 400.00) / 100.00;
             counter++;
 
@@ -830,11 +841,12 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * name. A value of "NONE" is returned when there is no value.
      */
-    public String getRiderNames() {
-        int[] start = {-1, -1, -1, 891};
+    private String getRiderNames() {
+        
         int mt = getNewMessageType();
-
-        int s = start[mt] + 12 * getTimesReplicated();
+       int start = XBTProfileDataRanges.getRiderNames(mt)[0];
+      
+        int s = start + 12 * getTimesReplicated();
         return toString(s, s + getNumberOfRiderBlocks() * 40);
     }// end method
 
@@ -844,11 +856,12 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * email. A value of "NONE" is returned when there is no value.
      */
-    public String getRiderEmails() {
-        int[] start = {-1, -1, -1, 891};
+    private String getRiderEmails() {
+       
         int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getRiderEmails(mt)[0];
 
-        int s = start[mt] + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40;
+        int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40;
         return toString(s, s + getNumberOfRiderEmailBlocks() * 40);
     }// end method
 
@@ -859,11 +872,11 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * institution. A value of "NONE" is returned when there is no value.
      */
-    public String getRiderInstituions() {
-        int[] start = {-1, -1, -1, 891};
+    private String getRiderInstituions() {
+        
         int mt = getNewMessageType();
-
-        int s = start[mt] + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
+        int start = XBTProfileDataRanges.getRiderInstituions(mt)[0];
+        int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
         return toString(s, s + getNumberOfRiderInstitutionBlocks() * 40);
     }// end method
 
@@ -874,13 +887,19 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * phone number. A value of "NONE" is returned when there is no value.
      */
-    public String getRiderPhones() {
-        int[] start = {-1, -1, -1, 891};
+    private String getRiderPhones() {
+        
         int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getRiderPhones(mt)[0];
 
-        int s = start[mt] + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstitutionBlocks() * 40;
+        int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstitutionBlocks() * 40;
         return toString(s, s + getNumberOfRiderPhoneBlocks() * 40);
     }// end method
+    
+  public XBTProfile getXBTProfile(){
+        return xBTProfile;
+    
+    }//end method
 
     /**
      * <strong>(FXY205030A)</strong>-This method computes and returns an integer
@@ -892,7 +911,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method computes and returns an
      * integer from a sequence of bits.
      */
-    private int toInteger(int start, int end) {
+    private  int toInteger(int start, int end) {
         try {
             if (start < 0 || end < 0 || end - start <= 0) {
                 return -999;
@@ -934,10 +953,10 @@ public class BinDecoder {
      * @return <strong>(FXY)</strong>-This method computes and returns a string
      * from a sequence of bits.
      */
-    private String toString(int start, int end) {
+    private  String toString(int start, int end) {
         try {
             if (start < 0 || end < 0 || end - start <= 0) {
-                return null;
+                return "NONE";
             }
 
             String str = "";
@@ -950,7 +969,7 @@ public class BinDecoder {
             }
             return str;
         } catch (Exception e) {
-            return null;
+            return "NONE";
         }//end catch
     }//end method
 
@@ -961,7 +980,7 @@ public class BinDecoder {
      * @return <strong>(FXY)</strong>-This method flips the "endianes" of a
      * BitSet object and returns a BitSet object with flipped "endianess".
      */
-    private BitSet changeEndian(BitSet b) {
+    private  BitSet changeEndian(BitSet b) {
         boolean temp;
         for (int i = 0; i < b.length() - 1; i = i + 8) {
             for (int j = 0; j < 4; j++) {
@@ -986,7 +1005,7 @@ public class BinDecoder {
      * representation of the binary sequence in the specified range in the bin
      * file.
      */
-    public String getBinarySequence(int start, int end) {
+    private String getBinarySequence(int start, int end) {
         String str = "";
         for (int i = start; i <= end; i++) {
 
@@ -1002,6 +1021,71 @@ public class BinDecoder {
 
         }//end for
         return str;
+    }//end method
+    
+    
+    private  XBTProfile decodeXBTProfile(){
+        
+        XBTProfile xBTProfile = new XBTProfile();
+        xBTProfile.setAgencyOwner(getAgencyOwner());
+        xBTProfile.setDataQuality(getDataQuality());
+        xBTProfile.setDay(getDay());
+        xBTProfile.setDryBulbTemperature(getDryBulbTemperature());
+        xBTProfile.setHour(getHour());
+        xBTProfile.setInstrumentType(getInstrumentType());
+        xBTProfile.setLatitude(getLatitude());
+        xBTProfile.setLaunchHeight(getLaunchHeight());
+        xBTProfile.setLloyds(getLloyds());
+        xBTProfile.setLongitude(getLongitude());
+        xBTProfile.setMinute(getMinute());
+        xBTProfile.setMonth(getMonth());
+        xBTProfile.setNewMessageType(getNewMessageType());
+        //xBTProfile.setNumberOfRepeatedFields(getNumberOfRepeatedFields());
+        //xBTProfile.setNumberOfRiderBlocks(getNumberOfRiderBlocks());
+        //xBTProfile.setNumberOfRiderEmailBlocks(getNumberOfRiderEmailBlocks());
+        //xBTProfile.setNumberOfRiderInstitutionBlocks(getNumberOfRiderInstitutionBlocks());
+        //xBTProfile.setNumberOfRiderPhoneBlocks(getNumberOfRiderPhoneBlocks());
+        xBTProfile.setOldMessageType(getOldMessageType());
+        xBTProfile.setProbeSerialNumber(getProbeSerialNumber());
+        xBTProfile.setRecorderType(getRecorderType());        
+        xBTProfile.setRiderNames(getRiderNames());
+        xBTProfile.setRiderEmails(getRiderEmails());
+        xBTProfile.setRiderInstitutions(getRiderInstituions());
+        xBTProfile.setRiderPhones(getRiderPhones());
+        xBTProfile.setSeaDepth(getSeaDepth());
+        xBTProfile.setSeaSurfaceCurrentDirection(getSeaSurfaceCurrentDirection());
+        xBTProfile.setSeaSurfaceCurrentMeasurementMethod(getSeaSurfaceCurrentMeasurementMethod());
+        xBTProfile.setSeaSurfaceCurrentSpeed(getSeaSurfaceCurrentSpeed());
+        xBTProfile.setSeaSurfaceTemperature(getSeaTemperature());        
+        xBTProfile.setSeasVersion(getSeasVersion());
+        xBTProfile.setSequenceNum(getSequenceNumber());
+        xBTProfile.setShipDirection(getShipDirection());
+        xBTProfile.setShipName(getShipName());
+        xBTProfile.setShipSpeed(getShipSpeed());
+        xBTProfile.setSoopLine(getSoopLine());
+        xBTProfile.setTemperaturePoints(getTemperaturePoints());
+        xBTProfile.setThisDataIs(getThisDataIs());
+        xBTProfile.setTimesReplicated(getTimesReplicated());
+        xBTProfile.setTotalWaterDepth(getTotalWaterDepth());
+        xBTProfile.setTransectNum(getTransectNumber());
+        xBTProfile.setUniqueTag(getUniqueTag());
+        xBTProfile.setWindDirection(getWindDirection());
+        xBTProfile.setWindInstrumentType(getWindInstrumentType());
+        xBTProfile.setWindSpeed(getWindSpeed());
+        xBTProfile.setCallsign(getCallsign());
+        xBTProfile.setXBTLauncherType(getXBTLauncherType());
+        xBTProfile.setXBTProbeManufacturedDay(getXBTProbeManufacturedDay());
+        xBTProfile.setXBTProbeManufacturedMonth(getXBTProbeManufacturedMonth());
+        xBTProfile.setXBTProbeManufacturedYear(getXBTProbeManufacturedYear());
+        xBTProfile.setXBTRecorderManufacturedDay(getXBTRecorderManufacturedDay());
+        xBTProfile.setXBTRecorderManufacturedMonth(getXBTRecorderManufacturedMonth());
+        xBTProfile.setXBTRecorderManufacturedYear(getXBTRecorderManufacturedYear());
+        xBTProfile.setXBTRecorderSerialNumber(getXBTRecorderSerialNumber());
+        xBTProfile.setYear(getYear());        
+        
+        
+        return xBTProfile;
+    
     }//end method
 
     /**
@@ -1038,7 +1122,7 @@ public class BinDecoder {
                 + "Instrument type=" + getInstrumentType() + "\n"
                 + "Recorder type=" + getRecorderType() + "\n"
                 + "Wind Instrument type=" + getWindInstrumentType() + "\n"
-                + "Wind Direction=" + getWindDiretion() + "\n"
+                + "Wind Direction=" + getWindDirection() + "\n"
                 + "Wind Speed=" + getWindSpeed() + "\n"
                 + "Dry bulb temp=" + getDryBulbTemperature() + "\n"
                 + "Measure method=" + getSeaSurfaceCurrentMeasurementMethod() + "\n"

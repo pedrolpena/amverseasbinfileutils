@@ -20,6 +20,7 @@ public class DepthCalculator {
     private double B = 0.0;
     private double sampleFrequency = 10.0;
     private int numberOfMeasurements = 0;
+    private XBTProfile xBTProfile;
 
     /**
      * The constructor accepts the recorder type, the probe type and the number
@@ -35,11 +36,25 @@ public class DepthCalculator {
      * @param numberOfMeasurements The number of measurements made.
      *
      */
-    public DepthCalculator(int recorderType, int probeType, int numberOfMeasurements) {
-        this.numberOfMeasurements = numberOfMeasurements;
+    public DepthCalculator(XBTProfile xBTProfile, int recorderType, int probeType) {
+        this.xBTProfile=xBTProfile;
+        numberOfMeasurements = xBTProfile.getTemperaturePoints().length;
         setRecorderFrequency(recorderType);
         setProbeCoefficients(probeType);
     }//end constructor
+    
+    
+    
+        public DepthCalculator(XBTProfile xBTProfile) {
+        this.xBTProfile=xBTProfile;
+        numberOfMeasurements = xBTProfile.getTemperaturePoints().length;
+        setRecorderFrequency(xBTProfile.getRecorderType());
+        setProbeCoefficients(xBTProfile.getInstrumentType());
+    }//end constructor
+        
+        
+        
+        
 
     /**
      * This method returns an array of doubles containing the depths where each
@@ -58,6 +73,21 @@ public class DepthCalculator {
         }//end for
         return depths;
     }//end methos
+    
+    public double[][] getDepthsAndTemperaturePoints(){
+        double time;
+         double[][] depthsAndTemps = new double[numberOfMeasurements][2];
+         double [] temps = xBTProfile.getTemperaturePoints();
+         
+        for (int i = 0; i < numberOfMeasurements; i++) {
+            time = ((double) i + 1) / sampleFrequency;
+            depthsAndTemps[i][0] = (A * time) + (.001 * B * time * time);
+            depthsAndTemps[i][1] = temps[i];
+        }//end for         
+         
+         return depthsAndTemps;
+    
+    }
 
     /**
      * This method sets the recorders measurement frequency in Hertz.

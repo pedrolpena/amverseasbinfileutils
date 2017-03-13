@@ -524,14 +524,12 @@ public class XBTBinFormat {
         return start[newMessageType] + (12 * timesReplicated);
     }
 
-    public int endRiderName(int newMessageType, int timesReplicated,
-            int currentRiderBlocks) {
+    public int endRiderName(int newMessageType, int timesReplicated,int currentRiderBlocks) {
         int[] end = {-1, -1, -1, 891};
         if (end[newMessageType] == -1) {
             return -1;
         }
-        return (end[newMessageType] + (12 * timesReplicated))
-                + (currentRiderBlocks * 40);
+        return (end[newMessageType] + (12 * timesReplicated)) + (currentRiderBlocks * 40);
     }
 
     public int startRiderEmail(int newMessageType, int timesReplicated,
@@ -550,9 +548,7 @@ public class XBTBinFormat {
         if (end[newMessageType] == -1) {
             return -1;
         }
-        return (end[newMessageType] + (12 * timesReplicated))
-                + (numberOfRiderBlocks * 40)
-                + (currentRiderEmailBlocks * 40);
+        return (end[newMessageType] + (12 * timesReplicated))+ (numberOfRiderBlocks * 40)+ (currentRiderEmailBlocks * 40);
     }
 
     public int startInstituion(int newMessageType, int timesReplicated,

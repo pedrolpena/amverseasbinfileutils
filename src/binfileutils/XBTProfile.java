@@ -73,9 +73,13 @@ public class XBTProfile {
     public XBTProfile() {
     }
 
-    public String getWmoId() {
+    public String getWMOId() {
         return wmoId;
     }
+    
+    public String getCallsign(){
+    return getWMOId();
+    }//end method
 
     public int getOldMessageType() {
         return oldMessageType;
@@ -97,11 +101,11 @@ public class XBTProfile {
         return soopLine;
     }
 
-    public int getTransectNum() {
+    public int getTransectNumber() {
         return transectNum;
     }
 
-    public int getSequenceNum() {
+    public int getSequenceNumber() {
         return sequenceNum;
     }
 
@@ -189,7 +193,7 @@ public class XBTProfile {
         return dryBulbTemperature;
     }
 
-    public int getSeaSurfaceCurrentMeasuringMethod() {
+    public int getSeaSurfaceCurrentMeasurementMethod() {
         return seaSurfaceCurrentMeasuringMethod;
     }
 
@@ -209,35 +213,35 @@ public class XBTProfile {
         return agencyOwner;
     }
 
-    public int getXbtLauncherType() {
+    public int getXBTLauncherType() {
         return xbtLauncherType;
     }
 
-    public String getXbtRecorderSerialNumber() {
+    public String getXBTRecorderSerialNumber() {
         return xbtRecorderSerialNumber;
     }
 
-    public int getXbtRecorderManufactureYear() {
+    public int getXBTRecorderManufacturedYear() {
         return xbtRecorderManufactureYear;
     }
 
-    public int getXbtRecorderManufactureMonth() {
+    public int getXBTRecorderManufacturedMonth() {
         return xbtRecorderManufactureMonth;
     }
 
-    public int getXbtRecorderManufactureDay() {
+    public int getXBTRecorderManufacturedDay() {
         return xbtRecorderManufactureDay;
     }
 
-    public int getXbtProbeManufactureYear() {
+    public int getXBTProbeManufacturedYear() {
         return xbtProbeManufactureYear;
     }
 
-    public int getXbtProbeManufactureMonth() {
+    public int getXBTProbeManufacturedMonth() {
         return xbtProbeManufactureMonth;
     }
 
-    public int getXbtProbeManufactureDay() {
+    public int getXBTProbeManufacturedDay() {
         return xbtProbeManufactureDay;
     }
 
@@ -280,6 +284,15 @@ public class XBTProfile {
     public String[] getRiderNames() {
         return riderNames;
     }
+    
+    public String getRiderName() {
+        String name="";
+        for (int i =0; i < riderNames.length; i++){
+        name+=riderNames[i];
+        }//end for
+                
+        return name;
+    }    
 
     public String[] getRiderEmails() {
         return riderEmails;
@@ -293,7 +306,11 @@ public class XBTProfile {
         return riderPhones;
     }
 
-    public void callSign(String wmoId) {
+    public void setCallsign(String wmoId) {
+        this.wmoId = wmoId;
+    }    
+    
+    public void setWMOId(String wmoId) {
         this.wmoId = wmoId;
     }
 

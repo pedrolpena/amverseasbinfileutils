@@ -6,8 +6,8 @@ import static binfileutils.XBTProbe.getProbeDescription;
 import static binfileutils.XBTRecorder.getRecorderDescription;
 
 /**
- * This class contains routines to convert a SEAS XBT temperature profile into
- * various formats
+ * This class contains routines to convert a SEAS XBT temperature xBTprofile into
+ various formats
  *
  * @author Pedro Pena
  * @version 1.0
@@ -15,79 +15,77 @@ import static binfileutils.XBTRecorder.getRecorderDescription;
  */
 public class FormatConverter {
 
-    BinDecoder profile;
+    XBTProfile xBTprofile;
     String prettyLat;
     String prettyLon;
 
     /**
-     * The constructor accepts an argument of type BinDecoder
+     * The constructor accepts an argument of type XBTProfile
      *
+     * @param xBTprofile
      */
-    public FormatConverter(BinDecoder profile) {
-        this.profile = profile;
+    public FormatConverter(XBTProfile xBTprofile) {
+        this.xBTprofile = xBTprofile;
 
     }//end constructor
 
     /**
-     * This method returns a String containg the profile information using the
-     * SEAS ASCII format.
+     * This method returns a String containing the xBTprofile information using the
+ SEAS ASCII format.
      *
-     * @return This method returns a String containg the profile information
-     * using the SEAS ASCII format.
+     * @return This method returns a String containing the xBTprofile information
+ using the SEAS ASCII format.
      */
     public String getASCII() {
         String tmp = "";
-        double[] temps;               //array of doubles that holds temperature measurements
-        int numberOfMeasurements;
-        double[] depths;             //array of doubles that holds the depths
-        temps = profile.getTemperaturePoints();
-        numberOfMeasurements = temps.length;
-        DepthCalculator dc = new DepthCalculator(profile.getRecorderType(), profile.getInstrumentType(), numberOfMeasurements);
-        depths = dc.getMeasurementDepths();
-        tmp += "Call Sign                      | " + profile.getCallsign() + "\n";
-        tmp += "Latitude                       | " + decimalDegreesLatToDMS(profile.getLatitude()) + "\n";
-        tmp += "Longitude                      | " + decimalDegreesLonToDMS(profile.getLongitude()) + "\n";
-        tmp += "Transect Name                  | " + profile.getSoopLine() + "\n";
-        tmp += "Transect Number                | " + profile.getTransectNumber() + "\n";
-        tmp += "Sequence Number                | " + profile.getSequenceNumber() + "\n";
-        tmp += "Year                           | " + String.format("%02d", profile.getYear()) + "\n";
-        tmp += "Month                          | " + String.format("%02d", profile.getMonth()) + "\n";
-        tmp += "Day                            | " + String.format("%02d", profile.getDay()) + "\n";
-        tmp += "Hour                           | " + String.format("%02d", profile.getHour()) + "\n";
-        tmp += "Minute                         | " + String.format("%02d", profile.getMinute()) + "\n";
-        tmp += "Ship Name                      | " + profile.getShipName() + "\n";
-        tmp += "IMO Number                     | " + profile.getLloyds() + "\n";
-        tmp += "SEAS ID                        | " + Integer.toHexString(profile.getUniqueTag()).toUpperCase() + "\n";
-        tmp += "SEAS Version                   | " + profile.getSeasVersion() + "\n";
-        tmp += "Probe Serial Number            | " + profile.getProbeSerialNumber() + "\n";
+        double[][] depthsAndTemps;               //array of doubles that holds depths & temperature measurements
+        DepthCalculator dc = new DepthCalculator(xBTprofile);
+        depthsAndTemps=dc.getDepthsAndTemperaturePoints();
+       
+        tmp += "Call Sign                      | " + xBTprofile.getCallsign() + "\n";
+        tmp += "Latitude                       | " + decimalDegreesLatToDMS(xBTprofile.getLatitude()) + "\n";
+        tmp += "Longitude                      | " + decimalDegreesLonToDMS(xBTprofile.getLongitude()) + "\n";
+        tmp += "Transect Name                  | " + xBTprofile.getSoopLine() + "\n";
+        tmp += "Transect Number                | " + xBTprofile.getTransectNumber() + "\n";
+        tmp += "Sequence Number                | " + xBTprofile.getSequenceNumber() + "\n";
+        tmp += "Year                           | " + String.format("%02d", xBTprofile.getYear()) + "\n";
+        tmp += "Month                          | " + String.format("%02d", xBTprofile.getMonth()) + "\n";
+        tmp += "Day                            | " + String.format("%02d", xBTprofile.getDay()) + "\n";
+        tmp += "Hour                           | " + String.format("%02d", xBTprofile.getHour()) + "\n";
+        tmp += "Minute                         | " + String.format("%02d", xBTprofile.getMinute()) + "\n";
+        tmp += "Ship Name                      | " + xBTprofile.getShipName() + "\n";
+        tmp += "IMO Number                     | " + xBTprofile.getLloyds() + "\n";
+        tmp += "SEAS ID                        | " + Integer.toHexString(xBTprofile.getUniqueTag()).toUpperCase() + "\n";
+        tmp += "SEAS Version                   | " + xBTprofile.getSeasVersion() + "\n";
+        tmp += "Probe Serial Number            | " + xBTprofile.getProbeSerialNumber() + "\n";
         tmp += "Probe Manufacture Date         | " + String.format("%02d/%02d/%04d\n",
-                profile.getXBTProbeManufacturedMonth(),
-                profile.getXBTProbeManufacturedDay(),
-                profile.getXBTProbeManufacturedYear());
-        tmp += "Data Type                      | " + profile.getThisDataIs() + " ("+ getDataResolutionDescription(profile.getThisDataIs())+")\n";
-        tmp += "Data Quality                   | " + profile.getDataQuality() + " ("+ getDataQualityDescription(profile.getDataQuality())+")\n";
-        tmp += "Deployment Height (meters)     | " + String.format("%4.2f", profile.getLaunchHeight()) + "\n";
-        tmp += "Ship Direction                 | " + String.format("%03d", (int) profile.getShipDirection()) + "\n";
-        tmp += "Ship Speed (knots)             | " + String.format("%05.2f", profile.getShipSpeed() * 1.94384) + "\n";
-        tmp += "Instrument Type                | " + getProbeDescription(profile.getInstrumentType())
-                + " (Code " + profile.getInstrumentType() + ")\n";
-        tmp += "Recorder Type                  | " + getRecorderDescription(profile.getRecorderType())
-                + " (Code " + profile.getRecorderType() + ")\n";
-        tmp += "Wind Instrument Type           | " + profile.getWindInstrumentType() + "\n";
-        tmp += "Wind Direction                 | " + profile.getWindDiretion() + "\n";
-        tmp += "Wind Speed (knots)             | " + profile.getWindSpeed() + "\n";
-        tmp += "Dry Bulb Temperature (celsius) | " + profile.getDryBulbTemperature() + "\n";
-        tmp += "Current Measurement Method     | " + profile.getSeaSurfaceCurrentMeasurementMethod() + "\n";
-        tmp += "Current Direction              | " + profile.getSeaSurfaceCurrentDirection() + "\n";
-        tmp += "Current Speed (knots)          | " + profile.getSeaSurfaceCurrentSpeed() + "\n";
-        tmp += "Total Water Depth (meters)     | " + profile.getTotalWaterDepth() + "\n";
+                xBTprofile.getXBTProbeManufacturedMonth(),
+                xBTprofile.getXBTProbeManufacturedDay(),
+                xBTprofile.getXBTProbeManufacturedYear());
+        tmp += "Data Type                      | " + xBTprofile.getThisDataIs() + " ("+ getDataResolutionDescription(xBTprofile.getThisDataIs())+")\n";
+        tmp += "Data Quality                   | " + xBTprofile.getDataQuality() + " ("+ getDataQualityDescription(xBTprofile.getDataQuality())+")\n";
+        tmp += "Deployment Height (meters)     | " + String.format("%4.2f", xBTprofile.getLaunchHeight()) + "\n";
+        tmp += "Ship Direction                 | " + String.format("%03d", (int) xBTprofile.getShipDirection()) + "\n";
+        tmp += "Ship Speed (knots)             | " + String.format("%05.2f", xBTprofile.getShipSpeed() * 1.94384) + "\n";
+        tmp += "Instrument Type                | " + getProbeDescription(xBTprofile.getInstrumentType())
+                + " (Code " + xBTprofile.getInstrumentType() + ")\n";
+        tmp += "Recorder Type                  | " + getRecorderDescription(xBTprofile.getRecorderType())
+                + " (Code " + xBTprofile.getRecorderType() + ")\n";
+        tmp += "Wind Instrument Type           | " + xBTprofile.getWindInstrumentType() + "\n";
+        tmp += "Wind Direction                 | " + xBTprofile.getWindDirection() + "\n";
+        tmp += "Wind Speed (knots)             | " + xBTprofile.getWindSpeed() + "\n";
+        tmp += "Dry Bulb Temperature (celsius) | " + xBTprofile.getDryBulbTemperature() + "\n";
+        tmp += "Current Measurement Method     | " + xBTprofile.getSeaSurfaceCurrentMeasurementMethod() + "\n";
+        tmp += "Current Direction              | " + xBTprofile.getSeaSurfaceCurrentDirection() + "\n";
+        tmp += "Current Speed (knots)          | " + xBTprofile.getSeaSurfaceCurrentSpeed() + "\n";
+        tmp += "Total Water Depth (meters)     | " + xBTprofile.getTotalWaterDepth() + "\n";
         tmp += "===================================================================\n";
         tmp += "Full Resolution Values\n";
         tmp += "   Depth       Temperature        \n";
 
-        for (int i = 0; i < depths.length; i++) {
-            tmp += String.format(" %7.2f       %5.2f\n", depths[i], temps[i]);
-        }//end for        
+        for (double[] depthsAndTemp : depthsAndTemps) {
+            tmp += String.format(" %7.2f       %5.2f\n", depthsAndTemp[0], depthsAndTemp[1]);
+        } //end for        
 
         return tmp;
     }//end mehtod
