@@ -297,14 +297,40 @@ public class XBTProfile {
     public String[] getRiderEmails() {
         return riderEmails;
     }
+    public String getRiderEmail() {
+        String name="";
+        for (int i =0; i < riderEmails.length; i++){
+        name+=riderEmails[i];
+        }//end for
+                
+        return name;
+    }    
 
     public String[] getRiderInstitutions() {
         return riderInstitutions;
     }
+    
+    public String getRiderInstitution() {
+        String name="";
+        for (int i =0; i < riderInstitutions.length; i++){
+        name+=riderInstitutions[i];
+        }//end for
+                
+        return name;
+    }    
 
     public String[] getRiderPhones() {
         return riderPhones;
     }
+    
+  public String getRiderPhone() {
+        String name="";
+        for (int i =0; i < riderPhones.length; i++){
+        name+=riderPhones[i]+"::";
+        }//end for
+                
+        return name;
+    }    
 
     public void setCallsign(String wmoId) {
         this.wmoId = wmoId;

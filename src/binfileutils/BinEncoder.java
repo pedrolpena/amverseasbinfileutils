@@ -34,9 +34,9 @@ public class BinEncoder {
         
         newMessageType = xp.getNewMessageType();
         start = XBTProfileDataRanges.getWMOID(newMessageType)[0];
-        stringToBits(xp.getWMOId().getBytes(), start);
+        //stringToBits(xp.getWMOId().getBytes(), start);
         
-
+        stringToBits(xp.getWMOId().getBytes(), xformat.startWmoId());
         integerToBits(xp.getOldMessageType(),XBTProfileDataRanges.getOldMessageType(newMessageType));
         integerToBits(xp.getNewMessageType(), XBTProfileDataRanges.getNewMessageType(newMessageType));
         
@@ -56,7 +56,7 @@ public class BinEncoder {
         integerToBits(xp.getMinute(),XBTProfileDataRanges.getMinute(newMessageType));
         stringToBits(xp.getShipName().getBytes(), xformat.startShipName(newMessageType));
         integerToBits(xp.getLloyds(), XBTProfileDataRanges.getLloyds(newMessageType));
-        integerToBits(xp.getUniqueTag(),XBTProfileDataRanges.getUniqueTag(newMessageType));
+        //integerToBits(xp.getUniqueTag(),XBTProfileDataRanges.getUniqueTag(newMessageType));
         integerToBits(xp.getSeasVersion(), XBTProfileDataRanges.getSeasVersion(newMessageType));
         integerToBits(xp.getProbeSerialNumber(), XBTProfileDataRanges.getProbeSerialNumber(newMessageType));
         integerToBits(xp.getThisDataIs(), XBTProfileDataRanges.getThisDataIs(newMessageType));

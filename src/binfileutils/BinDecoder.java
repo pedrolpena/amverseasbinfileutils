@@ -956,11 +956,11 @@ XBTProfile xBTProfile;
     private  String toString(int start, int end) {
         try {
             if (start < 0 || end < 0 || end - start <= 0) {
-                return "NONE";
+                return null;
             }
 
             String str = "";
-            BitSet b = bits.get(start, end);
+            BitSet b = bits.get(start, end+1);
             byte[] bytes;
             bytes = changeEndian(b).toByteArray();
 
@@ -969,7 +969,7 @@ XBTProfile xBTProfile;
             }
             return str;
         } catch (Exception e) {
-            return "NONE";
+            return null;
         }//end catch
     }//end method
 
@@ -1040,7 +1040,7 @@ XBTProfile xBTProfile;
         xBTProfile.setMinute(getMinute());
         xBTProfile.setMonth(getMonth());
         xBTProfile.setNewMessageType(getNewMessageType());
-        //xBTProfile.setNumberOfRepeatedFields(getNumberOfRepeatedFields());
+        xBTProfile.setNumberOfRepeatedFields(getNumberOfRepeatedFields());
         //xBTProfile.setNumberOfRiderBlocks(getNumberOfRiderBlocks());
         //xBTProfile.setNumberOfRiderEmailBlocks(getNumberOfRiderEmailBlocks());
         //xBTProfile.setNumberOfRiderInstitutionBlocks(getNumberOfRiderInstitutionBlocks());
