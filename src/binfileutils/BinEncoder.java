@@ -19,7 +19,7 @@ import java.util.zip.CRC32;
  */
 public class BinEncoder {
 
-    private XBTBinFormat xformat = new XBTBinFormat();
+  
     private BitSet bits;
     private int newMessageType = 0;
     private int numberOfRiderBlocks = 0;
@@ -41,10 +41,10 @@ public class BinEncoder {
         int[] range={-1,-1};
 
         newMessageType = xp.getNewMessageType();
-        start = XBTProfileDataRanges.getWMOID(newMessageType)[0];
+        //start = XBTProfileDataRanges.getWMOID(newMessageType)[0];
         //stringToBits(xp.getWMOId().getBytes(), start);
 
-        stringToBits(xp.getWMOId().getBytes(), xformat.startWmoId());
+        stringToBits(xp.getWMOId().getBytes(), XBTProfileDataRanges.getWMOID(newMessageType));
         integerToBits(xp.getOldMessageType(), XBTProfileDataRanges.getOldMessageType(newMessageType));
         integerToBits(xp.getNewMessageType(), XBTProfileDataRanges.getNewMessageType(newMessageType));
 
@@ -53,7 +53,7 @@ public class BinEncoder {
         double longitude = xp.getLongitude() * 100000.0 + 18000000;
         integerToBits(Double.valueOf(longitude).intValue(), XBTProfileDataRanges.getLongitude(newMessageType));
 
-        stringToBits(xp.getSoopLine().getBytes(), xformat.startSoopLine(newMessageType));
+        stringToBits(xp.getSoopLine().getBytes(), XBTProfileDataRanges.getSoopLine(newMessageType));
         integerToBits(xp.getTransectNumber(), XBTProfileDataRanges.getTransectNumber(newMessageType));
         integerToBits(xp.getSequenceNumber(), XBTProfileDataRanges.getSequenceNumber(newMessageType));
         integerToBits(xp.getYear(), XBTProfileDataRanges.getYear(newMessageType));
@@ -61,7 +61,7 @@ public class BinEncoder {
         integerToBits(xp.getDay(), XBTProfileDataRanges.getDay(newMessageType));
         integerToBits(xp.getHour(), XBTProfileDataRanges.getHour(newMessageType));
         integerToBits(xp.getMinute(), XBTProfileDataRanges.getMinute(newMessageType));
-        stringToBits(xp.getShipName().getBytes(), xformat.startShipName(newMessageType));
+        stringToBits(xp.getShipName().getBytes(), XBTProfileDataRanges.getShipName(newMessageType));
         integerToBits(xp.getLloyds(), XBTProfileDataRanges.getLloyds(newMessageType));
         //integerToBits(xp.getUniqueTag(),XBTProfileDataRanges.getUniqueTag(newMessageType));
         integerToBits(xp.getSeasVersion(), XBTProfileDataRanges.getSeasVersion(newMessageType));
@@ -97,7 +97,7 @@ public class BinEncoder {
         integerToBits(xp.getTotalWaterDepth(), XBTProfileDataRanges.getTotalWaterDepth(newMessageType));
         integerToBits(xp.getAgencyOwner(), XBTProfileDataRanges.getAgencyOwner(newMessageType));
         integerToBits(xp.getXBTLauncherType(), XBTProfileDataRanges.getXBTLauncherType(newMessageType));
-        stringToBits(xp.getXBTRecorderSerialNumber().getBytes(), xformat.startXBTRecorderSerialNumber(newMessageType));
+        stringToBits(xp.getXBTRecorderSerialNumber().getBytes(), XBTProfileDataRanges.getXBTRecorderSerialNumber(newMessageType));
         integerToBits(xp.getXBTRecorderManufacturedYear(), XBTProfileDataRanges.getXBTRecorderManufacturedYear(newMessageType));
         integerToBits(xp.getXBTRecorderManufacturedMonth(), XBTProfileDataRanges.getXBTRecorderManufacturedMonth(newMessageType));
         integerToBits(xp.getXBTRecorderManufacturedDay(), XBTProfileDataRanges.getXBTRecorderManufacturedDay(newMessageType));
