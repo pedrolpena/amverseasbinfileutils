@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package binfileutils;
+
 import binfileutils.XBTProfileDataRanges;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,6 +22,11 @@ public class BinEncoder {
     private XBTBinFormat xformat = new XBTBinFormat();
     private BitSet bits;
     private int newMessageType = 0;
+    private int numberOfRiderBlocks = 0;
+    private int numberOfRiderEmailBlocks = 0;
+    private int numberOfRiderInstitutionBlocks = 0;
+    private int numberOfRiderPhoneBlocks = 0;
+    private int timesReplicated = 0;
     XBTProfile xp;
 
     public BinEncoder() {
@@ -29,17 +35,18 @@ public class BinEncoder {
     public BinEncoder(XBTProfile xp) {
         this.xp = xp;
         bits = new BitSet();
-        int start=-1,
-                end=-1;
-        
+        int start = -1;
+        int start0=-1;
+        byte[] varStrings;
+        int[] range={-1,-1};
+
         newMessageType = xp.getNewMessageType();
         start = XBTProfileDataRanges.getWMOID(newMessageType)[0];
         //stringToBits(xp.getWMOId().getBytes(), start);
-        
+
         stringToBits(xp.getWMOId().getBytes(), xformat.startWmoId());
-        integerToBits(xp.getOldMessageType(),XBTProfileDataRanges.getOldMessageType(newMessageType));
+        integerToBits(xp.getOldMessageType(), XBTProfileDataRanges.getOldMessageType(newMessageType));
         integerToBits(xp.getNewMessageType(), XBTProfileDataRanges.getNewMessageType(newMessageType));
-        
 
         double latitude = xp.getLatitude() * 100000.0 + 9000000;
         integerToBits(Double.valueOf(latitude).intValue(), XBTProfileDataRanges.getLattitude(newMessageType));
@@ -47,13 +54,13 @@ public class BinEncoder {
         integerToBits(Double.valueOf(longitude).intValue(), XBTProfileDataRanges.getLongitude(newMessageType));
 
         stringToBits(xp.getSoopLine().getBytes(), xformat.startSoopLine(newMessageType));
-        integerToBits(xp.getTransectNumber(),XBTProfileDataRanges.getTransectNumber(newMessageType));
+        integerToBits(xp.getTransectNumber(), XBTProfileDataRanges.getTransectNumber(newMessageType));
         integerToBits(xp.getSequenceNumber(), XBTProfileDataRanges.getSequenceNumber(newMessageType));
-        integerToBits(xp.getYear(),XBTProfileDataRanges.getYear(newMessageType));
+        integerToBits(xp.getYear(), XBTProfileDataRanges.getYear(newMessageType));
         integerToBits(xp.getMonth(), XBTProfileDataRanges.getMonth(newMessageType));
         integerToBits(xp.getDay(), XBTProfileDataRanges.getDay(newMessageType));
         integerToBits(xp.getHour(), XBTProfileDataRanges.getHour(newMessageType));
-        integerToBits(xp.getMinute(),XBTProfileDataRanges.getMinute(newMessageType));
+        integerToBits(xp.getMinute(), XBTProfileDataRanges.getMinute(newMessageType));
         stringToBits(xp.getShipName().getBytes(), xformat.startShipName(newMessageType));
         integerToBits(xp.getLloyds(), XBTProfileDataRanges.getLloyds(newMessageType));
         //integerToBits(xp.getUniqueTag(),XBTProfileDataRanges.getUniqueTag(newMessageType));
@@ -66,9 +73,9 @@ public class BinEncoder {
 
         integerToBits(Double.valueOf(launchHeight).intValue(), XBTProfileDataRanges.getLaunchHeight(newMessageType));
         double shipDirection = xp.getShipDirection();
-        integerToBits(Double.valueOf(shipDirection).intValue(),XBTProfileDataRanges.getShipDirection(newMessageType));
+        integerToBits(Double.valueOf(shipDirection).intValue(), XBTProfileDataRanges.getShipDirection(newMessageType));
         double shipSpeed = xp.getShipSpeed() * 100.0;
-        integerToBits(Double.valueOf(shipSpeed).intValue(),XBTProfileDataRanges.getShipSpeed(newMessageType));
+        integerToBits(Double.valueOf(shipSpeed).intValue(), XBTProfileDataRanges.getShipSpeed(newMessageType));
 
         integerToBits(xp.getInstrumentType(), XBTProfileDataRanges.getInstrumentType(newMessageType));
         integerToBits(xp.getRecorderType(), XBTProfileDataRanges.getRecorderType(newMessageType));
@@ -77,7 +84,7 @@ public class BinEncoder {
         double windDirection = xp.getWindDirection();
         integerToBits(Double.valueOf(windDirection).intValue(), XBTProfileDataRanges.getWindDirection(newMessageType));
         double windSpeed = xp.getWindSpeed() * 10.0;
-        integerToBits(Double.valueOf(windSpeed).intValue(),XBTProfileDataRanges.getWindSpeed(newMessageType));
+        integerToBits(Double.valueOf(windSpeed).intValue(), XBTProfileDataRanges.getWindSpeed(newMessageType));
         double dryBulbTemperature = xp.getDryBulbTemperature() * 10.0;
         integerToBits(Double.valueOf(dryBulbTemperature).intValue(), XBTProfileDataRanges.getDryBulbTemperature(newMessageType));
 
@@ -87,65 +94,138 @@ public class BinEncoder {
         double seaSurfaceCurrentSpeed = xp.getSeaSurfaceCurrentSpeed() * 100.00;
         integerToBits(Double.valueOf(seaSurfaceCurrentSpeed).intValue(), XBTProfileDataRanges.getSeaSurfaceCurrentSpeed(newMessageType));
 
-        integerToBits(xp.getTotalWaterDepth(),XBTProfileDataRanges.getTotalWaterDepth(newMessageType));
+        integerToBits(xp.getTotalWaterDepth(), XBTProfileDataRanges.getTotalWaterDepth(newMessageType));
         integerToBits(xp.getAgencyOwner(), XBTProfileDataRanges.getAgencyOwner(newMessageType));
         integerToBits(xp.getXBTLauncherType(), XBTProfileDataRanges.getXBTLauncherType(newMessageType));
         stringToBits(xp.getXBTRecorderSerialNumber().getBytes(), xformat.startXBTRecorderSerialNumber(newMessageType));
-        integerToBits(xp.getXBTRecorderManufacturedYear(),XBTProfileDataRanges.getXBTRecorderManufacturedYear(newMessageType));
-        integerToBits(xp.getXBTRecorderManufacturedMonth(),XBTProfileDataRanges.getXBTRecorderManufacturedMonth(newMessageType));
+        integerToBits(xp.getXBTRecorderManufacturedYear(), XBTProfileDataRanges.getXBTRecorderManufacturedYear(newMessageType));
+        integerToBits(xp.getXBTRecorderManufacturedMonth(), XBTProfileDataRanges.getXBTRecorderManufacturedMonth(newMessageType));
         integerToBits(xp.getXBTRecorderManufacturedDay(), XBTProfileDataRanges.getXBTRecorderManufacturedDay(newMessageType));
-        integerToBits(xp.getXBTProbeManufacturedYear(),XBTProfileDataRanges.getXBTProbeManufacturedYear(newMessageType));
-        integerToBits(xp.getXBTProbeManufacturedMonth(),XBTProfileDataRanges.getXBTProbeManufacturedMonth(newMessageType));
-        integerToBits(xp.getXBTProbeManufacturedDay(),XBTProfileDataRanges.getXBTProbeManufacturedDay(newMessageType));
-        integerToBits(xp.getNumberOfRiderBlocks(),XBTProfileDataRanges.getNumberOfRiderBlocks(newMessageType));
-        integerToBits(xp.getNumberOfRiderInstitutionBlocks(),XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
-        integerToBits(xp.getNumberOfRiderEmailBlocks(), XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
-        integerToBits(xp.getNumberOfRiderPhoneBlocks(),XBTProfileDataRanges.getNumberOfRiderBlocks(newMessageType));
-        integerToBits(xp.getNumberOfRepeatedFields(),XBTProfileDataRanges.getNumberOfRepeatedFields(newMessageType));
-        integerToBits(xp.getTimesReplicated(), XBTProfileDataRanges.getTimesReplicated(newMessageType));
+        integerToBits(xp.getXBTProbeManufacturedYear(), XBTProfileDataRanges.getXBTProbeManufacturedYear(newMessageType));
+        integerToBits(xp.getXBTProbeManufacturedMonth(), XBTProfileDataRanges.getXBTProbeManufacturedMonth(newMessageType));
+        integerToBits(xp.getXBTProbeManufacturedDay(), XBTProfileDataRanges.getXBTProbeManufacturedDay(newMessageType));
 
+        integerToBits(xp.getNumberOfRiderInstitutionBlocks(), XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
+        integerToBits(xp.getNumberOfRiderEmailBlocks(), XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
+        integerToBits(xp.getNumberOfRiderPhoneBlocks(), XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
+        integerToBits(xp.getNumberOfRepeatedFields(), XBTProfileDataRanges.getNumberOfRepeatedFields(newMessageType));
+        
+        
+        timesReplicated = xp.getTemperaturePoints().length;
+        xp.setTimesReplicated(timesReplicated) ;
+        integerToBits(timesReplicated, XBTProfileDataRanges.getTimesReplicated(newMessageType));
+
+        //****************************************************************
+        start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + 12 * timesReplicated;
+        
+        if (xp.getRiderName() != null) {
+        
+        numberOfRiderBlocks = (int) Math.ceil(((double) xp.getRiderName().length()) / 5);
+        
+        integerToBits(numberOfRiderBlocks, XBTProfileDataRanges.getNumberOfRiderBlocks(newMessageType));
+
+        varStrings = xp.getRiderName().getBytes();
+        range[0] = start0;
+        stringToBits(varStrings, range);
+        
+        }
+        else{
+          numberOfRiderBlocks =0;  
+            
+        }
+       
+        xp.setNumberOfRiderBlocks(numberOfRiderBlocks);
+                
+//***************************************************************
+        //***************************************************************
+        
+        if (xp.getRiderEmail() != null) {
+        numberOfRiderEmailBlocks = (int) Math.ceil(((double) xp.getRiderEmail().length()) / 5);
+       
+        integerToBits(numberOfRiderEmailBlocks, XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
+        start0 = start0 + numberOfRiderBlocks * 40;
+        varStrings = xp.getRiderEmail().getBytes();
+        range[0] = start0;
+        stringToBits(varStrings, range);
+        }
+        else{
+        numberOfRiderEmailBlocks =0 ;
+        start0 = start0 + numberOfRiderBlocks * 40;
+        }
+         xp.setNumberOfRiderEmailBlocks(numberOfRiderEmailBlocks);
+
+        //***************************************************************
+        //***************************************************************
+        if (xp.getRiderInstitution() != null) {
+        numberOfRiderInstitutionBlocks = (int) Math.ceil(((double) xp.getRiderInstitution().length()) / 5);
+       
+        integerToBits(numberOfRiderInstitutionBlocks, XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
+        start0 = start0 + numberOfRiderEmailBlocks * 40;
+        varStrings = xp.getRiderInstitution().getBytes();
+        range[0] = start0;
+        stringToBits(varStrings, range);
+        }
+        else{
+        numberOfRiderInstitutionBlocks =0;
+        start0 = start0 + numberOfRiderEmailBlocks * 40;
+        }
+         xp.setNumberOfRiderInstitutionBlocks(numberOfRiderInstitutionBlocks);
+
+        //***************************************************************
+        //***************************************************************
+        if (xp.getRiderPhone() != null) {
+            numberOfRiderPhoneBlocks = (int) Math.ceil(((double) xp.getRiderPhone().length()) / 5);
+
+            integerToBits(numberOfRiderPhoneBlocks, XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
+            start0 = start0 + numberOfRiderInstitutionBlocks * 40;
+            range[0] = start0;
+
+            varStrings = xp.getRiderPhone().getBytes();
+            stringToBits(varStrings, range);
+        } else {
+            numberOfRiderPhoneBlocks = 0;
+            start0 = start0 + numberOfRiderInstitutionBlocks * 40;
+        }
+        xp.setNumberOfRiderPhoneBlocks(numberOfRiderPhoneBlocks);
+
+        //***************************************************************
         double seaSurfaceTemperature = Math.round(xp.getSeaSurfaceTemperature()
                 * 100.00 + 400.00);
-        integerToBits(Double.valueOf(seaSurfaceTemperature).intValue(),XBTProfileDataRanges.getSeaTemperature(newMessageType));
+        integerToBits(Double.valueOf(seaSurfaceTemperature).intValue(), XBTProfileDataRanges.getSeaTemperature(newMessageType));
 
         if (newMessageType == 1) {
             double seaDepth = xp.getSeaDepth();
-            integerToBits(Double.valueOf(seaDepth).intValue(),XBTProfileDataRanges.getSeaDepth(newMessageType));
+            integerToBits(Double.valueOf(seaDepth).intValue(), XBTProfileDataRanges.getSeaDepth(newMessageType));
         }
-         
-        int [] temperaturePointsRange={-1,-1};
-        start=XBTProfileDataRanges.getTemperaturePoints(newMessageType)[0];
-        
+
+        int[] temperaturePointsRange = {-1, -1};
+        start = XBTProfileDataRanges.getTemperaturePoints(newMessageType)[0];
+
         for (int i = 0; i < xp.getTemperaturePoints().length; i++) {
             // we had to round here because the doubles were being
             // truncated to the wrong value
-            
+
             double tp = Math.round(xp.getTemperaturePoints()[i] * 100.00) + 400.00;
-            temperaturePointsRange[0]=start+i*12;
-            temperaturePointsRange[1]=start+i*12+11;
+            temperaturePointsRange[0] = start + i * 12;
+            temperaturePointsRange[1] = start + i * 12 + 11;
             integerToBits(Double.valueOf(tp).intValue(), temperaturePointsRange);
-            
 
         }
 
-        for (int i = 0; i < xp.getRiderNames().length; i++) {
-            stringToBits(xp.getRiderNames()[i].getBytes(), xformat.endRiderName(newMessageType, xp.getTimesReplicated(), i));
-        }
-
-        for (int i = 0; i < xp.getRiderEmails().length; i++) {
-            stringToBits(xp.getRiderEmails()[i].getBytes(), xformat.endRiderEmail(newMessageType, xp.getTimesReplicated(), xp.getNumberOfRiderBlocks(), i));
-        }
-
-        for (int i = 0; i < xp.getRiderInstitutions().length; i++) {
-            stringToBits(xp.getRiderInstitutions()[i].getBytes(),
-                    xformat.endInstituion(newMessageType, xp.getTimesReplicated(), xp.getNumberOfRiderBlocks(), xp.getNumberOfRiderEmailBlocks(), i));
-        }
-
-        for (int i = 0; i < xp.getRiderPhones().length; i++) {
-            stringToBits(xp.getRiderPhones()[i].getBytes(),
-                    xformat.endRiderPhone(newMessageType, xp.getTimesReplicated(), xp.getNumberOfRiderBlocks(), xp.getNumberOfRiderEmailBlocks(), xp.getNumberOfRiderPhoneBlocks(), i));
-        }
-
+//        for (int i = 0; i < xp.getRiderNames().length; i++) {
+//            stringToBits(xp.getRiderNames()[i].getBytes(), xformat.endRiderName(newMessageType, xp.getTimesReplicated(), i));
+//        }
+//        for (int i = 0; i < xp.getRiderEmails().length; i++) {
+//            stringToBits(xp.getRiderEmails()[i].getBytes(), xformat.endRiderEmail(newMessageType, xp.getTimesReplicated(), xp.getNumberOfRiderBlocks(), i));
+//        }
+//        for (int i = 0; i < xp.getRiderInstitutions().length; i++) {
+//            stringToBits(xp.getRiderInstitutions()[i].getBytes(),
+//                    xformat.endInstituion(newMessageType, xp.getTimesReplicated(), xp.getNumberOfRiderBlocks(), xp.getNumberOfRiderEmailBlocks(), i));
+//        }
+//        for (int i = 0; i < xp.getRiderPhones().length; i++) {
+//            stringToBits(xp.getRiderPhones()[i].getBytes(),
+//                    xformat.endRiderPhone(newMessageType, xp.getTimesReplicated(), xp.getNumberOfRiderBlocks(), xp.getNumberOfRiderEmailBlocks(), xp.getNumberOfRiderPhoneBlocks(), i));
+//        }
     }
 
     public void writeOutBinFile(String outputFile) {
@@ -188,7 +268,7 @@ public class BinEncoder {
     }
 
     private void integerToBits(int binMetaData, int[] range) {
-        int endPos=-1;
+        int endPos = -1;
         int startPos = -1;
         startPos = range[0];
         endPos = range[1];
@@ -207,10 +287,15 @@ public class BinEncoder {
         }
         setBitWithinBits(tempBS, startPos);
     }
-    
-        
 
     private void stringToBits(byte[] metaData, int startPos) {
+        BitSet bs = BitSet.valueOf(metaData);
+        bs = changeEndian(bs);
+        setBitWithinBits(bs, startPos);
+    }
+
+    private void stringToBits(byte[] metaData, int[] range) {
+        int startPos = range[0];
         BitSet bs = BitSet.valueOf(metaData);
         bs = changeEndian(bs);
         setBitWithinBits(bs, startPos);

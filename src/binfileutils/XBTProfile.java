@@ -65,10 +65,10 @@ public class XBTProfile {
     private double seaSurfaceTemperature = 0;
     private double seaDepth = 0;
     private double[] temperaturePoints;
-    private String[] riderNames = {};
-    private String[] riderEmails = {};
-    private String[] riderInstitutions = {};
-    private String[] riderPhones = {};
+    private String riderName = "";
+    private String riderEmail = "";
+    private String riderInstitution = "";
+    private String riderPhone = "";
 
     public XBTProfile() {
     }
@@ -281,55 +281,34 @@ public class XBTProfile {
         return temperaturePoints;
     }
 
-    public String[] getRiderNames() {
-        return riderNames;
-    }
+
     
     public String getRiderName() {
-        String name="";
-        for (int i =0; i < riderNames.length; i++){
-        name+=riderNames[i];
-        }//end for
+
                 
-        return name;
+        return riderName;
     }    
 
-    public String[] getRiderEmails() {
-        return riderEmails;
-    }
+
     public String getRiderEmail() {
-        String name="";
-        for (int i =0; i < riderEmails.length; i++){
-        name+=riderEmails[i];
-        }//end for
+
                 
-        return name;
+        return riderEmail;
     }    
 
-    public String[] getRiderInstitutions() {
-        return riderInstitutions;
-    }
+
     
     public String getRiderInstitution() {
-        String name="";
-        for (int i =0; i < riderInstitutions.length; i++){
-        name+=riderInstitutions[i];
-        }//end for
+
                 
-        return name;
+        return riderInstitution;
     }    
 
-    public String[] getRiderPhones() {
-        return riderPhones;
-    }
+
     
   public String getRiderPhone() {
-        String name="";
-        for (int i =0; i < riderPhones.length; i++){
-        name+=riderPhones[i]+"::";
-        }//end for
                 
-        return name;
+        return riderPhone;
     }    
 
     public void setCallsign(String wmoId) {
@@ -549,47 +528,33 @@ public class XBTProfile {
 
     public void setTemperaturePoints(double[] temperaturePoints) {
         this.temperaturePoints = temperaturePoints;
-        this.setTimesReplicated(temperaturePoints.length);
+       
     }
 
-    public void setRiderNames(String[] riderNames) {
-        this.riderNames = riderNames;
-        setNumberOfRiderBlocks(this.riderNames.length);
+
+    public void setRiderName(String riderName) {
+        this.riderName = riderName;
+      
     }
 
-    public void setRiderNames(String riderName) {
-        riderNames = splitRiderBlockStrings(riderName);
-        setNumberOfRiderBlocks(this.riderNames.length);
+
+
+    public void setRiderEmail(String riderEmail) {
+        this.riderEmail = riderEmail;
+
     }
 
-    public void setRiderEmails(String[] riderEmails) {
-        this.riderEmails = riderEmails;
-        setNumberOfRiderEmailBlocks(this.riderEmails.length);
+
+
+    public void setRiderInstitution(String riderInstitution) {
+        this.riderInstitution = riderInstitution;
     }
 
-    public void setRiderEmails(String riderEmail) {
-        riderEmails = splitRiderBlockStrings(riderEmail);
-        setNumberOfRiderEmailBlocks(this.riderEmails.length);
-    }
 
-    public void setRiderInstitutions(String[] riderInstitutions) {
-        this.riderInstitutions = riderInstitutions;
-        setNumberOfRiderInstitutionBlocks(this.riderInstitutions.length);
-    }
-
-    public void setRiderInstitutions(String riderInstitution) {
-        riderInstitutions = splitRiderBlockStrings(riderInstitution);
-        setNumberOfRiderInstitutionBlocks(this.riderInstitutions.length);
-    }
-
-    public void setRiderPhones(String[] riderPhones) {
-        this.riderPhones = riderPhones;
-        setNumberOfRiderPhoneBlocks(this.riderPhones.length);
-    }
 
     public void setRiderPhones(String riderPhone) {
-        riderPhones = splitRiderBlockStrings(riderPhone);
-        setNumberOfRiderPhoneBlocks(this.riderPhones.length);
+        this.riderPhone =riderPhone ;
+
     }
 
     private String[] splitRiderBlockStrings(String riderDataString) {
