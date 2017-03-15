@@ -849,7 +849,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * name. A value of null is returned when there is no value.
      */
-    private String getRiderNames() {
+    private String getRiderName() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderNames(mt)[0];
@@ -864,7 +864,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * email. A value of null is returned when there is no value.
      */
-    private String getRiderEmails() {
+    private String getRiderEmail() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderEmails(mt)[0];
@@ -880,7 +880,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * institution. A value of null is returned when there is no value.
      */
-    private String getRiderInstituions() {
+    private String getRiderInstitution() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderInstituions(mt)[0];
@@ -895,7 +895,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * phone number. A value of null is returned when there is no value.
      */
-    private String getRiderPhones() {
+    private String getRiderPhone() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderPhones(mt)[0];
@@ -1055,10 +1055,10 @@ public class BinDecoder {
         xBTProfile.setOldMessageType(getOldMessageType());
         xBTProfile.setProbeSerialNumber(getProbeSerialNumber());
         xBTProfile.setRecorderType(getRecorderType());
-        xBTProfile.setRiderName(getRiderNames());
-        xBTProfile.setRiderEmail(getRiderEmails());
-        xBTProfile.setRiderInstitution(getRiderInstituions());
-        xBTProfile.setRiderPhones(getRiderPhones());
+        xBTProfile.setRiderName(getRiderName());
+        xBTProfile.setRiderEmail(getRiderEmail());
+        xBTProfile.setRiderInstitution(getRiderInstitution());
+        xBTProfile.setRiderPhones(getRiderPhone());
         xBTProfile.setSeaDepth(getSeaDepth());
         xBTProfile.setSeaSurfaceCurrentDirection(getSeaSurfaceCurrentDirection());
         xBTProfile.setSeaSurfaceCurrentMeasurementMethod(getSeaSurfaceCurrentMeasurementMethod());
@@ -1094,70 +1094,6 @@ public class BinDecoder {
 
     }//end method
 
-    /**
-     * <strong>(FXY)</strong>-This method returns a String that includes all of
-     * the info in the bin file.
-     *
-     * @return <strong>(FXY)</strong>-This method returns a String that includes
-     * all of the info in the bin file.
-     */
-    @Override
-    public String toString() {
-        double[] tempPoints = getTemperaturePoints();
-        String str = ""
-                + "Callsign=" + getCallsign() + "\n"
-                + "Old message type=" + getOldMessageType() + "\n"
-                + "New message type=" + getNewMessageType() + "\n"
-                + "Lat=" + getLatitude() + "\n"
-                + "Lon=" + getLongitude() + "\n"
-                + "Soopline=" + getSoopLine() + "\n"
-                + "Transect#=" + getTransectNumber() + "\n"
-                + "Sequence#=" + getSequenceNumber() + "\n"
-                + "date=" + getMonth() + "/" + getDay() + "/" + getYear() + "\n"
-                + "time=" + getHour() + ":" + getMinute() + "\n"
-                + "ShipName=" + getShipName() + "\n"
-                + "Lloyds=" + getLloyds() + "\n"
-                + "Unique tag=" + Integer.toHexString(getUniqueTag()).toUpperCase() + "\n"
-                + "SeasVersion=" + getSeasVersion() + "\n"
-                + "XBT Serial#=" + getProbeSerialNumber() + "\n"
-                + "ThisDatais=" + getThisDataIs() + "\n"
-                + "DataQuality=" + getDataQuality() + "\n"
-                + "LauncherHeight=" + getLaunchHeight() + "\n"
-                + "Ship direction=" + getShipDirection() + "\n"
-                + "Ship Speed=" + getShipSpeed() + "\n"
-                + "Instrument type=" + getInstrumentType() + "\n"
-                + "Recorder type=" + getRecorderType() + "\n"
-                + "Wind Instrument type=" + getWindInstrumentType() + "\n"
-                + "Wind Direction=" + getWindDirection() + "\n"
-                + "Wind Speed=" + getWindSpeed() + "\n"
-                + "Dry bulb temp=" + getDryBulbTemperature() + "\n"
-                + "Measure method=" + getSeaSurfaceCurrentMeasurementMethod() + "\n"
-                + "Current Dir=" + getSeaSurfaceCurrentDirection() + "\n"
-                + "Current Speed=" + getSeaSurfaceCurrentSpeed() + "\n"
-                + "Total water depth=" + getTotalWaterDepth() + "\n"
-                + "Agency Owner=" + getAgencyOwner() + "\n"
-                + "XBT launcher type=" + getXBTLauncherType() + "\n"
-                + "XBT Recorder Serial#=" + getXBTRecorderSerialNumber() + "\n"
-                + "XBT Recorder Manufacture date=" + getXBTRecorderManufacturedMonth() + "/" + getXBTRecorderManufacturedDay() + "/" + getXBTRecorderManufacturedYear() + "\n"
-                + "XBT Probe Manufacture date=" + getXBTProbeManufacturedMonth() + "/" + getXBTProbeManufacturedDay() + "/" + getXBTProbeManufacturedYear() + "\n"
-                + "# of rider blocks=" + getNumberOfRiderBlocks() + "\n"
-                + "# of rider email blocks=" + getNumberOfRiderEmailBlocks() + "\n"
-                + "# of rider phone blocks=" + getNumberOfRiderPhoneBlocks() + "\n"
-                + "# of rider inst blocks=" + getNumberOfRiderInstitutionBlocks() + "\n"
-                + "# of rep fields=" + getNumberOfRepeatedFields() + "\n"
-                + "Times replicated=" + getTimesReplicated() + "\n"
-                + "Sea Temperature=" + getSeaTemperature() + "\n"
-                + "SeaDepth=" + getSeaDepth() + "\n"
-                + "Rider=" + getRiderNames() + "\n"
-                + "Email=" + getRiderEmails() + "\n"
-                + "Phone=" + getRiderPhones() + "\n"
-                + "Institution=" + getRiderInstituions() + "\n"
-                + "index,temperature\n";
-        for (int i = 0; i < tempPoints.length; i++) {
-            str += i + "," + tempPoints[i] + "\n";
-        }//end for
-
-        return str;
-    }
+   
 }//end class
 

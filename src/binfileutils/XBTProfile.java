@@ -1297,5 +1297,70 @@ public class XBTProfile {
         this.riderPhone = riderPhone;
 
     }
+ /**
+     * <strong>(FXY)</strong>-This method returns a String that includes all of
+     * the info in the bin file.
+     *
+     * @return <strong>(FXY)</strong>-This method returns a String that includes
+     * all of the info in the bin file.
+     */
+    @Override
+    public String toString() {
+        double[] tempPoints = getTemperaturePoints();
+        String str = ""
+                + "Callsign=" + getCallsign() + "\n"
+                + "Old message type=" + getOldMessageType() + "\n"
+                + "New message type=" + getNewMessageType() + "\n"
+                + "Lat=" + getLatitude() + "\n"
+                + "Lon=" + getLongitude() + "\n"
+                + "Soopline=" + getSoopLine() + "\n"
+                + "Transect#=" + getTransectNumber() + "\n"
+                + "Sequence#=" + getSequenceNumber() + "\n"
+                + "date=" + getMonth() + "/" + getDay() + "/" + getYear() + "\n"
+                + "time=" + getHour() + ":" + getMinute() + "\n"
+                + "ShipName=" + getShipName() + "\n"
+                + "Lloyds=" + getLloyds() + "\n"
+                + "Unique tag=" + Integer.toHexString(getUniqueTag()).toUpperCase() + "\n"
+                + "SeasVersion=" + getSeasVersion() + "\n"
+                + "XBT Serial#=" + getProbeSerialNumber() + "\n"
+                + "ThisDatais=" + getThisDataIs() + "\n"
+                + "DataQuality=" + getDataQuality() + "\n"
+                + "LauncherHeight=" + getLaunchHeight() + "\n"
+                + "Ship direction=" + getShipDirection() + "\n"
+                + "Ship Speed=" + getShipSpeed() + "\n"
+                + "Instrument type=" + getInstrumentType() + "\n"
+                + "Recorder type=" + getRecorderType() + "\n"
+                + "Wind Instrument type=" + getWindInstrumentType() + "\n"
+                + "Wind Direction=" + getWindDirection() + "\n"
+                + "Wind Speed=" + getWindSpeed() + "\n"
+                + "Dry bulb temp=" + getDryBulbTemperature() + "\n"
+                + "Measure method=" + getSeaSurfaceCurrentMeasurementMethod() + "\n"
+                + "Current Dir=" + getSeaSurfaceCurrentDirection() + "\n"
+                + "Current Speed=" + getSeaSurfaceCurrentSpeed() + "\n"
+                + "Total water depth=" + getTotalWaterDepth() + "\n"
+                + "Agency Owner=" + getAgencyOwner() + "\n"
+                + "XBT launcher type=" + getXBTLauncherType() + "\n"
+                + "XBT Recorder Serial#=" + getXBTRecorderSerialNumber() + "\n"
+                + "XBT Recorder Manufacture date=" + getXBTRecorderManufacturedMonth() + "/" + getXBTRecorderManufacturedDay() + "/" + getXBTRecorderManufacturedYear() + "\n"
+                + "XBT Probe Manufacture date=" + getXBTProbeManufacturedMonth() + "/" + getXBTProbeManufacturedDay() + "/" + getXBTProbeManufacturedYear() + "\n"
+                + "# of rider blocks=" + getNumberOfRiderBlocks() + "\n"
+                + "# of rider email blocks=" + getNumberOfRiderEmailBlocks() + "\n"
+                + "# of rider phone blocks=" + getNumberOfRiderPhoneBlocks() + "\n"
+                + "# of rider inst blocks=" + getNumberOfRiderInstitutionBlocks() + "\n"
+                + "# of rep fields=" + getNumberOfRepeatedFields() + "\n"
+                + "Times replicated=" + getTimesReplicated() + "\n"
+                + "Sea Temperature=" + getSeaSurfaceTemperature() + "\n"
+                + "SeaDepth=" + getSeaDepth() + "\n"
+                + "Rider=" + getRiderName() + "\n"
+                + "Email=" + getRiderEmail() + "\n"
+                + "Phone=" + getRiderPhone() + "\n"
+                + "Institution=" + getRiderInstitution() + "\n"
+                + "index,temperature\n";
+        for (int i = 0; i < tempPoints.length; i++) {
+            str += i + "," + tempPoints[i] + "\n";
+        }//end for
+
+        return str;
+    }    
 
 }
