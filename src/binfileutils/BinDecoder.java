@@ -14,8 +14,8 @@ import java.nio.file.Path;
  *
  */
 public class BinDecoder {
-    
-XBTProfile xBTProfile;    
+
+    XBTProfile xBTProfile;
 
     static BitSet bits; //holds bits from file
 
@@ -31,15 +31,25 @@ XBTProfile xBTProfile;
             Path path = Paths.get(filePath);
             byte[] data = Files.readAllBytes(path);
             bits = changeEndian(BitSet.valueOf(data));
-             xBTProfile=decodeXBTProfile();            
+            xBTProfile = decodeXBTProfile();
 
         } catch (Exception e) {
             System.out.println(e);
         }
 
     }//end constructor
-    
-    
+
+    /**
+     * <strong>(FXY1011)</strong>-This method returns the ship's WMO ID
+     *
+     * @return    <strong>(FXY1011)</strong>-This method returns a the ship's WMO
+     * ID
+     */
+    private String getWMOID() {
+        int start = XBTProfileDataRanges.getCallsign(1)[0];
+        int end = XBTProfileDataRanges.getCallsign(1)[1];
+        return toString(start, end);
+    }// end method
 
     /**
      * <strong>(FXY1011)</strong>-This method returns the ship's WMO ID
@@ -48,9 +58,8 @@ XBTProfile xBTProfile;
      * ID
      */
     private String getCallsign() {
-        int start = XBTProfileDataRanges.getCallsign(1)[0];
-        int   end = XBTProfileDataRanges.getCallsign(1)[1];
-        return toString(start, end);
+
+        return getWMOID();
     }// end method
 
     /**
@@ -61,8 +70,8 @@ XBTProfile xBTProfile;
      */
     private int getOldMessageType() {
         int start = XBTProfileDataRanges.getOldMessageType(1)[0];
-        int   end = XBTProfileDataRanges.getOldMessageType(1)[1]; 
-        
+        int end = XBTProfileDataRanges.getOldMessageType(1)[1];
+
         try {
 
             return toInteger(start, end);
@@ -81,8 +90,8 @@ XBTProfile xBTProfile;
      */
     private int getNewMessageType() {
         int start = XBTProfileDataRanges.getNewMessageType(1)[0];
-        int   end = XBTProfileDataRanges.getNewMessageType(1)[1]; 
-        
+        int end = XBTProfileDataRanges.getNewMessageType(1)[1];
+
         try {
 
             return toInteger(start, end);
@@ -102,7 +111,6 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getLattitude(mt)[0];
         int end = XBTProfileDataRanges.getLattitude(mt)[1];
-        
 
         return (toInteger(start, end) - 9000000) / 100000.0;
 
@@ -116,7 +124,7 @@ XBTProfile xBTProfile;
      * where the measurement was made. The value is returned in decimal degrees.
      */
     private double getLongitude() {
-  
+
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getLongitude(mt)[0];
         int end = XBTProfileDataRanges.getLongitude(mt)[1];
@@ -154,7 +162,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getTransectNumber(mt)[0];
         int end = XBTProfileDataRanges.getTransectNumber(mt)[1];
-       
+
         return toInteger(start, end);
     }
 
@@ -251,13 +259,13 @@ XBTProfile xBTProfile;
      * there is no
      *
      * @return <strong>(FXY1200)</strong>-This method returns the name of the
-     * ship. If there is no name then the string "NONE" is returned.
+     * ship. If there is no name then the string null is returned.
      */
     private String getShipName() {
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getShipName(mt)[0];
         int end = XBTProfileDataRanges.getShipName(mt)[1];
-        return toString(start, end); 
+        return toString(start, end);
     }
 
     /**
@@ -369,7 +377,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getLaunchHeight(mt)[0];
         int end = XBTProfileDataRanges.getLaunchHeight(mt)[1];
-        return toInteger(start, end)/100.00;
+        return toInteger(start, end) / 100.00;
     }
 
     /**
@@ -415,7 +423,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getInstrumentType(mt)[0];
         int end = XBTProfileDataRanges.getInstrumentType(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -448,7 +456,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getWindInstrumentType(mt)[0];
         int end = XBTProfileDataRanges.getWindInstrumentType(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -463,7 +471,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getWindDirection(mt)[0];
         int end = XBTProfileDataRanges.getWindDirection(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -478,7 +486,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getWindSpeed(mt)[0];
         int end = XBTProfileDataRanges.getWindSpeed(mt)[1];
-        return toInteger(start, end)/ 10.0;
+        return toInteger(start, end) / 10.0;
     }//end method
 
     /**
@@ -507,7 +515,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getSeaSurfaceCurrentMeasurementMethod(mt)[0];
         int end = XBTProfileDataRanges.getSeaSurfaceCurrentMeasurementMethod(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -521,7 +529,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getSeaSurfaceCurrentDirection(mt)[0];
         int end = XBTProfileDataRanges.getSeaSurfaceCurrentDirection(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -535,7 +543,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getSeaSurfaceCurrentSpeed(mt)[0];
         int end = XBTProfileDataRanges.getSeaSurfaceCurrentSpeed(mt)[1];
-        return toInteger(start, end)   / 100.00;
+        return toInteger(start, end) / 100.00;
     }//end method
 
     /**
@@ -550,7 +558,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getTotalWaterDepth(mt)[0];
         int end = XBTProfileDataRanges.getTotalWaterDepth(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -565,7 +573,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getAgencyOwner(mt)[0];
         int end = XBTProfileDataRanges.getAgencyOwner(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -580,7 +588,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTLauncherType(mt)[0];
         int end = XBTProfileDataRanges.getXBTLauncherType(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }//end method
 
     /**
@@ -594,7 +602,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTRecorderSerialNumber(mt)[0];
         int end = XBTProfileDataRanges.getXBTRecorderSerialNumber(mt)[1];
-        return toString(start, end);  
+        return toString(start, end);
     }// end method
 
     /**
@@ -609,7 +617,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTRecorderManufacturedYear(mt)[0];
         int end = XBTProfileDataRanges.getXBTRecorderManufacturedYear(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -624,7 +632,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTRecorderManufacturedMonth(mt)[0];
         int end = XBTProfileDataRanges.getXBTRecorderManufacturedMonth(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -639,7 +647,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTRecorderManufacturedDay(mt)[0];
         int end = XBTProfileDataRanges.getXBTRecorderManufacturedDay(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -653,7 +661,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTProbeManufacturedYear(mt)[0];
         int end = XBTProfileDataRanges.getXBTProbeManufacturedYear(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -668,7 +676,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTProbeManufacturedMonth(mt)[0];
         int end = XBTProfileDataRanges.getXBTProbeManufacturedMonth(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -683,7 +691,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getXBTProbeManufacturedDay(mt)[0];
         int end = XBTProfileDataRanges.getXBTProbeManufacturedDay(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -698,7 +706,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getNumberOfRiderBlocks(mt)[0];
         int end = XBTProfileDataRanges.getNumberOfRiderBlocks(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -713,7 +721,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(mt)[0];
         int end = XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -728,7 +736,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getNumberOfRiderEmailBlocks(mt)[0];
         int end = XBTProfileDataRanges.getNumberOfRiderEmailBlocks(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -743,7 +751,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(mt)[0];
         int end = XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -759,7 +767,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getNumberOfRepeatedFields(mt)[0];
         int end = XBTProfileDataRanges.getNumberOfRepeatedFields(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -774,7 +782,7 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getTimesReplicated(mt)[0];
         int end = XBTProfileDataRanges.getTimesReplicated(mt)[1];
-        return toInteger(start, end);  
+        return toInteger(start, end);
     }// end method
 
     /**
@@ -803,8 +811,8 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getSeaDepth(mt)[0];
         int end = XBTProfileDataRanges.getSeaDepth(mt)[1];
-        return (double) toInteger(start, end);  
-    
+        return (double) toInteger(start, end);
+
     }// end method
 
     /**
@@ -819,11 +827,11 @@ XBTProfile xBTProfile;
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getTemperaturePoints(mt)[0];
         int points = getTimesReplicated();
-        
+
         if (points < 0) {
             return new double[0];
         }
-        
+
         double temps[] = new double[points];
         int counter = 0;
         for (int i = start; i < start + points * 12; i += 12) {
@@ -839,13 +847,13 @@ XBTProfile xBTProfile;
      * <strong>(FXY205030A)</strong>-This method returns the rider's name.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
-     * name. A value of "NONE" is returned when there is no value.
+     * name. A value of null is returned when there is no value.
      */
     private String getRiderNames() {
-        
+
         int mt = getNewMessageType();
-       int start = XBTProfileDataRanges.getRiderNames(mt)[0];
-      
+        int start = XBTProfileDataRanges.getRiderNames(mt)[0];
+
         int s = start + 12 * getTimesReplicated();
         return toString(s, s + getNumberOfRiderBlocks() * 40);
     }// end method
@@ -854,10 +862,10 @@ XBTProfile xBTProfile;
      * <strong>(FXY205030A)</strong>-This method returns the rider's email.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
-     * email. A value of "NONE" is returned when there is no value.
+     * email. A value of null is returned when there is no value.
      */
     private String getRiderEmails() {
-       
+
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderEmails(mt)[0];
 
@@ -870,10 +878,10 @@ XBTProfile xBTProfile;
      * institution.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
-     * institution. A value of "NONE" is returned when there is no value.
+     * institution. A value of null is returned when there is no value.
      */
     private String getRiderInstituions() {
-        
+
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderInstituions(mt)[0];
         int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
@@ -885,20 +893,20 @@ XBTProfile xBTProfile;
      * number.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
-     * phone number. A value of "NONE" is returned when there is no value.
+     * phone number. A value of null is returned when there is no value.
      */
     private String getRiderPhones() {
-        
+
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderPhones(mt)[0];
 
         int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstitutionBlocks() * 40;
         return toString(s, s + getNumberOfRiderPhoneBlocks() * 40);
     }// end method
-    
-  public XBTProfile getXBTProfile(){
+
+    public XBTProfile getXBTProfile() {
         return xBTProfile;
-    
+
     }//end method
 
     /**
@@ -911,7 +919,7 @@ XBTProfile xBTProfile;
      * @return <strong>(FXY205030A)</strong>-This method computes and returns an
      * integer from a sequence of bits.
      */
-    private  int toInteger(int start, int end) {
+    private int toInteger(int start, int end) {
         try {
             if (start < 0 || end < 0 || end - start <= 0) {
                 return -999;
@@ -953,14 +961,14 @@ XBTProfile xBTProfile;
      * @return <strong>(FXY)</strong>-This method computes and returns a string
      * from a sequence of bits.
      */
-    private  String toString(int start, int end) {
+    private String toString(int start, int end) {
         try {
             if (start < 0 || end < 0 || end - start <= 0) {
                 return null;
             }
 
             String str = "";
-            BitSet b = bits.get(start, end+1);
+            BitSet b = bits.get(start, end + 1);
             byte[] bytes;
             bytes = changeEndian(b).toByteArray();
 
@@ -980,7 +988,7 @@ XBTProfile xBTProfile;
      * @return <strong>(FXY)</strong>-This method flips the "endianes" of a
      * BitSet object and returns a BitSet object with flipped "endianess".
      */
-    private  BitSet changeEndian(BitSet b) {
+    private BitSet changeEndian(BitSet b) {
         boolean temp;
         for (int i = 0; i < b.length() - 1; i = i + 8) {
             for (int j = 0; j < 4; j++) {
@@ -1022,10 +1030,9 @@ XBTProfile xBTProfile;
         }//end for
         return str;
     }//end method
-    
-    
-    private  XBTProfile decodeXBTProfile(){
-        
+
+    private XBTProfile decodeXBTProfile() {
+
         XBTProfile xBTProfile = new XBTProfile();
         xBTProfile.setAgencyOwner(getAgencyOwner());
         xBTProfile.setDataQuality(getDataQuality());
@@ -1041,13 +1048,13 @@ XBTProfile xBTProfile;
         xBTProfile.setMonth(getMonth());
         xBTProfile.setNewMessageType(getNewMessageType());
         xBTProfile.setNumberOfRepeatedFields(getNumberOfRepeatedFields());
-        //xBTProfile.setNumberOfRiderBlocks(getNumberOfRiderBlocks());
-        //xBTProfile.setNumberOfRiderEmailBlocks(getNumberOfRiderEmailBlocks());
-        //xBTProfile.setNumberOfRiderInstitutionBlocks(getNumberOfRiderInstitutionBlocks());
-        //xBTProfile.setNumberOfRiderPhoneBlocks(getNumberOfRiderPhoneBlocks());
+        xBTProfile.setNumberOfRiderBlocks(getNumberOfRiderBlocks());
+        xBTProfile.setNumberOfRiderEmailBlocks(getNumberOfRiderEmailBlocks());
+        xBTProfile.setNumberOfRiderInstitutionBlocks(getNumberOfRiderInstitutionBlocks());
+        xBTProfile.setNumberOfRiderPhoneBlocks(getNumberOfRiderPhoneBlocks());
         xBTProfile.setOldMessageType(getOldMessageType());
         xBTProfile.setProbeSerialNumber(getProbeSerialNumber());
-        xBTProfile.setRecorderType(getRecorderType());        
+        xBTProfile.setRecorderType(getRecorderType());
         xBTProfile.setRiderName(getRiderNames());
         xBTProfile.setRiderEmail(getRiderEmails());
         xBTProfile.setRiderInstitution(getRiderInstituions());
@@ -1056,7 +1063,7 @@ XBTProfile xBTProfile;
         xBTProfile.setSeaSurfaceCurrentDirection(getSeaSurfaceCurrentDirection());
         xBTProfile.setSeaSurfaceCurrentMeasurementMethod(getSeaSurfaceCurrentMeasurementMethod());
         xBTProfile.setSeaSurfaceCurrentSpeed(getSeaSurfaceCurrentSpeed());
-        xBTProfile.setSeaSurfaceTemperature(getSeaTemperature());        
+        xBTProfile.setSeaSurfaceTemperature(getSeaTemperature());
         xBTProfile.setSeasVersion(getSeasVersion());
         xBTProfile.setSequenceNum(getSequenceNumber());
         xBTProfile.setShipDirection(getShipDirection());
@@ -1081,11 +1088,10 @@ XBTProfile xBTProfile;
         xBTProfile.setXBTRecorderManufacturedMonth(getXBTRecorderManufacturedMonth());
         xBTProfile.setXBTRecorderManufacturedYear(getXBTRecorderManufacturedYear());
         xBTProfile.setXBTRecorderSerialNumber(getXBTRecorderSerialNumber());
-        xBTProfile.setYear(getYear());        
-        
-        
+        xBTProfile.setYear(getYear());
+
         return xBTProfile;
-    
+
     }//end method
 
     /**
