@@ -36,13 +36,15 @@ Some example programs are included to get an idea of how to use the library.
 --------------------------
 linux
 -----
-javac -cp .:lib/AmverseasBinFileUtils.jar decoderTest.java
-javac -cp .:lib/AmverseasBinFileUtils.jar decoderTestASCII.java
+javac -cp .:lib/AmverseasBinFileUtils.jar DecoderTest.java
+javac -cp .:lib/AmverseasBinFileUtils.jar DecoderTestASCII.java
+javac -cp .:lib/AmverseasBinFileUtils.jar DecoderTestGetDepths.java
 
 windows
 -------
-javac -cp .;lib/AmverseasBinFileUtils.jar decoderTest.java
-javac -cp .;lib/AmverseasBinFileUtils.jar decoderTestASCII.java
+javac -cp .;lib/AmverseasBinFileUtils.jar DecoderTest.java
+javac -cp .;lib/AmverseasBinFileUtils.jar DecoderTestASCII.java
+javac -cp .;lib/AmverseasBinFileUtils.jar DecoderTestGetDepths.java
 
 ----------------------
 -Run example programs-
@@ -50,10 +52,18 @@ javac -cp .;lib/AmverseasBinFileUtils.jar decoderTestASCII.java
 
 linux
 -----
-java -cp .:lib/AmverseasBinFileUtils.jar decoderTest profile.bin
-java -cp .:lib/AmverseasBinFileUtils.jar decoderTestASCII profile.bin
+java -cp .:lib/AmverseasBinFileUtils.jar DecoderTest profile.bin
+java -cp .:lib/AmverseasBinFileUtils.jar DecoderTestASCII profile.bin
+java -cp .:lib/AmverseasBinFileUtils.jar DecoderTestGetDepths profile.bin
 
 windows
 -------
-java -cp .;lib/AmverseasBinFileUtils.jar decoderTest profile.bin
-java -cp .;lib/AmverseasBinFileUtils.jar decoderTestASCII profile.bin
+java -cp .;lib/AmverseasBinFileUtils.jar DecoderTest profile.bin
+java -cp .;lib/AmverseasBinFileUtils.jar DecoderTestASCII profile.bin
+java -cp .;lib/AmverseasBinFileUtils.jar DecoderTestGetDepths profile.bin
+
+
+
+
+
+
