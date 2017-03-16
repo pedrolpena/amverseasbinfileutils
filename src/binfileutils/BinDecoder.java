@@ -971,7 +971,6 @@ public class BinDecoder {
             BitSet b = bits.get(start, end + 1);
             byte[] bytes;
             bytes = changeEndian(b).toByteArray();
-
             for (int i = 0; i < bytes.length; i++) {
                 str += (char) bytes[i];
             }
