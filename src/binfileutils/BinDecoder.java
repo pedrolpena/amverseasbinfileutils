@@ -968,11 +968,15 @@ public class BinDecoder {
             }
 
             String str = "";
+            char x;
             BitSet b = bits.get(start, end + 1);
             byte[] bytes;
             bytes = changeEndian(b).toByteArray();
             for (int i = 0; i < bytes.length; i++) {
-                str += (char) bytes[i];
+                x=(char)bytes[i];
+                x = (char) (x & 0x00ff);
+                if(x>=0 && x<=127)
+                str += x;
             }
             return str;
         } catch (Exception e) {
@@ -989,7 +993,10 @@ public class BinDecoder {
      */
     private BitSet changeEndian(BitSet b) {
         boolean temp;
-        for (int i = 0; i < b.length() - 1; i = i + 8) {
+        int width =  b.length()-1;
+        if (b.length()!=b.size()-1)
+          width =  b.size();  
+        for (int i = 0; i < width; i = i + 8) {
             for (int j = 0; j < 4; j++) {
                 temp = b.get(i + j);
                 b.set(i + j, b.get(i - j + 7));
