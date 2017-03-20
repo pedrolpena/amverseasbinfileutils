@@ -6,6 +6,8 @@
 package binfileutils;
 
 /**
+ * This class contains the locations of where the data are located in an
+ * XBT profile. The class also contains methods to retrieve these locations.
  *
  * @author pedro
  */
@@ -85,9 +87,9 @@ public final class XBTProfileDataRanges {
     }//end method
 
     /**
-     * <strong>(FXY48211)</strong>-This method returns the old message type.
+     * <strong>(FXY48211)</strong>-This method returns the data range used for  the old message type.
      *
-     * @return  <strong>(FXY48211)</strong>-This method returns the old message
+     * @return  <strong>(FXY48211)</strong>-This method returns the data range used for  the old message
      * type.Returns 0 when there is an exception.
      */
     public static int[] getOldMessageType(int messageType) {
@@ -99,9 +101,9 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY48211)</strong>-This method returns the old message type.
+     * <strong>(FXY48211)</strong>-This method returns the data range used for  the old message type.
      *
-     * @return  <strong>(FXY48211)</strong>-This method returns the old message
+     * @return  <strong>(FXY48211)</strong>-This method returns the data range used for  the old message
      * type.Returns 0 when there is an exception.
      */
     public static int[] getNewMessageType(int messageType) {
@@ -113,10 +115,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY5001)</strong>-This method returns the latitude where the
+     * <strong>(FXY5001)</strong>-This method returns the data range used for  the latitude where the
      * measurement was made.
      *
-     * @return  <strong>(FXY5001)</strong>-This method returns the latitude where
+     * @return  <strong>(FXY5001)</strong>-This method returns the data range used for  the latitude where
      * the measurement was made. The value is returned in decimal degrees.
      */
     public static int[] getLattitude(int messageType) {
@@ -128,10 +130,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY6001)</strong>-This method returns the longitude where the
+     * <strong>(FXY6001)</strong>-This method returns the data range used for  the longitude where the
      * measurement was made
      *
-     * @return  <strong>(FXY6001)</strong>-This method returns the longitude
+     * @return  <strong>(FXY6001)</strong>-This method returns the data range used for  the longitude
      * where the measurement was made. The value is returned in decimal degrees.
      */
     public static int[] getLongitude(int messageType) {
@@ -142,10 +144,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY1080)</strong>-This method returns the name given to the
+     * <strong>(FXY1080)</strong>-This method returns the data range used for  the name given to the
      * transect.
      *
-     * @return  <strong>(FXY1080)</strong>-This method returns the name given to
+     * @return  <strong>(FXY1080)</strong>-This method returns the data range used for  the name given to
      * the transect. e.g. AX10 This field became available beginning with
      * message type 2
      */
@@ -157,10 +159,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY5036)</strong>-This method returns the transect number for
+     * <strong>(FXY5036)</strong>-This method returns the data range used for  the transect number for
      * the line.
      *
-     * @return <strong>(FXY5036)</strong>-This method returns the transect
+     * @return <strong>(FXY5036)</strong>-This method returns the data range used for  the transect
      * number for the line. This is the number assigned to a transect repeated
      * in the same calendar year. e.g. The second transect would have a value of
      * 2. A value of -999 is returned when there is no value.
@@ -175,7 +177,7 @@ public final class XBTProfileDataRanges {
     /**
      * <strong>(FXY48304)</strong>-
      *
-     * @return <strong>(FXY48304)</strong>-This method returns
+     * @return <strong>(FXY48304)</strong>-This method returns the data range used for 
      */
     public static int[] getSequenceNumber(int messageType) {
         int start = dataLocations[7][0][messageType];
@@ -185,10 +187,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4001)</strong>-This method returns the year in which the
+     * <strong>(FXY4001)</strong>-This method returns the data range used for  the year in which the
      * measurement was made.
      *
-     * @return <strong>(FXY4001)</strong>-This method returns the year in which
+     * @return <strong>(FXY4001)</strong>-This method returns the data range used for  the year in which
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
@@ -200,10 +202,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4002)</strong>-This method returns the month in which the
+     * <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which the
      * measurement was made.
      *
-     * @return <strong>(FXY4002)</strong>-This method returns the month in which
+     * @return <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
@@ -215,10 +217,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4003)</strong>-This method returns the day in which the
+     * <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which the
      * measurement was made.
      *
-     * @return <strong>(FXY4003)</strong>-This method returns the day in which
+     * @return <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
@@ -230,10 +232,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4004)</strong>-This method returns the GMT hour when the
+     * <strong>(FXY4004)</strong>-This method returns the data range used for  the GMT hour when the
      * measurement was made.
      *
-     * @return <strong>(FXY4004)</strong>-This method returns the GMT hour when
+     * @return <strong>(FXY4004)</strong>-This method returns the data range used for  the GMT hour when
      * the measurement was made. A value of -999 is returned when there is no
      * value.
      */
@@ -245,10 +247,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4005)</strong>-This method returns the GMT minute when the
+     * <strong>(FXY4005)</strong>-This method returns the data range used for  the GMT minute when the
      * measurement was made
      *
-     * @return <strong>(FXY4005)</strong>-This method returns the GMT minute
+     * @return <strong>(FXY4005)</strong>-This method returns the data range used for  the GMT minute
      * when the measurement was made A value of -999 is returned when there is
      * no value.
      */
@@ -260,10 +262,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY1200)</strong>-This method returns the name of the ship. If
+     * <strong>(FXY1200)</strong>-This method returns the data range used for  the name of the ship. If
      * there is no
      *
-     * @return <strong>(FXY1200)</strong>-This method returns the name of the
+     * @return <strong>(FXY1200)</strong>-This method returns the data range used for  the name of the
      * ship. If there is no name then the string "NONE" is returned.
      */
     public static int[] getShipName(int messageType) {
@@ -274,10 +276,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY1201)</strong>-This method returns the ships International
+     * <strong>(FXY1201)</strong>-This method returns the data range used for  the ships International
      * Maritime Organization (IMO) number.
      *
-     * @return <strong>(FXY1201)</strong>-This method returns the ships
+     * @return <strong>(FXY1201)</strong>-This method returns the data range used for  the ships
      * International Maritime Organization (IMO) number. A value of -999 is
      * returned when there is no value.
      */
@@ -289,10 +291,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY48302)</strong>-This method returns the CRC value for the bin
+     * <strong>(FXY48302)</strong>-This method returns the data range used for  the CRC value for the bin
      * file.
      *
-     * @return <strong>(FXY48302)</strong>-This method returns the CRC value for
+     * @return <strong>(FXY48302)</strong>-This method returns the data range used for  the CRC value for
      * the bin file. This value is computed by WRITE LOGIC HERE Once computed,
      * the value returned by this method must match. If there is not a match,
      * then the bin file is possibly corrupt. A value of -999 is returned when
@@ -306,10 +308,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY48201)</strong>-This method returns the version of Amverseas
+     * <strong>(FXY48201)</strong>-This method returns the data range used for  the version of Amverseas
      * used to make the measurement.
      *
-     * @return <strong>(FXY48201)</strong>-This method returns the version of
+     * @return <strong>(FXY48201)</strong>-This method returns the data range used for  the version of
      * Amverseas used to make the measurement. This value must later be massaged
      * to get the actual version. e.g. 920 must be dived by 100 to get Amverseas
      * version 9.20 A value of -999 is returned when there is no value.
@@ -322,10 +324,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY48300)</strong>-This method returns the serial number of the
+     * <strong>(FXY48300)</strong>-This method returns the data range used for  the serial number of the
      * XBT used to make the measurement.
      *
-     * @return <strong>(FXY48300)</strong>-This method returns the serial number
+     * @return <strong>(FXY48300)</strong>-This method returns the data range used for  the serial number
      * of the XBT used to make the measurement. A value of -999 is returned when
      * there is no value.
      */
@@ -337,10 +339,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY48303)</strong>-This method returns the resolution of the
+     * <strong>(FXY48303)</strong>-This method returns the data range used for  the resolution of the
      * profile.
      *
-     * @return <strong>(FXY48303)</strong>-This method returns the resolution of
+     * @return <strong>(FXY48303)</strong>-This method returns the data range used for  the resolution of
      * the profile. A value of 1 is full resolution a value of 2 is 1 meter
      * resolution and a value of 3 is two meter resolution. A value of -999 is
      * returned when there is no value.
@@ -353,10 +355,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY33003)</strong>-This method returns the quality of the data
+     * <strong>(FXY33003)</strong>-This method returns the data range used for  the quality of the data
      * as entered by the user.
      *
-     * @return <strong>(FXY33003)</strong>-This method returns the quality of
+     * @return <strong>(FXY33003)</strong>-This method returns the data range used for  the quality of
      * the data as entered by the user. If the user suspects the data is of a
      * quality other than good, the user can add it to the profile after the
      * measurement has been made. A value of -999 is returned when there is no
@@ -370,10 +372,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY48305)</strong>-This method returns the approximate height of
+     * <strong>(FXY48305)</strong>-This method returns the data range used for  the approximate height of
      * the autolauncher from the surface of the water.
      *
-     * @return <strong>(FXY48305)</strong>-This method returns the approximate
+     * @return <strong>(FXY48305)</strong>-This method returns the data range used for  the approximate
      * height of the autolauncher from the surface of the water. A value of
      * -9.99 is returned when there is no value.
      */
@@ -385,10 +387,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY1012)</strong>-This method returns the direction in degrees
+     * <strong>(FXY1012)</strong>-This method returns the data range used for  the direction in degrees
      * that the ship was heading when the measurement was made.
      *
-     * @return <strong>(FXY1012)</strong>-This method returns the direction in
+     * @return <strong>(FXY1012)</strong>-This method returns the data range used for  the direction in
      * degrees that the ship was heading when the measurement was made. A value
      * of -999.0 is returned when there is no value.
      */
@@ -400,10 +402,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY1013)</strong>-This method returns the speed of the ship in
+     * <strong>(FXY1013)</strong>-This method returns the data range used for  the speed of the ship in
      * km/h when the measurement was made.
      *
-     * @return <strong>(FXY1013)</strong>-This method returns the speed of the
+     * @return <strong>(FXY1013)</strong>-This method returns the data range used for  the speed of the
      * ship in m/s when the measurement was made. A value of -9.99 is returned
      * when there is no value.
      */
@@ -415,10 +417,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22067)</strong>-This method returns a table value that
+     * <strong>(FXY22067)</strong>-This method returns the data range used for  a table value that
      * represents the type of probe used to make the measurement.
      *
-     * @return <strong>(FXY22067)</strong>-This method returns a table value
+     * @return <strong>(FXY22067)</strong>-This method returns the data range used for  a table value
      * that represents the type of probe used to make the measurement.<br>
      * e.g. a value of 52 refers to a Deep Blue XBT. A value of -999 is returned
      * when there is no value.
@@ -431,10 +433,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22068)</strong>-This method returns a table value that
+     * <strong>(FXY22068)</strong>-This method returns the data range used for  a table value that
      * represents the device that determines the thermistor value in the XBT.
      *
-     * @return <strong>(FXY22068)</strong>-This method returns a table value
+     * @return <strong>(FXY22068)</strong>-This method returns the data range used for  a table value
      * that represents the device that determines the thermistor value in the
      * XBT.<br>
      * e.g. a value of 6 refers to any of the different Sippican MK21 models. A
@@ -449,10 +451,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY2002)</strong>-This method returns a table value that
+     * <strong>(FXY2002)</strong>-This method returns the data range used for  a table value that
      * represents the type of anemometer used.
      *
-     * @return <strong>(FXY2002)</strong>-This method returns a table value that
+     * @return <strong>(FXY2002)</strong>-This method returns the data range used for  a table value that
      * represents the type of anemometer used. A value of -999 is returned when
      * there is no value.
      */
@@ -464,10 +466,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY11001)</strong>-This method returns the wind direction in
+     * <strong>(FXY11001)</strong>-This method returns the data range used for  the wind direction in
      * degrees at the time of the measurement.
      *
-     * @return <strong>(FXY11001)</strong>-This method returns the wind
+     * @return <strong>(FXY11001)</strong>-This method returns the data range used for  the wind
      * direction in degrees at the time of the measurement. A value of -999 is
      * returned when there is no value.
      */
@@ -479,10 +481,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY11002)</strong>-This method returns the wind speed in degrees
+     * <strong>(FXY11002)</strong>-This method returns the data range used for  the wind speed in degrees
      * at the time of the measurement.
      *
-     * @return <strong>(FXY11002)</strong>-This method returns the wind speed in
+     * @return <strong>(FXY11002)</strong>-This method returns the data range used for  the wind speed in
      * degrees at the time of the measurement. A value of -99.9 is returned when
      * there is no value.
      */
@@ -494,10 +496,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY12004)</strong>-This method returns the dry bulb temperature
+     * <strong>(FXY12004)</strong>-This method returns the data range used for  the dry bulb temperature
      * at the time of the measurement.
      *
-     * @return <strong>(FXY12004)</strong>-This method returns the dry bulb
+     * @return <strong>(FXY12004)</strong>-This method returns the data range used for  the dry bulb
      * temperature at the time of the measurement. A value of -99.9 is returned
      * when there is no value.
      */
@@ -509,10 +511,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY2030)</strong>-This method returns the sea current
+     * <strong>(FXY2030)</strong>-This method returns the data range used for  the sea current
      * measurement method.
      *
-     * @return <strong>(FXY2030)</strong>-This method returns the sea current
+     * @return <strong>(FXY2030)</strong>-This method returns the data range used for  the sea current
      * measurement method. A value of -999 is returned when there is no value.
      */
     public static int[] getSeaSurfaceCurrentMeasurementMethod(int messageType) {
@@ -523,10 +525,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22004)</strong>-This method returns the sea surface current
+     * <strong>(FXY22004)</strong>-This method returns the data range used for  the sea surface current
      * direction .
      *
-     * @return <strong>(FXY22004)</strong>-This method returns the sea surface
+     * @return <strong>(FXY22004)</strong>-This method returns the data range used for  the sea surface
      * current direction . A value of -999 is returned when there is no value.
      */
     public static int[] getSeaSurfaceCurrentDirection(int messageType) {
@@ -537,10 +539,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22031)</strong>-This method returns the sea surface current
+     * <strong>(FXY22031)</strong>-This method returns the data range used for  the sea surface current
      * speed
      *
-     * @return <strong>(FXY22031)</strong>-This method returns the sea surface
+     * @return <strong>(FXY22031)</strong>-This method returns the data range used for  the sea surface
      * current speed A value of -999 is returned when there is no value.
      */
     public static int[] getSeaSurfaceCurrentSpeed(int messageType) {
@@ -551,10 +553,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22063)</strong>-This method returns the total water depth at
+     * <strong>(FXY22063)</strong>-This method returns the data range used for  the total water depth at
      * the location where the measurement was made.
      *
-     * @return <strong>(FXY22063)</strong>-This method returns the total water
+     * @return <strong>(FXY22063)</strong>-This method returns the data range used for  the total water
      * depth at the location where the measurement was made. A value of -999 is
      * returned when there is no value.
      */
@@ -566,10 +568,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY1036)</strong>-This method returns the agency in charge of
+     * <strong>(FXY1036)</strong>-This method returns the data range used for  the agency in charge of
      * operating the observation platform.
      *
-     * @return <strong>(FXY1036)</strong>-This method returns the agency in
+     * @return <strong>(FXY1036)</strong>-This method returns the data range used for  the agency in
      * charge of operating the observation platform. A value of -999 is returned
      * when there is no value.
      */
@@ -581,10 +583,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22178)</strong>-This method returns a table value that
+     * <strong>(FXY22178)</strong>-This method returns the data range used for  a table value that
      * represents the type of launcher used.
      *
-     * @return <strong>(FXY22178)</strong>-This method returns a table value
+     * @return <strong>(FXY22178)</strong>-This method returns the data range used for  a table value
      * that represents the type of launcher used. A value of -999 is returned
      * when there is no value.
      */
@@ -596,10 +598,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY2171)</strong>-This method returns the serial number of the
+     * <strong>(FXY2171)</strong>-This method returns the data range used for  the serial number of the
      * recorder used.
      *
-     * @return <strong>(FXY2171)</strong>-This method returns the serial number
+     * @return <strong>(FXY2171)</strong>-This method returns the data range used for  the serial number
      * of the recorder used. A value of -999 is returned when there is no value.
      */
     public static int[] getXBTRecorderSerialNumber(int messageType) {
@@ -610,10 +612,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4001)</strong>-This method returns the year in which the
+     * <strong>(FXY4001)</strong>-This method returns the data range used for  the year in which the
      * recorder was manufactured.
      *
-     * @return <strong>(FXY4001)</strong>-This method returns the year in which
+     * @return <strong>(FXY4001)</strong>-This method returns the data range used for  the year in which
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
      */
@@ -625,10 +627,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4002)</strong>-This method returns the month in which the
+     * <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which the
      * recorder was manufactured.
      *
-     * @return <strong>(FXY4002)</strong>-This method returns the month in which
+     * @return <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
      */
@@ -640,10 +642,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4003)</strong>-This method returns the day in which the
+     * <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which the
      * recorder was manufactured.
      *
-     * @return <strong>(FXY4003)</strong>-This method returns the day in which
+     * @return <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
      */
@@ -655,10 +657,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4001)</strong>-This method returns the year the XBT was
+     * <strong>(FXY4001)</strong>-This method returns the data range used for  the year the XBT was
      * manufactured.
      *
-     * @return <strong>(FXY4001)</strong>-This method returns the year the XBT
+     * @return <strong>(FXY4001)</strong>-This method returns the data range used for  the year the XBT
      * was manufactured. A value of -999 is returned when there is no value.
      */
     public static int[] getXBTProbeManufacturedYear(int messageType) {
@@ -669,10 +671,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4002)</strong>-This method returns the month in which the XBT
+     * <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which the XBT
      * was manufactured.
      *
-     * @return <strong>(FXY4002)</strong>-This method returns the month in which
+     * @return <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which
      * the XBT was manufactured. A value of -999 is returned when there is no
      * value.
      */
@@ -684,10 +686,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY4003)</strong>-This method returns the day in which the XBT
+     * <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which the XBT
      * was manufactured.
      *
-     * @return <strong>(FXY4003)</strong>-This method returns the day in which
+     * @return <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which
      * the XBT was manufactured. A value of -999 is returned when there is no
      * value.
      */
@@ -699,10 +701,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY31001B)</strong>-This method returns the number of 40 bit
+     * <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40 bit
      * blocks or 5 characters, used to store the rider name.
      *
-     * @return <strong>(FXY31001B)</strong>-This method returns the number of 40
+     * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the rider name. A value of -999
      * is returned when there is no value.
      */
@@ -714,10 +716,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY31001B)</strong>-This method returns the number of 40 bit
+     * <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40 bit
      * blocks or 5 characters, used to store the riders institution's name.
      *
-     * @return <strong>(FXY31001B)</strong>-This method returns the number of 40
+     * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the riders institution's name.
      * A value of -999 is returned when there is no value.
      */
@@ -729,10 +731,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY31001B)</strong>-This method returns the number of 40 bit
+     * <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40 bit
      * blocks or 5 characters, used to store the rider's email address.
      *
-     * @return <strong>(FXY31001B)</strong>-This method returns the number of 40
+     * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the rider's email address. A
      * value of -999 is returned when there is no value.
      */
@@ -744,10 +746,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY31001B)</strong>-This method returns the number of 40 bit
+     * <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40 bit
      * blocks or 5 characters, used to store the rider's phone number.
      *
-     * @return <strong>(FXY31001B)</strong>-This method returns the number of 40
+     * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the rider's phone number. A
      * value of -999 is returned when there is no value.
      */
@@ -775,10 +777,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY31200)</strong>-This method returns the number of temperature
+     * <strong>(FXY31200)</strong>-This method returns the data range used for  the number of temperature
      * measurement points recorded.
      *
-     * @return <strong>(FXY31200)</strong>-This method returns the number of
+     * @return <strong>(FXY31200)</strong>-This method returns the data range used for  the number of
      * temperature measurement points recorded. A value of -999 is returned when
      * there is no value.
      */
@@ -790,10 +792,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22042S)</strong>-This method returns the SST or the first
+     * <strong>(FXY22042S)</strong>-This method returns the data range used for  the SST or the first
      * temperature measurement made.
      *
-     * @return <strong>(FXY22042S)</strong>-This method returns the SST or the
+     * @return <strong>(FXY22042S)</strong>-This method returns the data range used for  the SST or the
      * first temperature measurement made. A value of -13.99 is returned when
      * there is no value.
      */
@@ -805,10 +807,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY7062S)</strong>-This method returns the depth below the
+     * <strong>(FXY7062S)</strong>-This method returns the data range used for  the depth below the
      * sea/water surface
      *
-     * @return <strong>(FXY7062S)</strong>-This method returns the depth below
+     * @return <strong>(FXY7062S)</strong>-This method returns the data range used for  the depth below
      * the sea/water surface A value of -999 is returned when there is no value.
      */
     public static int[] getSeaDepth(int messageType) {
@@ -819,10 +821,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY22042S)</strong>-This method returns an array containing the
+     * <strong>(FXY22042S)</strong>-This method returns the data range used for  an array containing the
      * temperature measurements made.
      *
-     * @return <strong>(FXY22042S)</strong>-This method returns an array
+     * @return <strong>(FXY22042S)</strong>-This method returns the data range used for  an array
      * containing the temperature measurements made. An empty array is returned
      * when there are no values.
      */
@@ -834,9 +836,9 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY205030A)</strong>-This method returns the rider's name.
+     * <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's name.
      *
-     * @return <strong>(FXY205030A)</strong>-This method returns the rider's
+     * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
      * name. A value of "NONE" is returned when there is no value.
      */
     public static int[] getRiderNames(int messageType) {
@@ -847,9 +849,9 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY205030A)</strong>-This method returns the rider's email.
+     * <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's email.
      *
-     * @return <strong>(FXY205030A)</strong>-This method returns the rider's
+     * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
      * email. A value of "NONE" is returned when there is no value.
      */
     public static int[] getRiderEmails(int messageType) {
@@ -860,10 +862,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY205030A)</strong>-This method returns the rider's
+     * <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
      * institution.
      *
-     * @return <strong>(FXY205030A)</strong>-This method returns the rider's
+     * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
      * institution. A value of "NONE" is returned when there is no value.
      */
     public static int[] getRiderInstituions(int messageType) {
@@ -874,10 +876,10 @@ public final class XBTProfileDataRanges {
     }
 
     /**
-     * <strong>(FXY205030A)</strong>-This method returns the rider's phone
+     * <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's phone
      * number.
      *
-     * @return <strong>(FXY205030A)</strong>-This method returns the rider's
+     * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
      * phone number. A value of "NONE" is returned when there is no value.
      */
     public static int[] getRiderPhones(int messageType) {
