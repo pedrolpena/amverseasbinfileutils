@@ -36,6 +36,7 @@ public final class DataQuality {
      * of the data quality for the data resolution recorded in the profile.
      * This method accepts an int as a parameter. The parameter is the value
      * of dataquality field in the XBT profile.
+     * @param dataType the quality assigned to the profile.
      */
     public static final String getDataQualityDescription(int dataType) {
         String description = "Unknown";

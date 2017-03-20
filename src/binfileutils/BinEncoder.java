@@ -24,7 +24,7 @@ public class BinEncoder {
 /**
  * The constructor takes an XBTProfile object that will be converted to a
  * SEAS binary XBT profile
- * @param xBTProfile 
+ * @param xBTProfile an XBTProfile object
  */
     public BinEncoder(XBTProfile xBTProfile) {
 
@@ -36,7 +36,7 @@ public class BinEncoder {
 /**
  * takes an XBTProfile object and creates a
  * SEAS binary XBT profile
- * @param xBTProfile 
+ * @param xBTProfile an XBTProfile object
  */
     private void encodeProfile(XBTProfile xBTProfile) {
 
@@ -217,7 +217,8 @@ public class BinEncoder {
      * This method accepts a String representing the filename that will be used
      * to create the binary file.
      *
-     * @param outputFile
+     * @param outputFile the filename that will be used
+     * to create the binary file.
      */
     public void writeOutBinFile(String outputFile) {
 

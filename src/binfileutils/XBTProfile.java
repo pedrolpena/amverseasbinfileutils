@@ -331,7 +331,7 @@ public class XBTProfile {
 
     /**
      * <strong>(FXY1013)</strong>-This method returns the speed of the ship in
-     * km/h when the measurement was made.
+     * m/s when the measurement was made.
      *
      * @return <strong>(FXY1013)</strong>-This method returns the speed of the
      * ship in m/s when the measurement was made.
@@ -702,7 +702,7 @@ public class XBTProfile {
     /**
      * <strong>(FXY1011)</strong>-This method sets the ship's WMO ID
      *
-     * @param wmoId
+     * @param wmoId WMO ID
      */
     public void setCallsign(String wmoId) {
         setWMOID(wmoId);
@@ -711,7 +711,7 @@ public class XBTProfile {
     /**
      * <strong>(FXY1011)</strong>-This method sets the ship's WMO ID
      *
-     * @param wmoId
+     * @param wmoId WMO ID
      */
     public void setWMOID(String wmoId) {
         this.wmoId = wmoId;
@@ -720,7 +720,7 @@ public class XBTProfile {
     /**
      * <strong>(FXY48211)</strong>-This method sets the old message type.
      *
-     * @param oldMessageType
+     * @param oldMessageType the old message type number
      */
     public void setOldMessageType(int oldMessageType) {
         this.oldMessageType = oldMessageType;
@@ -731,7 +731,7 @@ public class XBTProfile {
      * <strong>(FXY48216)</strong>-This method sets the new message types used
      * in Amverseas The types can be a value from 1-3.
      *
-     * @param newMessageType
+     * @param newMessageType the new message type number
      */
     public void setNewMessageType(int newMessageType) {
         this.newMessageType = newMessageType;
@@ -741,7 +741,7 @@ public class XBTProfile {
      * <strong>(FXY5001)</strong>-This method sets the latitude where the
      * measurement was made.
      *
-     * @param latitude
+     * @param latitude the latitude where the measurement was made.
      */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
@@ -752,7 +752,7 @@ public class XBTProfile {
      * <strong>(FXY6001)</strong>-This method sets the longitude where the
      * measurement was made.
      *
-     * @param longitude
+     * @param longitude the longitude where the measurement was made.
      */
     public void setLongitude(double longitude) {
         this.longitude = longitude;
@@ -763,7 +763,7 @@ public class XBTProfile {
      * transect. e.g. AX10 This field became available beginning with message
      * type 2
      *
-     * @param soopLine
+     * @param soopLine THe name given to the transect
      */
     public void setSoopLine(String soopLine) {
         this.soopLine = soopLine;
@@ -774,7 +774,7 @@ public class XBTProfile {
      * line. This is the number assigned to a transect repeated in the same
      * calendar year. e.g. The second transect would have a value of 2.
      *
-     * @param transectNum
+     * @param transectNum transect number
      */
     public void setTransectNum(int transectNum) {
         this.transectNum = transectNum;
@@ -786,7 +786,7 @@ public class XBTProfile {
      * Sequence number N means that it was the Nth deployment for that day. This
      * number is reset to 1 at the start of the day.
      *
-     * @param sequenceNum
+     * @param sequenceNum sequence number
      */
     public void setSequenceNum(int sequenceNum) {
         this.sequenceNum = sequenceNum;
@@ -796,7 +796,7 @@ public class XBTProfile {
      * <strong>(FXY4001)</strong>-This method sets the year in which the
      * measurement was made.
      *
-     * @param year
+     * @param year the year in which the measurement was made
      */
     public void setYear(int year) {
         this.year = year;
@@ -806,7 +806,7 @@ public class XBTProfile {
      * <strong>(FXY4002)</strong>-This method sets the month in which the
      * measurement was made.
      *
-     * @param month
+     * @param month the month the measurement was made.
      */
     public void setMonth(int month) {
         this.month = month;
@@ -816,7 +816,7 @@ public class XBTProfile {
      * <strong>(FXY4003)</strong>-This method sets the day in which the
      * measurement was made.
      *
-     * @param day
+     * @param day the day the measurement was made.
      */
     public void setDay(int day) {
         this.day = day;
@@ -826,7 +826,7 @@ public class XBTProfile {
      * <strong>(FXY4004)</strong>-This method sets the GMT hour when the
      * measurement was made.
      *
-     * @param hour
+     * @param hour the hour when the measurement was made
      */
     public void setHour(int hour) {
         this.hour = hour;
@@ -836,7 +836,7 @@ public class XBTProfile {
      * <strong>(FXY4005)</strong>-This method sets the GMT minute when the
      * measurement was made.
      *
-     * @param minute
+     * @param minute the minute the measurement was made
      */
     public void setMinute(int minute) {
         this.minute = minute;
@@ -845,7 +845,7 @@ public class XBTProfile {
     /**
      * <strong>(FXY1200)</strong>-This method sets the name of the ship.
      *
-     * @param shipName
+     * @param shipName the name of the ship
      */
     public void setShipName(String shipName) {
         this.shipName = shipName;
@@ -855,7 +855,7 @@ public class XBTProfile {
      * <strong>(FXY1201)</strong>-This method sets the ships International
      * Maritime Organization (IMO) number.
      *
-     * @param lloyds
+     * @param lloyds the IMO number
      */
     public void setLloyds(int lloyds) {
         this.lloyds = lloyds;
@@ -866,7 +866,7 @@ public class XBTProfile {
      * file. This value is computed by the BinEncoder and set using this
      * method. Any value set here will be overwritten bt the BinFileENcoder.
      *
-     * @param uniqueTag
+     * @param uniqueTag the CRC32 checksum  or SEAS ID
      */
     public void setUniqueTag(int uniqueTag) {
         this.uniqueTag = uniqueTag;
@@ -879,7 +879,7 @@ public class XBTProfile {
      * the actual version. e.g. 920 must be dived by 100 to get Amverseas
      * version 9.20.
      *
-     * @param seasVersion
+     * @param seasVersion The version of Amverseas used to create the profile
      */
     public void setSeasVersion(int seasVersion) {
         this.seasVersion = seasVersion;
@@ -889,7 +889,7 @@ public class XBTProfile {
      * <strong>(FXY48300)</strong>-This method sets the serial number of the XBT
      * used to make the measurement.
      *
-     * @param probeSerialNumber
+     * @param probeSerialNumber The probes serial number
      */
     public void setProbeSerialNumber(int probeSerialNumber) {
         this.probeSerialNumber = probeSerialNumber;
@@ -900,7 +900,7 @@ public class XBTProfile {
      * profile. A value of 1 is full resolution a value of 2 is 1 meter
      * resolution and a value of 3 is two meter resolution.
      *
-     * @param thisDataIs
+     * @param thisDataIs The resolution of the profile
      */
     public void setThisDataIs(int thisDataIs) {
         this.thisDataIs = thisDataIs;
@@ -913,17 +913,17 @@ public class XBTProfile {
      * than good, the user can add it to the profile after the measurement has
      * been made.
      *
-     * @param dataQuality
+     * @param dataQuality The quality confidence number assigned to the profile.
      */
     public void setDataQuality(int dataQuality) {
         this.dataQuality = dataQuality;
     }
 
     /**
-     * <strong>(FXY48305)</strong>-This method sets the approximate height of
-     * the autolauncher from the surface of the water.
+     * <strong>(FXY48305)</strong>-This method sets the approximate launch height 
+     * from the surface of the water.
      *
-     * @param launchHeight
+     * @param launchHeight The launch height
      */
     public void setLaunchHeight(double launchHeight) {
         this.launchHeight = launchHeight;
@@ -933,17 +933,17 @@ public class XBTProfile {
      * <strong>(FXY1012)</strong>-This method sets the direction in degrees that
      * the ship was heading when the measurement was made.
      *
-     * @param shipDirection
+     * @param shipDirection the ships heading
      */
     public void setShipDirection(double shipDirection) {
         this.shipDirection = shipDirection;
     }
 
     /**
-     * <strong>(FXY1013)</strong>-This method sets the speed of the ship in km/h
+     * <strong>(FXY1013)</strong>-This method sets the speed of the ship in m/s
      * when the measurement was made.
      *
-     * @param shipSpeed
+     * @param shipSpeed the ships speed in m/s
      */
     public void setShipSpeed(double shipSpeed) {
         this.shipSpeed = shipSpeed;
@@ -954,7 +954,7 @@ public class XBTProfile {
      * represents the type of probe used to make the measurement.<br>
      * e.g. a value of 52 refers to a Deep Blue XBT.
      *
-     * @param instrumentType
+     * @param instrumentType number assigned to the type of probe used.
      */
     public void setInstrumentType(int instrumentType) {
         this.instrumentType = instrumentType;
@@ -966,7 +966,7 @@ public class XBTProfile {
      * XBT.<br>
      * e.g. a value of 6 refers to any of the different Sippican MK21 models.
      *
-     * @param recorderType
+     * @param recorderType the number given to the type of recorder used.
      */
     public void setRecorderType(int recorderType) {
         this.recorderType = recorderType;
@@ -976,7 +976,7 @@ public class XBTProfile {
      * <strong>(FXY2002)</strong>-This method sets a table value that represents
      * the type of anemometer used.
      *
-     * @param windInstrumentType
+     * @param windInstrumentType the type of anemometer used.
      */
     public void setWindInstrumentType(int windInstrumentType) {
         this.windInstrumentType = windInstrumentType;
@@ -986,7 +986,7 @@ public class XBTProfile {
      * <strong>(FXY11001)</strong>-This method sets the wind direction in
      * degrees at the time of the measurement.
      *
-     * @param windDirection
+     * @param windDirection the wind direction in degrees
      */
     public void setWindDirection(double windDirection) {
         this.windDirection = windDirection;
@@ -996,7 +996,7 @@ public class XBTProfile {
      * <strong>(FXY11002)</strong>-This method sets the wind speed in degrees at
      * the time of the measurement.
      *
-     * @param windSpeed
+     * @param windSpeed the wind speed
      */
     public void setWindSpeed(double windSpeed) {
         this.windSpeed = windSpeed;
@@ -1006,7 +1006,7 @@ public class XBTProfile {
      * <strong>(FXY12004)</strong>-This method sets the dry bulb temperature at
      * the time of the measurement.
      *
-     * @param dryBulbTemperature
+     * @param dryBulbTemperature the dry bulb temperature
      */
     public void setDryBulbTemperature(double dryBulbTemperature) {
         this.dryBulbTemperature = dryBulbTemperature;
@@ -1016,7 +1016,8 @@ public class XBTProfile {
      * <strong>(FXY2030)</strong>-This method sets the sea current measurement
      * method.
      *
-     * @param seaSurfaceCurrentMeasuringMethod
+     * @param seaSurfaceCurrentMeasuringMethod the methos used to measure sea
+     * surface current
      */
     public void setSeaSurfaceCurrentMeasurementMethod(
             int seaSurfaceCurrentMeasuringMethod) {
@@ -1027,7 +1028,7 @@ public class XBTProfile {
      * <strong>(FXY22004)</strong>-This method sets the sea surface current
      * direction .
      *
-     * @param seaSurfaceCurrentDirection
+     * @param seaSurfaceCurrentDirection the direction of  the seas surface
      */
     public void setSeaSurfaceCurrentDirection(
             int seaSurfaceCurrentDirection) {
@@ -1038,7 +1039,7 @@ public class XBTProfile {
      * <strong>(FXY22031)</strong>-This method sets the sea surface current
      * speed
      *
-     * @param seaSurfaceCurrentSpeed
+     * @param seaSurfaceCurrentSpeed sea surface current speed
      */
     public void setSeaSurfaceCurrentSpeed(double seaSurfaceCurrentSpeed) {
         this.seaSurfaceCurrentSpeed = seaSurfaceCurrentSpeed;
@@ -1048,7 +1049,7 @@ public class XBTProfile {
      * <strong>(FXY22063)</strong>-This method sets the total water depth at the
      * location where the measurement was made.
      *
-     * @param totalWaterDepth
+     * @param totalWaterDepth the depth where the measurement was made.
      */
     public void setTotalWaterDepth(int totalWaterDepth) {
         this.totalWaterDepth = totalWaterDepth;
@@ -1058,7 +1059,7 @@ public class XBTProfile {
      * <strong>(FXY1036)</strong>-This method sets the agency in charge of
      * operating the observation platform.
      *
-     * @param agencyOwner
+     * @param agencyOwner the agency in charge of operating the observation platform.
      */
     public void setAgencyOwner(int agencyOwner) {
         this.agencyOwner = agencyOwner;
@@ -1068,7 +1069,7 @@ public class XBTProfile {
      * <strong>(FXY22178)</strong>-This method sets a table value that
      * represents the type of launcher used.
      *
-     * @param xbtLauncherType
+     * @param xbtLauncherType the type of launcher used.
      */
     public void setXBTLauncherType(int xbtLauncherType) {
         this.xbtLauncherType = xbtLauncherType;
@@ -1078,7 +1079,7 @@ public class XBTProfile {
      * <strong>(FXY2171)</strong>-This method sets the serial number of the
      * recorder used.
      *
-     * @param xbtRecorderSerialNumber
+     * @param xbtRecorderSerialNumber he serial number of the recorder used.
      */
     public void setXBTRecorderSerialNumber(String xbtRecorderSerialNumber) {
         this.xbtRecorderSerialNumber = xbtRecorderSerialNumber;
@@ -1088,7 +1089,8 @@ public class XBTProfile {
      * <strong>(FXY4001)</strong>-This method sets the year in which the
      * recorder was manufactured.
      *
-     * @param xbtRecorderManufactureYear
+     * @param xbtRecorderManufactureYear the year in which the recorder was 
+     * manufactured.
      */
     public void setXBTRecorderManufacturedYear(
             int xbtRecorderManufactureYear) {
@@ -1099,7 +1101,8 @@ public class XBTProfile {
      * <strong>(FXY4002)</strong>-This method sets the month in which the
      * recorder was manufactured.
      *
-     * @param xbtRecorderManufactureMonth
+     * @param xbtRecorderManufactureMonth he month in which the
+     * recorder was manufactured.
      */
     public void setXBTRecorderManufacturedMonth(
             int xbtRecorderManufactureMonth) {
@@ -1110,7 +1113,8 @@ public class XBTProfile {
      * <strong>(FXY4003)</strong>-This method sets the day in which the recorder
      * was manufactured.
      *
-     * @param xbtRecorderManufactureDay
+     * @param xbtRecorderManufactureDay the day in which the recorder
+     * was manufactured.
      */
     public void setXBTRecorderManufacturedDay(
             int xbtRecorderManufactureDay) {
@@ -1121,7 +1125,8 @@ public class XBTProfile {
      * <strong>(FXY4001)</strong>-This method sets the year the XBT was
      * manufactured.
      *
-     * @param xbtProbeManufactureYear
+     * @param xbtProbeManufactureYear the year the XBT was
+     * manufactured.
      */
     public void setXBTProbeManufacturedYear(
             int xbtProbeManufactureYear) {
@@ -1132,7 +1137,8 @@ public class XBTProfile {
      * <strong>(FXY4002)</strong>-This method sets the month in which the XBT
      * was manufactured.
      *
-     * @param xbtProbeManufactureMonth
+     * @param xbtProbeManufactureMonth the month in which the XBT
+     * was manufactured.
      */
     public void setXBTProbeManufacturedMonth(
             int xbtProbeManufactureMonth) {
@@ -1143,7 +1149,8 @@ public class XBTProfile {
      * <strong>(FXY4003)</strong>-This method sets the day in which the XBT was
      * manufactured.
      *
-     * @param xbtProbeManufactureDay
+     * @param xbtProbeManufactureDay the day in which the XBT was
+     * manufactured.
      */
     public void setXBTProbeManufacturedDay(
             int xbtProbeManufactureDay) {
@@ -1156,8 +1163,9 @@ public class XBTProfile {
      * the BinEncoder and set via this method. any values entered here will
      * get overwritten.
      *
-     * @param numberOfRiderBlocks
-     */
+     * @param numberOfRiderBlocks the number of 40 bit blocks or 5 characters, 
+     * used to store the rider name. 
+     **/
     public void setNumberOfRiderBlocks(
             int numberOfRiderBlocks) {
         this.numberOfRiderBlocks = numberOfRiderBlocks;
@@ -1169,7 +1177,8 @@ public class XBTProfile {
      * is computed by the BinEncoder and set via this method. any values
      * entered here will get overwritten.
      *
-     * @param numberOfRiderInstitutionBlocks
+     * @param numberOfRiderInstitutionBlocks the number of 40 bit blocks
+     * or 5 characters, used to store the riders institution's name.
      */
     public void setNumberOfRiderInstitutionBlocks(
             int numberOfRiderInstitutionBlocks) {
@@ -1182,7 +1191,8 @@ public class XBTProfile {
      * computed by the BinEncoder and set via this method. any values
      * entered here will get overwritten.
      *
-     * @param numberOfRiderEmailBlocks
+     * @param numberOfRiderEmailBlocks the number of 40 bit blocks
+     * or 5 characters, used to store the rider's email address.
      */
     public void setNumberOfRiderEmailBlocks(int numberOfRiderEmailBlocks) {
         this.numberOfRiderEmailBlocks = numberOfRiderEmailBlocks;
@@ -1194,7 +1204,8 @@ public class XBTProfile {
      * computed by the BinEncoder and set via this method. any values
      * entered here will get overwritten.
      *
-     * @param numberOfRiderPhoneBlocks
+     * @param numberOfRiderPhoneBlocks the number of 40 bit blocks
+     * or 5 characters, used to store the rider's phone number.
      */
     public void setNumberOfRiderPhoneBlocks(int numberOfRiderPhoneBlocks) {
         this.numberOfRiderPhoneBlocks = numberOfRiderPhoneBlocks;
@@ -1208,7 +1219,8 @@ public class XBTProfile {
      * Value is computed by the BinEncoder and set via this method. any
      * values entered here will get overwritten.
      *
-     * @param numberOfRepeatedFields
+     * @param numberOfRepeatedFields The number contained within is the number 
+     * of following consecutive fields to replicate
      */
     public void setNumberOfRepeatedFields(int numberOfRepeatedFields) {
         this.numberOfRepeatedFields = numberOfRepeatedFields;
@@ -1219,7 +1231,8 @@ public class XBTProfile {
      * measurement points recorded. This Value is computed by the BinEncoder
      * and set via this method. any values entered here will get overwritten.
      *
-     * @param timesReplicated
+     * @param timesReplicated the number of temperature
+     * measurement points recorded.
      */
     public void setTimesReplicated(int timesReplicated) {
         this.timesReplicated = timesReplicated;
@@ -1229,7 +1242,8 @@ public class XBTProfile {
      * <strong>(FXY22042S)</strong>-This method sets the SST or the first
      * temperature measurement made.
      *
-     * @param seaSurfaceTemperature
+     * @param seaSurfaceTemperature the SST or the first
+     * temperature measurement made.
      */
     public void setSeaSurfaceTemperature(double seaSurfaceTemperature) {
         this.seaSurfaceTemperature = seaSurfaceTemperature;
@@ -1240,7 +1254,7 @@ public class XBTProfile {
      * sea/water surface
      *
      *
-     * @param seaDepth
+     * @param seaDepth the depth below the sea/water surface
      */
     public void setSeaDepth(double seaDepth) {
         this.seaDepth = seaDepth;
@@ -1250,7 +1264,8 @@ public class XBTProfile {
      * <strong>(FXY22042S)</strong>-This method sets an array containing the
      * temperature measurements made.
      *
-     * @param temperaturePoints
+     * @param temperaturePoints An array containing the temperature 
+     * measurements made.
      */
     public void setTemperaturePoints(double[] temperaturePoints) {
         this.temperaturePoints = temperaturePoints;
@@ -1261,7 +1276,7 @@ public class XBTProfile {
      * <strong>(FXY205030A)</strong>-This method sets the rider's name.
      *
      *
-     * @param riderName
+     * @param riderName the rider's name.
      */
     public void setRiderName(String riderName) {
         this.riderName = riderName;
@@ -1272,7 +1287,7 @@ public class XBTProfile {
      * <strong>(FXY205030A)</strong>-This method sets the rider's email.
      *
      *
-     * @param riderEmail
+     * @param riderEmail the rider's email.
      */
     public void setRiderEmail(String riderEmail) {
         this.riderEmail = riderEmail;
@@ -1282,7 +1297,7 @@ public class XBTProfile {
     /**
      * <strong>(FXY205030A)</strong>-This method sets the rider's institution.
      *
-     * @param riderInstitution
+     * @param riderInstitution the rider's institution.
      */
     public void setRiderInstitution(String riderInstitution) {
         this.riderInstitution = riderInstitution;
@@ -1291,7 +1306,7 @@ public class XBTProfile {
     /**
      * <strong>(FXY205030A)</strong>-This method sets the rider's phone number.
      *
-     * @param riderPhone
+     * @param riderPhone the rider's phone number.
      */
     public void setRiderPhones(String riderPhone) {
         this.riderPhone = riderPhone;

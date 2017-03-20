@@ -90,6 +90,7 @@ public final class XBTProfileDataRanges {
      * <strong>(FXY48211)</strong>-This method returns the data range used for  the old message type.
      *
      * @return  <strong>(FXY48211)</strong>-This method returns the data range used for  the old message
+     * @param messageType  the profile's message type
      * type.Returns 0 when there is an exception.
      */
     public static int[] getOldMessageType(int messageType) {
@@ -105,6 +106,7 @@ public final class XBTProfileDataRanges {
      *
      * @return  <strong>(FXY48211)</strong>-This method returns the data range used for  the old message
      * type.Returns 0 when there is an exception.
+     * @param messageType  the profile's message type
      */
     public static int[] getNewMessageType(int messageType) {
         int start = dataLocations[2][0][messageType];
@@ -120,6 +122,7 @@ public final class XBTProfileDataRanges {
      *
      * @return  <strong>(FXY5001)</strong>-This method returns the data range used for  the latitude where
      * the measurement was made. The value is returned in decimal degrees.
+     * @param messageType  the profile's message type
      */
     public static int[] getLattitude(int messageType) {
         int start = dataLocations[3][0][messageType];
@@ -135,6 +138,7 @@ public final class XBTProfileDataRanges {
      *
      * @return  <strong>(FXY6001)</strong>-This method returns the data range used for  the longitude
      * where the measurement was made. The value is returned in decimal degrees.
+     * @param messageType  the profile's message type
      */
     public static int[] getLongitude(int messageType) {
         int start = dataLocations[4][0][messageType];
@@ -150,6 +154,7 @@ public final class XBTProfileDataRanges {
      * @return  <strong>(FXY1080)</strong>-This method returns the data range used for  the name given to
      * the transect. e.g. AX10 This field became available beginning with
      * message type 2
+     * @param messageType  the profile's message type
      */
     public static int[] getSoopLine(int messageType) {
         int start = dataLocations[5][0][messageType];
@@ -166,6 +171,7 @@ public final class XBTProfileDataRanges {
      * number for the line. This is the number assigned to a transect repeated
      * in the same calendar year. e.g. The second transect would have a value of
      * 2. A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getTransectNumber(int messageType) {
         int start = dataLocations[6][0][messageType];
@@ -178,6 +184,7 @@ public final class XBTProfileDataRanges {
      * <strong>(FXY48304)</strong>-
      *
      * @return <strong>(FXY48304)</strong>-This method returns the data range used for 
+     * @param messageType  the profile's message type
      */
     public static int[] getSequenceNumber(int messageType) {
         int start = dataLocations[7][0][messageType];
@@ -192,6 +199,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY4001)</strong>-This method returns the data range used for  the year in which
      * the measurement was made. A value of -999 is returned when there is no
+     * @param messageType  the profile's message type
      * value.
      */
     public static int[] getYear(int messageType) {
@@ -207,6 +215,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which
      * the measurement was made. A value of -999 is returned when there is no
+     * @param messageType  the profile's message type
      * value.
      */
     public static int[] getMonth(int messageType) {
@@ -223,6 +232,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which
      * the measurement was made. A value of -999 is returned when there is no
      * value.
+     * @param messageType  the profile's message type
      */
     public static int[] getDay(int messageType) {
         int start = dataLocations[10][0][messageType];
@@ -238,6 +248,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4004)</strong>-This method returns the data range used for  the GMT hour when
      * the measurement was made. A value of -999 is returned when there is no
      * value.
+     * @param messageType  the profile's message type
      */
     public static int[] getHour(int messageType) {
         int start = dataLocations[11][0][messageType];
@@ -253,6 +264,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4005)</strong>-This method returns the data range used for  the GMT minute
      * when the measurement was made A value of -999 is returned when there is
      * no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getMinute(int messageType) {
         int start = dataLocations[12][0][messageType];
@@ -266,7 +278,8 @@ public final class XBTProfileDataRanges {
      * there is no
      *
      * @return <strong>(FXY1200)</strong>-This method returns the data range used for  the name of the
-     * ship. If there is no name then the string "NONE" is returned.
+     * ship. 
+     * @param messageType  the profile's message type
      */
     public static int[] getShipName(int messageType) {
         int start = dataLocations[13][0][messageType];
@@ -282,6 +295,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY1201)</strong>-This method returns the data range used for  the ships
      * International Maritime Organization (IMO) number. A value of -999 is
      * returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getLloyds(int messageType) {
         int start = dataLocations[14][0][messageType];
@@ -299,6 +313,7 @@ public final class XBTProfileDataRanges {
      * the value returned by this method must match. If there is not a match,
      * then the bin file is possibly corrupt. A value of -999 is returned when
      * there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getUniqueTag(int messageType) {
         int start = dataLocations[15][0][messageType];
@@ -315,6 +330,7 @@ public final class XBTProfileDataRanges {
      * Amverseas used to make the measurement. This value must later be massaged
      * to get the actual version. e.g. 920 must be dived by 100 to get Amverseas
      * version 9.20 A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getSeasVersion(int messageType) {
         int start = dataLocations[16][0][messageType];
@@ -330,6 +346,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY48300)</strong>-This method returns the data range used for  the serial number
      * of the XBT used to make the measurement. A value of -999 is returned when
      * there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getProbeSerialNumber(int messageType) {
         int start = dataLocations[17][0][messageType];
@@ -346,6 +363,7 @@ public final class XBTProfileDataRanges {
      * the profile. A value of 1 is full resolution a value of 2 is 1 meter
      * resolution and a value of 3 is two meter resolution. A value of -999 is
      * returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getThisDataIs(int messageType) {
         int start = dataLocations[18][0][messageType];
@@ -363,6 +381,7 @@ public final class XBTProfileDataRanges {
      * quality other than good, the user can add it to the profile after the
      * measurement has been made. A value of -999 is returned when there is no
      * value.
+     * @param messageType  the profile's message type
      */
     public static int[] getDataQuality(int messageType) {
         int start = dataLocations[19][0][messageType];
@@ -378,6 +397,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY48305)</strong>-This method returns the data range used for  the approximate
      * height of the autolauncher from the surface of the water. A value of
      * -9.99 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getLaunchHeight(int messageType) {
         int start = dataLocations[20][0][messageType];
@@ -393,6 +413,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY1012)</strong>-This method returns the data range used for  the direction in
      * degrees that the ship was heading when the measurement was made. A value
      * of -999.0 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getShipDirection(int messageType) {
         int start = dataLocations[21][0][messageType];
@@ -403,11 +424,12 @@ public final class XBTProfileDataRanges {
 
     /**
      * <strong>(FXY1013)</strong>-This method returns the data range used for  the speed of the ship in
-     * km/h when the measurement was made.
+     * m/s when the measurement was made.
      *
      * @return <strong>(FXY1013)</strong>-This method returns the data range used for  the speed of the
      * ship in m/s when the measurement was made. A value of -9.99 is returned
      * when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getShipSpeed(int messageType) {
         int start = dataLocations[22][0][messageType];
@@ -424,6 +446,7 @@ public final class XBTProfileDataRanges {
      * that represents the type of probe used to make the measurement.<br>
      * e.g. a value of 52 refers to a Deep Blue XBT. A value of -999 is returned
      * when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getInstrumentType(int messageType) {
         int start = dataLocations[23][0][messageType];
@@ -441,6 +464,7 @@ public final class XBTProfileDataRanges {
      * XBT.<br>
      * e.g. a value of 6 refers to any of the different Sippican MK21 models. A
      * value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      *
      */
     public static int[] getRecorderType(int messageType) {
@@ -457,6 +481,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY2002)</strong>-This method returns the data range used for  a table value that
      * represents the type of anemometer used. A value of -999 is returned when
      * there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getWindInstrumentType(int messageType) {
         int start = dataLocations[25][0][messageType];
@@ -472,6 +497,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY11001)</strong>-This method returns the data range used for  the wind
      * direction in degrees at the time of the measurement. A value of -999 is
      * returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getWindDirection(int messageType) {
         int start = dataLocations[26][0][messageType];
@@ -487,6 +513,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY11002)</strong>-This method returns the data range used for  the wind speed in
      * degrees at the time of the measurement. A value of -99.9 is returned when
      * there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getWindSpeed(int messageType) {
         int start = dataLocations[27][0][messageType];
@@ -502,6 +529,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY12004)</strong>-This method returns the data range used for  the dry bulb
      * temperature at the time of the measurement. A value of -99.9 is returned
      * when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getDryBulbTemperature(int messageType) {
         int start = dataLocations[28][0][messageType];
@@ -516,6 +544,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY2030)</strong>-This method returns the data range used for  the sea current
      * measurement method. A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getSeaSurfaceCurrentMeasurementMethod(int messageType) {
         int start = dataLocations[29][0][messageType];
@@ -530,6 +559,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY22004)</strong>-This method returns the data range used for  the sea surface
      * current direction . A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getSeaSurfaceCurrentDirection(int messageType) {
         int start = dataLocations[30][0][messageType];
@@ -544,6 +574,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY22031)</strong>-This method returns the data range used for  the sea surface
      * current speed A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getSeaSurfaceCurrentSpeed(int messageType) {
         int start = dataLocations[31][0][messageType];
@@ -559,6 +590,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY22063)</strong>-This method returns the data range used for  the total water
      * depth at the location where the measurement was made. A value of -999 is
      * returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getTotalWaterDepth(int messageType) {
         int start = dataLocations[32][0][messageType];
@@ -574,6 +606,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY1036)</strong>-This method returns the data range used for  the agency in
      * charge of operating the observation platform. A value of -999 is returned
      * when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getAgencyOwner(int messageType) {
         int start = dataLocations[33][0][messageType];
@@ -589,6 +622,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY22178)</strong>-This method returns the data range used for  a table value
      * that represents the type of launcher used. A value of -999 is returned
      * when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTLauncherType(int messageType) {
         int start = dataLocations[34][0][messageType];
@@ -603,6 +637,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY2171)</strong>-This method returns the data range used for  the serial number
      * of the recorder used. A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTRecorderSerialNumber(int messageType) {
         int start = dataLocations[35][0][messageType];
@@ -618,6 +653,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4001)</strong>-This method returns the data range used for  the year in which
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTRecorderManufacturedYear(int messageType) {
         int start = dataLocations[36][0][messageType];
@@ -633,6 +669,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTRecorderManufacturedMonth(int messageType) {
         int start = dataLocations[37][0][messageType];
@@ -648,6 +685,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which
      * the recorder was manufactured. A value of -999 is returned when there is
      * no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTRecorderManufacturedDay(int messageType) {
         int start = dataLocations[38][0][messageType];
@@ -662,6 +700,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY4001)</strong>-This method returns the data range used for  the year the XBT
      * was manufactured. A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTProbeManufacturedYear(int messageType) {
         int start = dataLocations[39][0][messageType];
@@ -677,6 +716,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4002)</strong>-This method returns the data range used for  the month in which
      * the XBT was manufactured. A value of -999 is returned when there is no
      * value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTProbeManufacturedMonth(int messageType) {
         int start = dataLocations[40][0][messageType];
@@ -692,6 +732,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY4003)</strong>-This method returns the data range used for  the day in which
      * the XBT was manufactured. A value of -999 is returned when there is no
      * value.
+     * @param messageType  the profile's message type
      */
     public static int[] getXBTProbeManufacturedDay(int messageType) {
         int start = dataLocations[41][0][messageType];
@@ -707,6 +748,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the rider name. A value of -999
      * is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getNumberOfRiderBlocks(int messageType) {
         int start = dataLocations[42][0][messageType];
@@ -722,6 +764,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the riders institution's name.
      * A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getNumberOfRiderInstitutionBlocks(int messageType) {
         int start = dataLocations[43][0][messageType];
@@ -737,6 +780,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the rider's email address. A
      * value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getNumberOfRiderEmailBlocks(int messageType) {
         int start = dataLocations[44][0][messageType];
@@ -752,6 +796,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY31001B)</strong>-This method returns the data range used for  the number of 40
      * bit blocks or 5 characters, used to store the rider's phone number. A
      * value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getNumberOfRiderPhoneBlocks(int messageType) {
         int start = dataLocations[45][0][messageType];
@@ -768,6 +813,7 @@ public final class XBTProfileDataRanges {
      * fields to replicate. This field must be followed by FXY31200 to identify
      * how many groups of replicated fields follow. Always delayed replication.
      * value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getNumberOfRepeatedFields(int messageType) {
         int start = dataLocations[46][0][messageType];
@@ -783,6 +829,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY31200)</strong>-This method returns the data range used for  the number of
      * temperature measurement points recorded. A value of -999 is returned when
      * there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getTimesReplicated(int messageType) {
         int start = dataLocations[47][0][messageType];
@@ -798,6 +845,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY22042S)</strong>-This method returns the data range used for  the SST or the
      * first temperature measurement made. A value of -13.99 is returned when
      * there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getSeaTemperature(int messageType) {
         int start = dataLocations[48][0][messageType];
@@ -812,6 +860,7 @@ public final class XBTProfileDataRanges {
      *
      * @return <strong>(FXY7062S)</strong>-This method returns the data range used for  the depth below
      * the sea/water surface A value of -999 is returned when there is no value.
+     * @param messageType  the profile's message type
      */
     public static int[] getSeaDepth(int messageType) {
         int start = dataLocations[49][0][messageType];
@@ -827,6 +876,7 @@ public final class XBTProfileDataRanges {
      * @return <strong>(FXY22042S)</strong>-This method returns the data range used for  an array
      * containing the temperature measurements made. An empty array is returned
      * when there are no values.
+     * @param messageType  the profile's message type
      */
     public static int[] getTemperaturePoints(int messageType) {
         int start = dataLocations[50][0][messageType];
@@ -839,7 +889,8 @@ public final class XBTProfileDataRanges {
      * <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's name.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
-     * name. A value of "NONE" is returned when there is no value.
+     * name. 
+     * @param messageType  the profile's message type
      */
     public static int[] getRiderNames(int messageType) {
         int start = dataLocations[52][0][messageType];
@@ -852,7 +903,8 @@ public final class XBTProfileDataRanges {
      * <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's email.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
-     * email. A value of "NONE" is returned when there is no value.
+     * email. 
+     * @param messageType  the profile's message type
      */
     public static int[] getRiderEmails(int messageType) {
         int start = dataLocations[53][0][messageType];
@@ -866,7 +918,8 @@ public final class XBTProfileDataRanges {
      * institution.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
-     * institution. A value of "NONE" is returned when there is no value.
+     * institution. 
+     * @param messageType  the profile's message type
      */
     public static int[] getRiderInstituions(int messageType) {
         int start = dataLocations[54][0][messageType];
@@ -880,7 +933,8 @@ public final class XBTProfileDataRanges {
      * number.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the data range used for  the rider's
-     * phone number. A value of "NONE" is returned when there is no value.
+     * phone number. 
+     * @param messageType  the profile's message type
      */
     public static int[] getRiderPhones(int messageType) {
         int start = dataLocations[55][0][messageType];

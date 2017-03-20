@@ -33,7 +33,7 @@ public class DepthCalculator {
      * @param probeType <strong>(FXY22067)</strong>-a table value that
      * represents the type of probe used to make the measurement.<br>
      * e.g. a value of 52 refers to a Deep Blue XBT.
-     * @param numberOfMeasurements The number of measurements made.
+     * @param xBTProfile XBTProfile object
      *
      */
     public DepthCalculator(XBTProfile xBTProfile, int recorderType, int probeType) {

@@ -22,7 +22,7 @@ public class FormatConverter {
     /**
      * The constructor accepts an argument of type XBTProfile
      *
-     * @param xBTprofile
+     * @param xBTprofile XBTProfile object
      */
     public FormatConverter(XBTProfile xBTprofile) {
         this.xBTprofile = xBTprofile;

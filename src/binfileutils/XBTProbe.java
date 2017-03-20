@@ -245,6 +245,7 @@ public final class XBTProbe {
      *
      * @return This method returns the A coefficient used in the 
      * fall rate equation.
+     * @param probeType the type of probe used.
      */
     public static double getCoefficientA(int probeType ) {
         double A = 0.0;
@@ -369,6 +370,7 @@ public final class XBTProbe {
      *
      * @return This method returns the B coefficient used in the 
      * fall rate equation.
+     * @param probeType the type of probe used.
      */
     public static double getCoefficientB(int probeType) {
         double B = 0.0;
@@ -492,6 +494,7 @@ public final class XBTProbe {
      * This method returns the maximumm depth that the probe is designed for.
      *
      * @return This method returns the maximumm depth that the probe is designed for.
+     * @param probeType the type of probe used.
      */
     public static double getMaxDepth(int probeType ) {
         double maxDepth = 4000.00;
@@ -614,7 +617,8 @@ public final class XBTProbe {
      /**
      * This method returns a description for the probe.
      *
-     * @return This method returns a description for the probe.
+     * @return This method returns a description for the probe
+     * @param probeType the type of probe used..
      */
     public static String getProbeDescription(int probeType ) {
         String probeDescription = "Unknown";

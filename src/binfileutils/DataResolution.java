@@ -34,6 +34,7 @@ public final class DataResolution {
      * of the description for the data resolution recorded in the profile.
      * This method accepts an int as a parameter. The parameter is the value
      * of datatype field in the XBT profile.
+     * @param dataType the resolution of the profile
      */
     
     public static final String getDataResolutionDescription(int dataType) {
