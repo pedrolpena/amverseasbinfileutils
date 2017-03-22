@@ -393,7 +393,7 @@ public class XBTProfile {
      * at the time of the measurement.
      *
      * @return <strong>(FXY11002)</strong>-This method returns the wind speed in
-     * degrees at the time of the measurement.
+     * m/s at the time of the measurement.
      */
     public double getWindSpeed() {
         return windSpeed;
@@ -993,7 +993,7 @@ public class XBTProfile {
     }
 
     /**
-     * <strong>(FXY11002)</strong>-This method sets the wind speed in degrees at
+     * <strong>(FXY11002)</strong>-This method sets the wind speed in m/s at
      * the time of the measurement.
      *
      * @param windSpeed the wind speed

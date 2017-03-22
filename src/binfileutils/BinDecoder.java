@@ -479,7 +479,7 @@ public class BinDecoder {
      * at the time of the measurement.
      *
      * @return <strong>(FXY11002)</strong>-This method returns the wind speed in
-     * degrees at the time of the measurement. A value of -99.9 is returned when
+     * m/s at the time of the measurement. A value of -99.9 is returned when
      * there is no value.
      */
     private double getWindSpeed() {
