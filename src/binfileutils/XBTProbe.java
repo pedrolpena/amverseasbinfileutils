@@ -31,7 +31,7 @@ public final class XBTProbe {
     public static final String SIPPICAN_T5_DESCRIPTION = "Sippican T-5";
 
     public static final int SIPPICAN_FAST_DEEP = 21;
-    public static final double SIPPICAN_FAST_DEEP_COEFFICIENT_A = 6.346;
+    public static final double SIPPICAN_FAST_DEEP_COEFFICIENT_A = 6.390;
     public static final double SIPPICAN_FAST_DEEP_COEFFICIENT_B = -1.82;
     public static final double SIPPICAN_FAST_DEEP_MAX_DEPTH = 1000.00;
     public static final String SIPPICAN_FAST_DEEP_DESCRIPTION = "Sippican Fast Deep";
