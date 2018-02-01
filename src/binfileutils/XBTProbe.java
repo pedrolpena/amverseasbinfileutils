@@ -172,7 +172,7 @@ public final class XBTProbe {
     public static final double SPARTON_XBT4_COEFFICIENT_A = 6.472;
     public static final double SPARTON_XBT4_COEFFICIENT_B = -2.16;
     public static final double SPARTON_XBT4_MAX_DEPTH = 4000.00;
-    public static final String SPARTON_XBT4_DESCRIPTION = "";
+    public static final String SPARTON_XBT4_DESCRIPTION = "Sparton XBT-4";
 
     public static final int SPARTON_XBT5 = 431;
     public static final double SPARTON_XBT5_COEFFICIENT_A = 6.828;
