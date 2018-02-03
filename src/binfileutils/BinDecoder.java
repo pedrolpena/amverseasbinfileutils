@@ -849,7 +849,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * name. A value of null is returned when there is no value.
      */
-    private String getRiderName() {
+    private String getRiderNames() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderNames(mt)[0];
@@ -864,7 +864,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * email. A value of null is returned when there is no value.
      */
-    private String getRiderEmail() {
+    private String getRiderEmails() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderEmails(mt)[0];
@@ -880,7 +880,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * institution. A value of null is returned when there is no value.
      */
-    private String getRiderInstitution() {
+    private String getRiderInstitutions() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderInstituions(mt)[0];
@@ -895,7 +895,7 @@ public class BinDecoder {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * phone number. A value of null is returned when there is no value.
      */
-    private String getRiderPhone() {
+    private String getRiderPhones() {
 
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getRiderPhones(mt)[0];
@@ -1061,10 +1061,10 @@ public class BinDecoder {
         xBTProfile.setOldMessageType(getOldMessageType());
         xBTProfile.setProbeSerialNumber(getProbeSerialNumber());
         xBTProfile.setRecorderType(getRecorderType());
-        xBTProfile.setRiderName(getRiderName());
-        xBTProfile.setRiderEmail(getRiderEmail());
-        xBTProfile.setRiderInstitution(getRiderInstitution());
-        xBTProfile.setRiderPhones(getRiderPhone());
+        xBTProfile.setRiderName(getRiderNames());
+        xBTProfile.setRiderEmail(getRiderEmails());
+        xBTProfile.setRiderInstitution(getRiderInstitutions());
+        xBTProfile.setRiderPhones(getRiderPhones());
         xBTProfile.setSeaDepth(getSeaDepth());
         xBTProfile.setSeaSurfaceCurrentDirection(getSeaSurfaceCurrentDirection());
         xBTProfile.setSeaSurfaceCurrentMeasurementMethod(getSeaSurfaceCurrentMeasurementMethod());
