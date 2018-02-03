@@ -1278,7 +1278,7 @@ public class XBTProfile {
      *
      * @param riderName the rider's name.
      */
-    public void setRiderName(String riderName) {
+    public void setRiderNames(String riderName) {
         this.riderName = riderName;
 
     }
@@ -1289,7 +1289,7 @@ public class XBTProfile {
      *
      * @param riderEmail the rider's email.
      */
-    public void setRiderEmail(String riderEmail) {
+    public void setRiderEmails(String riderEmail) {
         this.riderEmail = riderEmail;
 
     }
@@ -1299,7 +1299,7 @@ public class XBTProfile {
      *
      * @param riderInstitution the rider's institution.
      */
-    public void setRiderInstitution(String riderInstitution) {
+    public void setRiderInstitutions(String riderInstitution) {
         this.riderInstitution = riderInstitution;
     }
 

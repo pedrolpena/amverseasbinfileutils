@@ -1061,9 +1061,9 @@ public class BinDecoder {
         xBTProfile.setOldMessageType(getOldMessageType());
         xBTProfile.setProbeSerialNumber(getProbeSerialNumber());
         xBTProfile.setRecorderType(getRecorderType());
-        xBTProfile.setRiderName(getRiderNames());
-        xBTProfile.setRiderEmail(getRiderEmails());
-        xBTProfile.setRiderInstitution(getRiderInstitutions());
+        xBTProfile.setRiderNames(getRiderNames());
+        xBTProfile.setRiderEmails(getRiderEmails());
+        xBTProfile.setRiderInstitutions(getRiderInstitutions());
         xBTProfile.setRiderPhones(getRiderPhones());
         xBTProfile.setSeaDepth(getSeaDepth());
         xBTProfile.setSeaSurfaceCurrentDirection(getSeaSurfaceCurrentDirection());
