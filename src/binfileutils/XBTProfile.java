@@ -661,7 +661,7 @@ public class XBTProfile {
      * name.
      *
      */
-    public String getRiderName() {
+    public String getRiderNames() {
         return riderName;
     }
 
@@ -672,7 +672,7 @@ public class XBTProfile {
      * email.
      *
      */
-    public String getRiderEmail() {
+    public String getRiderEmails() {
         return riderEmail;
     }
 
@@ -683,7 +683,7 @@ public class XBTProfile {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * institution.
      */
-    public String getRiderInstitution() {
+    public String getRiderInstitutions() {
         return riderInstitution;
     }
 
@@ -694,7 +694,7 @@ public class XBTProfile {
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
      * phone number.
      */
-    public String getRiderPhone() {
+    public String getRiderPhones() {
 
         return riderPhone;
     }
@@ -1366,10 +1366,10 @@ public class XBTProfile {
                 + "Times replicated=" + getTimesReplicated() + "\n"
                 + "Sea Temperature=" + getSeaSurfaceTemperature() + "\n"
                 + "SeaDepth=" + getSeaDepth() + "\n"
-                + "Rider=" + getRiderName() + "\n"
-                + "Email=" + getRiderEmail() + "\n"
-                + "Phone=" + getRiderPhone() + "\n"
-                + "Institution=" + getRiderInstitution() + "\n"
+                + "Rider=" + getRiderNames() + "\n"
+                + "Email=" + getRiderEmails() + "\n"
+                + "Phone=" + getRiderPhones() + "\n"
+                + "Institution=" + getRiderInstitutions() + "\n"
                 + "index,temperature\n";
         for (int i = 0; i < tempPoints.length; i++) {
             str += i + "," + tempPoints[i] + "\n";
