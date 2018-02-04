@@ -1,6 +1,6 @@
 /*
-* This is an example of how to use the library to get profile info in the SEAS 
-* ASCII format.
+* This is an example of how to use the library to print the metadata and
+* data to standard out.
 */
 
 import binfileutils.BinDecoder;       // decodes the profile

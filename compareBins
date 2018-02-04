@@ -1,10 +1,11 @@
 #!/bin/bash
 clear
-java -cp .:../AmverseasBinFileUtils/dist/AmverseasBinFileUtils.jar DecoderTestASCII ./outProfile.bin > outProfile.txt
-java -cp .:../AmverseasBinFileUtils/dist/AmverseasBinFileUtils.jar DecoderTestASCII ./inProfile2.bin > inProfile2.txt
-xxd ./outProfile.bin > outProfile.hex
-xxd ./inProfile2.bin > inProfile2.hex
+java -cp .:lib/AmverseasBinFileUtils.jar DecodeEncodeXBTProfile $1 $2
+java -cp .:lib/AmverseasBinFileUtils.jar DecoderTestASCII ./$1 > $1'.txt'
+java -cp .:lib/AmverseasBinFileUtils.jar DecoderTestASCII ./$2 > $2'.txt'
+#xxd ./outProfile.bin > outProfile.hex
+#xxd ./inProfile2.bin > inProfile2.hex
 
-diff inProfile2.txt outProfile.txt
+diff $1'.txt' $2'.txt'
 
-diff  inProfile2.hex outProfile.hex
+#diff  inProfile2.hex outProfile.hex
