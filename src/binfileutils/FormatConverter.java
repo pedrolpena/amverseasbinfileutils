@@ -74,7 +74,7 @@ public class FormatConverter {
         tmp += "Wind Instrument Type           | " + xBTprofile.getWindInstrumentType() + "\n";
         tmp += "Wind Direction                 | " + xBTprofile.getWindDirection() + "\n";
         tmp += "Wind Speed (knots)             | " + xBTprofile.getWindSpeed() + "\n";
-        tmp += "Dry Bulb Temperature (celsius) | " + xBTprofile.getDryBulbTemperature() + "\n";
+        tmp += "Dry Bulb Temperature (celsius) | " + String.format("%05.2f", xBTprofile.getDryBulbTemperature()-273.15) + "\n";
         tmp += "Current Measurement Method     | " + xBTprofile.getSeaSurfaceCurrentMeasurementMethod() + "\n";
         tmp += "Current Direction              | " + xBTprofile.getSeaSurfaceCurrentDirection() + "\n";
         tmp += "Current Speed (knots)          | " + xBTprofile.getSeaSurfaceCurrentSpeed() + "\n";
