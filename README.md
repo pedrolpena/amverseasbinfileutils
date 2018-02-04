@@ -27,8 +27,16 @@ To make it executable type<br>
 
 When done compiling, AmverseasBinFileUtils.jar will be placed in the lib directory.<br>
 
+--------------------------
+-Example programs-
+--------------------------
 
 Some example programs are included to get an idea of how to use the library.<br>
+<b>-DecoderTest
+-DecoderTestASCII
+-DecoderTestGetDepths
+-DecodeEncodeXBTProfile</b>
+
 
 DecoderTest takes an XBT profile as an argument and prints the metadata and data to standard out.<br>
 DecoderTestASCII takes an XBT profile as an argument and prints the metadata and data to standard out in the AOML ASCII format.<br>
