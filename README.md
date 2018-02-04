@@ -30,6 +30,12 @@ When done compiling, AmverseasBinFileUtils.jar will be placed in the lib directo
 
 Some example programs are included to get an idea of how to use the library.<br>
 
+DecoderTest takes an XBT profile as an argument and prints the metadata and data to standard out.<br>
+DecoderTestASCII takes an XBT profile as an argument and prints the metadata and data to standard out in the AOML ASCII format.<br>
+DecoderTestGetDepths takes an XBT profile as an argument and prints the depth and temperature points to standard out.<br>
+DecodeEncodeXBTProfile takes an XBT profile and a an output filename as arguments.It then extracts data from the input <br>
+XBT profile and encodes it into a new profile. This example basically makes a copy of an XBT profile.<br>
+
 --------------------------
 -Compile example programs-
 --------------------------
@@ -69,3 +75,6 @@ java -cp .;lib/AmverseasBinFileUtils.jar DecoderTest profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar DecoderTestASCII profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar DecoderTestGetDepths profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar DecodeEncodeXBTProfile profile.bin copiedProfile.bin<br>
+
+
+
