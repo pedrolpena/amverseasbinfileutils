@@ -38,13 +38,14 @@ linux
 javac -cp .:lib/AmverseasBinFileUtils.jar DecoderTest.java<br>
 javac -cp .:lib/AmverseasBinFileUtils.jar DecoderTestASCII.java<br>
 javac -cp .:lib/AmverseasBinFileUtils.jar DecoderTestGetDepths.java<br>
+javac -cp .:lib/AmverseasBinFileUtils.jar DecodeEncodeXBTProfile.java<br>
 
 windows
 -------
 javac -cp .;lib/AmverseasBinFileUtils.jar DecoderTest.java<br>
 javac -cp .;lib/AmverseasBinFileUtils.jar DecoderTestASCII.java<br>
 javac -cp .;lib/AmverseasBinFileUtils.jar DecoderTestGetDepths.java<br>
-
+javac -cp .;lib/AmverseasBinFileUtils.jar DecodeEncodeXBTProfile.java<br>
 ----------------------
 -Run example programs-
 ----------------------
@@ -54,9 +55,11 @@ linux
 java -cp .:lib/AmverseasBinFileUtils.jar DecoderTest profile.bin<br>
 java -cp .:lib/AmverseasBinFileUtils.jar DecoderTestASCII profile.bin<br>
 java -cp .:lib/AmverseasBinFileUtils.jar DecoderTestGetDepths profile.bin<br>
+java -cp .:lib/AmverseasBinFileUtils.jar DecodeEncodeXBTProfile profile.bin copiedProfile.bin<br>
 
 windows
 -------
 java -cp .;lib/AmverseasBinFileUtils.jar DecoderTest profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar DecoderTestASCII profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar DecoderTestGetDepths profile.bin<br>
+java -cp .;lib/AmverseasBinFileUtils.jar DecodeEncodeXBTProfile profile.bin copiedProfile.bin<br>
