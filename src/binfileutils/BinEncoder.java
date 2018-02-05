@@ -147,14 +147,16 @@ public class BinEncoder {
         //**************Encode Rider Name*********************************
         start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + 12 * timesReplicated;
 
-        if (xBTProfile.getRiderNames() != null) {
+                if (xBTProfile.getRiderNames() != null) {
 
             numberOfRiderBlocks = (int) Math.ceil(((double) xBTProfile.getRiderNames().length()) / 5);
+            
+            if (numberOfRiderBlocks > 0) {
+                integerToBits(bits, numberOfRiderBlocks, XBTProfileDataRanges.getNumberOfRiderBlocks(newMessageType));
 
-            integerToBits(bits, numberOfRiderBlocks, XBTProfileDataRanges.getNumberOfRiderBlocks(newMessageType));
-
-            range[0] = start0;
-            encodeCommentBlocks(bits, xBTProfile.getRiderNames(), range, numberOfRiderBlocks);
+                range[0] = start0;
+                encodeCommentBlocks(bits, xBTProfile.getRiderNames(), range, numberOfRiderBlocks);
+            }
 
         } else {
             numberOfRiderBlocks = 0;
@@ -166,11 +168,13 @@ public class BinEncoder {
         //***********************Encode Rider Email***********************
         if (xBTProfile.getRiderEmails() != null) {
             numberOfRiderEmailBlocks = (int) Math.ceil(((double) xBTProfile.getRiderEmails().length()) / 5);
-
-            integerToBits(bits, numberOfRiderEmailBlocks, XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
-            start0 = start0 + numberOfRiderBlocks * 40;
-            range[0] = start0;
-            encodeCommentBlocks(bits, xBTProfile.getRiderEmails(), range, numberOfRiderEmailBlocks);
+            
+            if (numberOfRiderEmailBlocks > 0) {
+                integerToBits(bits, numberOfRiderEmailBlocks, XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
+                start0 = start0 + numberOfRiderBlocks * 40;
+                range[0] = start0;
+                encodeCommentBlocks(bits, xBTProfile.getRiderEmails(), range, numberOfRiderEmailBlocks);
+            }
         } else {
             numberOfRiderEmailBlocks = 0;
             start0 = start0 + numberOfRiderBlocks * 40;
@@ -180,12 +184,12 @@ public class BinEncoder {
         //***********************Encode Rider Instituion********************
         if (xBTProfile.getRiderInstitutions() != null) {
             numberOfRiderInstitutionBlocks = (int) Math.ceil(((double) xBTProfile.getRiderInstitutions().length()) / 5);
-
-            integerToBits(bits, numberOfRiderInstitutionBlocks, XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
-            start0 = start0 + numberOfRiderEmailBlocks * 40;
-            range[0] = start0;
-            encodeCommentBlocks(bits, xBTProfile.getRiderInstitutions(), range, numberOfRiderInstitutionBlocks);
-
+            if (numberOfRiderInstitutionBlocks > 0) {
+                integerToBits(bits, numberOfRiderInstitutionBlocks, XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
+                start0 = start0 + numberOfRiderEmailBlocks * 40;
+                range[0] = start0;
+                encodeCommentBlocks(bits, xBTProfile.getRiderInstitutions(), range, numberOfRiderInstitutionBlocks);
+            }
         } else {
             numberOfRiderInstitutionBlocks = 0;
             start0 = start0 + numberOfRiderEmailBlocks * 40;
@@ -197,18 +201,17 @@ public class BinEncoder {
         //**************************Encode Rider Phone Number****************
         if (xBTProfile.getRiderPhones() != null) {
             numberOfRiderPhoneBlocks = (int) Math.ceil(((double) xBTProfile.getRiderPhones().length()) / 5);
+            if (numberOfRiderPhoneBlocks > 0) {
+                integerToBits(bits, numberOfRiderPhoneBlocks, XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
+                start0 = start0 + numberOfRiderInstitutionBlocks * 40;
+                range[0] = start0;
 
-            integerToBits(bits, numberOfRiderPhoneBlocks, XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
-            start0 = start0 + numberOfRiderInstitutionBlocks * 40;
-            range[0] = start0;
-
-            encodeCommentBlocks(bits, xBTProfile.getRiderPhones(), range, numberOfRiderPhoneBlocks);
-
+                encodeCommentBlocks(bits, xBTProfile.getRiderPhones(), range, numberOfRiderPhoneBlocks);
+            }
         } else {
             numberOfRiderPhoneBlocks = 0;
 
         }
-
         xBTProfile.setNumberOfRiderPhoneBlocks(numberOfRiderPhoneBlocks);
 
     }
