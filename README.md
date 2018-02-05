@@ -101,10 +101,10 @@ java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecodeEncod
 Two meter resolution check
 --------------------------
 
-you can ouput the depths and temperatures from DecoderTestGetDepths into a text file and interpolate in matlab or octave<br>
+You can ouput the depths and temperatures from DecoderTestGetDepths into a text file and interpolate in matlab or octave<br>
 to double check the results.
 
-in linux create profile.txt you can do the saem in windows just use the appropriate command<br>
+in linux create profile.txt you can do the same in windows just use the appropriate command<br>
 
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepths profile.bin > profile.txt<br>
 
