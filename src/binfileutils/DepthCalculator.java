@@ -3,6 +3,8 @@ package binfileutils;
 ;
 import static binfileutils.XBTProbe.*;
 import static binfileutils.XBTRecorder.*;
+import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
+import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
 /**
  * This class uses the XBT fall rate equation to generate measurement depths for
@@ -37,24 +39,18 @@ public class DepthCalculator {
      *
      */
     public DepthCalculator(XBTProfile xBTProfile, int recorderType, int probeType) {
-        this.xBTProfile=xBTProfile;
+        this.xBTProfile = xBTProfile;
         numberOfMeasurements = xBTProfile.getTemperaturePoints().length;
         setRecorderFrequency(recorderType);
         setProbeCoefficients(probeType);
     }//end constructor
-    
-    
-    
-        public DepthCalculator(XBTProfile xBTProfile) {
-        this.xBTProfile=xBTProfile;
+
+    public DepthCalculator(XBTProfile xBTProfile) {
+        this.xBTProfile = xBTProfile;
         numberOfMeasurements = xBTProfile.getTemperaturePoints().length;
         setRecorderFrequency(xBTProfile.getRecorderType());
         setProbeCoefficients(xBTProfile.getInstrumentType());
     }//end constructor
-        
-        
-        
-        
 
     /**
      * This method returns an array of doubles containing the depths where each
@@ -73,20 +69,100 @@ public class DepthCalculator {
         }//end for
         return depths;
     }//end methos
-    
-    public double[][] getDepthsAndTemperaturePoints(){
+
+    /**
+     * This method returns a two dimensional array of doubles containing the
+     * depths ad temperatures as measured by the recorder.
+     *
+     * @return returns a two dimensional array of doubles containing the depths
+     * ad temperatures as measured by the recorder.
+     */
+    public double[][] getDepthsAndTemperaturePoints() {
         double time;
-         double[][] depthsAndTemps = new double[numberOfMeasurements][2];
-         double [] temps = xBTProfile.getTemperaturePoints();
-         
+        double[][] depthsAndTemps = new double[numberOfMeasurements][2];
+        double[] temps = xBTProfile.getTemperaturePoints();
+
         for (int i = 0; i < numberOfMeasurements; i++) {
             time = ((double) i + 1) / sampleFrequency;
             depthsAndTemps[i][0] = (A * time) + (.001 * B * time * time);
             depthsAndTemps[i][1] = temps[i];
         }//end for         
-         
-         return depthsAndTemps;
-    
+
+        return depthsAndTemps;
+
+    }
+
+    /**
+     * This method returns a two dimensional array of doubles containing the
+     * depths ad temperatures with a resolution of two meters. A linear
+     * interpolation is performed to get the depths at 2 meter increments.
+     *
+     * @return returns a two dimensional array of doubles containing the depths
+     * ad temperatures with a resolution of two meters. A linear interpolation
+     * is performed to get the depths at 2 meter increments.
+     */
+    public double[][] getDepthsAndTemperaturePointsTwoMeterResolution() {
+        double[][] depthsAndTemps = this.getDepthsAndTemperaturePoints();
+        double[] temps = new double[numberOfMeasurements];
+        double[] depths = new double[numberOfMeasurements];
+        int finalDepth = (int) depthsAndTemps[numberOfMeasurements - 1][0];
+        if (finalDepth % 2 == 1) {
+            finalDepth--;
+        }
+
+        int numberOfMeasurementsTwoMeterResolution = finalDepth / 2;
+        double[][] depthsAndTempsTwoMeterResolution = new double[numberOfMeasurementsTwoMeterResolution][2];
+
+        for (int i = 0; i < numberOfMeasurements; i++) {
+
+            depths[i] = depthsAndTemps[i][0];
+            temps[i] = depthsAndTemps[i][1];
+        }//end for
+
+        LinearInterpolator interp = new LinearInterpolator();
+        PolynomialSplineFunction f = interp.interpolate(depths, temps);
+        for (int i = 0; i < numberOfMeasurementsTwoMeterResolution; i++) {
+            depthsAndTempsTwoMeterResolution[i][0] = (double) 2 * (i + 1);
+            depthsAndTempsTwoMeterResolution[i][1] = f.value((double) 2 * (i + 1));
+        }//end for
+
+        return depthsAndTempsTwoMeterResolution;
+
+    }
+
+    /**
+     * This method returns a two dimensional array of doubles containing the
+     * depths ad temperatures with a resolution of two meters. A linear
+     * interpolation is performed to get the depths at 1 meter increments.
+     *
+     * @return returns a two dimensional array of doubles containing the depths
+     * ad temperatures with a resolution of two meters. A linear interpolation
+     * is performed to get the depths at 1 meter increments.
+     */
+    public double[][] getDepthsAndTemperaturePointsOneMeterResolution() {
+        double[][] depthsAndTemps = this.getDepthsAndTemperaturePoints();
+        double[] temps = new double[numberOfMeasurements];
+        double[] depths = new double[numberOfMeasurements];
+        int finalDepth = (int) depthsAndTemps[numberOfMeasurements - 1][0];
+
+        int numberOfMeasurementsOneMeterResolution = finalDepth;
+        double[][] depthsAndTempsOneMeterResolution = new double[numberOfMeasurementsOneMeterResolution][2];
+
+        for (int i = 0; i < numberOfMeasurements; i++) {
+
+            depths[i] = depthsAndTemps[i][0];
+            temps[i] = depthsAndTemps[i][1];
+        }//end for
+
+        LinearInterpolator interp = new LinearInterpolator();
+        PolynomialSplineFunction f = interp.interpolate(depths, temps);
+        for (int i = 0; i < numberOfMeasurementsOneMeterResolution; i++) {
+            depthsAndTempsOneMeterResolution[i][0] = (double) 1 * (i + 1);
+            depthsAndTempsOneMeterResolution[i][1] = f.value((double) 1 * (i + 1));
+        }//end for
+
+        return depthsAndTempsOneMeterResolution;
+
     }
 
     /**
