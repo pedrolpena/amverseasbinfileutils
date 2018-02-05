@@ -98,3 +98,40 @@ java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecodeEncod
 
 
 
+Two meter resolution check
+--------------------------
+
+you can ouput the depths and temperatures from DecoderTestGetDepths into a text file and interpolate in matlab or octave<br>
+to double check the results.
+
+in linux create profile.txt you can do the saem in windows just use the appropriate command<br>
+
+java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepths profile.bin > profile.txt<br>
+
+You can copy paste the following into octave to compare the linear interpolation. This should also work in matlab.<br>
+open octave and navigate to the directory containing profile.txt and paste the following<br>
+
+%openfile created by DecoderTestGetDepths<br>
+fid=fopen('profile.txt');<br>
+%read in the depths and temperatures as floats.<br>
+c=textscan(fid,'%f %f');<br>
+%close file<br>
+fclose(fid);<br>
+%assign depths to x<br>
+x=c{1};<br>
+$assign temperature to y<br>
+y=c{2};<br>
+%dtermine max depth and floor the value<br>
+maxDepth=floor(max(c{1}));<br>
+%create matrix of depths starting at two and ending at maxDepth <br>
+%increasing value every two meters<br> 
+xq= [2:2:maxDepth];<br>
+% get a piece-wise polynomial structure<br>
+pp=interp1(x,y,'linear','pp');<br>
+%evaluate piece-wise polynomial structure<br>
+v=ppval(pp,xq);<br>
+%examine values. index 1 is 2m, index 2 is 4m ect...<br>
+v(2/2)<br>
+v(maxDepth/2)<br>
+
+%v contains all of the interpolated values, look through it.
