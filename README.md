@@ -45,6 +45,9 @@ Takes an XBT profile as an argument and prints the metadata and data to standard
 Takes an XBT profile as an argument and prints the metadata and data to standard out in the AOML ASCII format.<br>
 <b>DecoderTestGetDepths</b><br>
 Takes an XBT profile as an argument and prints the depth and temperature points to standard out.<br>
+<b>DecoderTestGetDepthsTwoMeterResolution</b><br>
+Takes an XBT profile as an argument and prints linearly interpolated depth and temperature points  at
+two meter resolution to standard out.<br>
 <b>DecodeEncodeXBTProfile</b><br>
 Takes an XBT profile and a an output filename as arguments.It then extracts data from the input <br>
 XBT profile and encodes it into a new profile. This example basically makes a copy of an XBT profile.<br>
@@ -59,6 +62,7 @@ linux
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTest.java<br>
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestASCII.java<br>
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepths.java<br>
+javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution.java<br>
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile.java<br>
 
 windows
@@ -67,6 +71,7 @@ windows
 javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTest.java<br>
 javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestASCII.java<br>
 javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepths.java<br>
+javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution.java<br>
 javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile.java<br>
 
 ----------------------
@@ -79,6 +84,7 @@ linux
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTest profile.bin<br>
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestASCII profile.bin<br>
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepths profile.bin<br>
+java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution profile.bin<br>
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile profile.bin copiedProfile.bin<br>
 
 windows
@@ -87,6 +93,7 @@ windows
 java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTest profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestASCII profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepths profile.bin<br>
+java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile profile.bin copiedProfile.bin<br>
 
 
