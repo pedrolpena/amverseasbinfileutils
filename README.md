@@ -135,3 +135,19 @@ v(2/2)<br>
 v(maxDepth/2)<br>
 
 %v contains all of the interpolated values, look through it.
+
+Plotting the profile in Octave or Matlab
+----------------------------------------
+Once compiled, you can read, edit and create an xbt profile with Octave or Matlab by importing<br>
+the library. Open Octave or Matlab and navigate to the directory containing all the files.<br>
+This should be the directory that has the lib folder.<br>
+Here is an exmaple of how to plot temperature vs depth for profile.bin.<br>
+
+javaaddpath([pwd(),'/lib/AmverseasBinFileUtils.jar'])<br>
+javaaddpath([pwd(),'/lib/commons-math3-3.6.1.jar'])<br>
+BinDecoder=javaObject('binfileutils.BinDecoder','profile.bin');<br>
+XBTProfile=javaMethod('getXBTProfile',BinDecoder);<br>
+temps=javaMethod('getTemperaturePoints',XBTProfile);<br>
+DepthCalculator=javaObject('binfileutils.DepthCalculator',XBTProfile);<br>
+depths=javaMethod('getMeasurementDepths',DepthCalculator);<br>
+plot(temps,-depths)<br>
