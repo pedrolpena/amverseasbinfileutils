@@ -384,4 +384,23 @@ public class BinEncoder {
         generator.update(tmpBitSet.toByteArray());
         integerToBits(b, (int) (generator.getValue()), XBTProfileDataRanges.getUniqueTag(newMessageType));
     }
+
+    /**
+     * This method replaces the CRC32 value or SEAS ID for the profile and
+     * stores it in the profile. This is to maintain what has been used as a
+     * unique identifier for a profile in the past. This is not calculated and
+     * should only be used for historical reasons. Note that by doing this, any
+     * integrity check done on the profile will fail. Do this as the last step
+     * before writing out the file.
+     *
+     * @param b the BitSet object that holds the profile.
+     * @param UniqueTag the integer representing a uniqure tag.
+     */
+    public void OverwriteAndSetMessageCRC(BitSet b, int UniqueTag) {
+
+        BitSet tmpBitSet;
+        tmpBitSet = b.get(0, bits.size() + 1);
+        changeEndian(tmpBitSet);
+        integerToBits(b, UniqueTag, XBTProfileDataRanges.getUniqueTag(newMessageType));
+    }
 }
