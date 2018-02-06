@@ -119,7 +119,7 @@ c=textscan(fid,'%f %f');<br>
 fclose(fid);<br>
 %assign depths to x<br>
 x=c{1};<br>
-$assign temperature to y<br>
+%assign temperature to y<br>
 y=c{2};<br>
 %dtermine max depth and floor the value<br>
 maxDepth=floor(max(c{1}));<br>
