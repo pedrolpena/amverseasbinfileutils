@@ -137,7 +137,7 @@ twoMeterTemps=ppval(pp,twoMeterDepths);<br>
 %plot one on top of the other<br>
 figure;<br>
 hold on;<br>
-plot(depths,temps);<br>
+plot(depths,temps,'x');<br>
 plot(twoMeterDepths,twoMeterTemps);<br>
 
 
