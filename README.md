@@ -134,11 +134,11 @@ twoMeterDepths= [2:2:maxDepth];<br>
 pp=interp1(depths,temps,'linear','pp');<br>
 %evaluate piece-wise polynomial structure<br>
 twoMeterTemps=ppval(pp,twoMeterDepths);<br>
-%plot one on top of the other
-figure;
-hold on;
-plot(depths,temps);
-plot(twoMeterDepths,twoMeterTemps);
+%plot one on top of the other<br>
+figure;<br>
+hold on;<br>
+plot(depths,temps);<br>
+plot(twoMeterDepths,twoMeterTemps);<br>
 
 
 
