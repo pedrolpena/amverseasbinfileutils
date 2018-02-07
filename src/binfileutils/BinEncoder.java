@@ -393,14 +393,13 @@ public class BinEncoder {
      * integrity check done on the profile will fail. Do this as the last step
      * before writing out the file.
      *
-     * @param b the BitSet object that holds the profile.
      * @param UniqueTag the integer representing a uniqure tag.
      */
-    public void OverwriteAndSetMessageCRC(BitSet b, int UniqueTag) {
+    public void OverwriteAndSetMessageCRC(int UniqueTag) {
 
         BitSet tmpBitSet;
-        tmpBitSet = b.get(0, bits.size() + 1);
+        tmpBitSet = bits.get(0, bits.size() + 1);
         changeEndian(tmpBitSet);
-        integerToBits(b, UniqueTag, XBTProfileDataRanges.getUniqueTag(newMessageType));
+        integerToBits(bits, UniqueTag, XBTProfileDataRanges.getUniqueTag(newMessageType));
     }
 }
