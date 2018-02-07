@@ -126,7 +126,7 @@ Here is an example of a linear interpolation.<br>
 Open Octave or Matlaband navigate to the directory containing profile.bin and do the following<br>
 
 %determine max depth and floor the value<br>
-maxDepth=floor(max(temps));<br>
+maxDepth=floor(max(depths));<br>
 %create matrix of depths starting at 2 and ending at maxDepth with a step of 2<br>
 %increasing value every two meters<br> 
 twoMeterDepths= [2:2:maxDepth];<br>
