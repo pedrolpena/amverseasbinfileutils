@@ -36,7 +36,8 @@ Some example programs are included to get an idea of how to use the library.<br>
 <b>DecoderTest<br>
 DecoderTestASCII<br>
 DecoderTestGetDepths<br>
-DecodeEncodeXBTProfile</b><br>
+DecodeEncodeXBTProfile<br>
+EditBinFile</b><br>
 
 
 <b>DecoderTest</b><br>
@@ -51,6 +52,8 @@ two meter resolution to standard out.<br>
 <b>DecodeEncodeXBTProfile</b><br>
 Takes an XBT profile and a an output filename as arguments.It then extracts data from the input <br>
 XBT profile and encodes it into a new profile. This example basically makes a copy of an XBT profile.<br>
+<b>EditBinFile</b><br>
+Allows one to edit and XBT profile on the command line<br>
 
 --------------------------
 -Compile example programs-
@@ -64,6 +67,7 @@ javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTes
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepths.java<br>
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution.java<br>
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile.java<br>
+javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar:lib/commons-cli-1.4.jar EditBinFile.java<br>
 
 windows
 -------
@@ -73,6 +77,7 @@ javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTes
 javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepths.java<br>
 javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution.java<br>
 javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile.java<br>
+javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar;lib/commons-cli-1.4.jar EditBinFile.java<br>
 
 ----------------------
 -Run example programs-
@@ -86,6 +91,7 @@ java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTest
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepths profile.bin<br>
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution profile.bin<br>
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile profile.bin copiedProfile.bin<br>
+java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar:lib/commons-cli-1.4.jar EditBinFile -help<br>
 
 windows
 -------
@@ -95,6 +101,7 @@ java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTest
 java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepths profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecoderTestGetDepthsTwoMeterResolution profile.bin<br>
 java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar DecodeEncodeXBTProfile profile.bin copiedProfile.bin<br>
+java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar;lib/commons-cli-1.4.jar EditBinFile -help<br>
 
 
 
