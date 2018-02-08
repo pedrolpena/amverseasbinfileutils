@@ -11,7 +11,7 @@ rmdir /q /s .\lib  > nul
 :exit
 
 mkdir .\lib
-copy .\libs\commons-math3-3.6.1.jar .\lib
+copy .\libs\*.* .\lib
 javac -source 1.7 -target 1.7 -d .\ -cp .\lib\commons-math3-3.6.1.jar .\src\binfileutils\*.java
 jar cfm AmverseasBinFileUtils.jar manifest.txt binfileutils\*.class
 
