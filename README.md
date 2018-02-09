@@ -53,7 +53,7 @@ two meter resolution to standard out.<br>
 Takes an XBT profile and a an output filename as arguments.It then extracts data from the input <br>
 XBT profile and encodes it into a new profile. This example basically makes a copy of an XBT profile.<br>
 <b>EditBinFile</b><br>
-Allows one to edit and XBT profile on the command line<br>
+Allows one to edit an XBT profile's meta data on the command line.<br>
 
 --------------------------
 -Compile example programs-
