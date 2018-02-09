@@ -59,6 +59,9 @@ Allows one to edit an XBT profile's meta data on the command line.<br>
 -Compile example programs-
 --------------------------
 
+You should be able to just copy and paste these commands striaght into a terminal window/command prompt.<br>
+Make sure you have java JDK installed.<br>
+
 linux
 -----
 
