@@ -108,6 +108,24 @@ java -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar;lib/commons
 
 
 
+Mono Executable
+---------------
+
+If you need a stand alone executable you could use IKVM to convert the compiled program to a mono program.<br>
+In this example we'll convert the EditBinFle program. This was done under linux but the same should be possible under windows.<br>
+The executable produced in this example should run without modification under Windows as well.<br>
+Make sure ikvm and the mono runtime engine are installed, then run the following.<br>
+
+ikvmc EditBinFile.class lib/AmverseasBinFileUtils.jar lib/commons-math3-3.6.1.jar lib/commons-cli-1.4.jar<br>
+
+To test the program type the following.<br>
+
+./EditBinFile.exe -help<br>
+
+Check the file type with the file command.<br>
+
+file EditBinFile.exe<br>
+EditBinFile.exe: PE32 executable (console) Intel 80386 Mono/.Net assembly, for MS Windows<br>
 
 
 Plotting the profile in Octave or Matlab
