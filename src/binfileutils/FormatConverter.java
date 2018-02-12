@@ -1,7 +1,9 @@
 package binfileutils;
 
+import static binfileutils.Agency.getAgencyDescription;
 import static binfileutils.DataQuality.getDataQualityDescription;
 import static binfileutils.DataResolution.getDataResolutionDescription;
+import static binfileutils.Launchers.getLauncherDescription;
 import static binfileutils.XBTProbe.getProbeDescription;
 import static binfileutils.XBTRecorder.getRecorderDescription;
 
@@ -74,11 +76,22 @@ public class FormatConverter {
         tmp += "Wind Instrument Type           | " + xBTprofile.getWindInstrumentType() + "\n";
         tmp += "Wind Direction                 | " + xBTprofile.getWindDirection() + "\n";
         tmp += "Wind Speed (knots)             | " + xBTprofile.getWindSpeed() + "\n";
-        tmp += "Dry Bulb Temperature (celsius) | " + String.format("%05.2f", xBTprofile.getDryBulbTemperature()-273.15) + "\n";
+        tmp += "Dry Bulb Temperature (celsius) | " + String.format("%05.2f", xBTprofile.getDryBulbTemperature() - 273.15) + "\n";
         tmp += "Current Measurement Method     | " + xBTprofile.getSeaSurfaceCurrentMeasurementMethod() + "\n";
         tmp += "Current Direction              | " + xBTprofile.getSeaSurfaceCurrentDirection() + "\n";
         tmp += "Current Speed (knots)          | " + xBTprofile.getSeaSurfaceCurrentSpeed() + "\n";
         tmp += "Total Water Depth (meters)     | " + xBTprofile.getTotalWaterDepth() + "\n";
+        tmp += "XBT Launcher Type              | " + getLauncherDescription(xBTprofile.getXBTLauncherType()) + "\n";
+        tmp += "XBT Recorder Serial Number     | " + xBTprofile.getXBTRecorderSerialNumber() + "\n";
+        tmp += "XBT Recorder Manufacture Date  | " + String.format("%02d/%02d/%04d\n",
+                xBTprofile.getXBTRecorderManufacturedMonth(),
+                xBTprofile.getXBTRecorderManufacturedDay(),
+                xBTprofile.getXBTRecorderManufacturedYear());
+        tmp += "Agency in charge of Operation  | " + getAgencyDescription(xBTprofile.getAgencyOwner()) + "\n";
+        tmp += "Ship Rider                     | " + xBTprofile.getRiderNames() + "\n";
+        tmp += "Ship Rider Institution         | " + xBTprofile.getRiderInstitutions() + "\n";
+        tmp += "Ship Rider Email               | " + xBTprofile.getRiderEmails() + "\n";
+        tmp += "Ship Rider Telephone Number    | " + xBTprofile.getRiderPhones() + "\n";
         tmp += "===================================================================\n";
         tmp += "Full Resolution Values\n";
         tmp += "   Depth       Temperature        \n";
