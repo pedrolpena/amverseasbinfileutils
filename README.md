@@ -158,7 +158,7 @@ Two meter resolution check
 You can do some interpolation and produce two meter resolution profiles with Octave or Matlab.<br>
 Here is an example of a linear interpolation.<br>
 
-Open Octave or Matlaband navigate to the directory containing profile.bin and do the following<br>
+Open Octave or Matlab and navigate to the directory containing profile.bin and do the following<br>
 ```matlab
 %determine max depth and floor the value
 maxDepth=floor(max(depths));
