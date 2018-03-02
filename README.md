@@ -132,7 +132,7 @@ To test the program type the following.<br>
 Check the file type with the file command.<br>
 ```bash
 file EditBinFile.exe
-EditBinFile.exe: PE32 executable (console) Intel 80386 Mono/.Net assembly, for MS Windows<br>
+EditBinFile.exe: PE32 executable (console) Intel 80386 Mono/.Net assembly, for MS Windows
 ```
 
 Plotting the profile in Octave or Matlab
