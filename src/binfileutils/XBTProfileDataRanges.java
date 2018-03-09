@@ -66,13 +66,13 @@ public final class XBTProfileDataRanges {
         /*46*/ {{-1, 597, 707, 867, 867}, {-1, 604, 714, 874, 874}},//number of repeated fields
         /*47*/ {{-1, 605, 715, 875, 875}, {-1, 620, 730, 890, 890}},//times replicated
         /*48*/ {{-1, 621, 731, 891, 891}, {-1, 632, 742, 902, 906}},//sea surface temperature/resistance
-        /*49*/ {{-1, 633, -1, -1}, {-1, 646, -1, -1}}, //sea depth
-        /*50*/ {{-1, 621, 731, 891}, {-1, -1, -1, -1}}, //temperature points
-        /*51*/{{-1, -1, -1, -1}, {-1, -1, -1, -1}},// comment blocks
-        /*52*/ {{-1, -1, -1, 891}, {-1, -1, -1, -1}},//rider names
-        /*53*/ {{-1, -1, -1, 891}, {-1, -1, -1, -1}},//rider emails
-        /*54*/ {{-1, -1, -1, 891}, {-1, -1, -1, -1}},//rider institutions
-        /*55*/ {{-1, -1, -1, 891}, {-1, -1, -1, -1}},//rider phones
+        /*49*/ {{-1, 633, -1, -1,-1}, {-1, 646, -1, -1,-1}}, //sea depth
+        /*50*/ {{-1, 621, 731, 891,891}, {-1, -1, -1, -1,-1}}, //temperature points
+        /*51*/{{-1, -1, -1, -1, -1}, {-1, -1, -1, -1, -1}},// comment blocks
+        /*52*/ {{-1, -1, -1, 891, 891}, {-1, -1, -1, -1, -1}},//rider names
+        /*53*/ {{-1, -1, -1, 891, 891}, {-1, -1, -1, -1, -1}},//rider emails
+        /*54*/ {{-1, -1, -1, 891, 891}, {-1, -1, -1, -1, -1}},//rider institutions
+        /*55*/ {{-1, -1, -1, 891, 891}, {-1, -1, -1, -1, -1}},//rider phones
     };
 
     public static int[] getWMOID(int messageType) {
@@ -853,6 +853,21 @@ public final class XBTProfileDataRanges {
         int[] startEnd = {start, end};
         return startEnd;
     }
+    /**
+     * <strong>(FXY22042S)</strong>-This method returns the data range used for  the SSR or the first
+     * Resistance measurement made.
+     *
+     * @return <strong>(FXY22042S)</strong>-This method returns the data range used for  the SSR or the
+     * first resistance measurement made. A value of -13.99 is returned when
+     * there is no value.
+     * @param messageType  the profile's message type
+     */
+    public static int[] getSeaResistance(int messageType) {
+        int start = dataLocations[48][0][messageType];
+        int end = dataLocations[48][1][messageType];
+        int[] startEnd = {start, end};
+        return startEnd;
+    }    
 
     /**
      * <strong>(FXY7062S)</strong>-This method returns the data range used for  the depth below the
@@ -879,6 +894,22 @@ public final class XBTProfileDataRanges {
      * @param messageType  the profile's message type
      */
     public static int[] getTemperaturePoints(int messageType) {
+        int start = dataLocations[50][0][messageType];
+        int end = dataLocations[50][1][messageType];
+        int[] startEnd = {start, end};
+        return startEnd;
+    }
+    
+        /**
+     * <strong>(FXY22042S)</strong>-This method returns the data range used for  an array containing the
+     * ressitance measurements made.
+     *
+     * @return <strong>(FXY22042S)</strong>-This method returns the data range used for  an array
+     * containing the resistance measurements made. An empty array is returned
+     * when there are no values.
+     * @param messageType  the profile's message type
+     */
+    public static int[] getResistancePoints(int messageType) {
         int start = dataLocations[50][0][messageType];
         int end = dataLocations[50][1][messageType];
         int[] startEnd = {start, end};

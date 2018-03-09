@@ -14,5 +14,6 @@ public final class MessageType {
     public static int MESSAGE_TYPE_1=1;
     public static int MESSAGE_TYPE_2=2;
     public static int MESSAGE_TYPE_3=3;
+    public static int MESSAGE_TYPE_4=4;
     
 }

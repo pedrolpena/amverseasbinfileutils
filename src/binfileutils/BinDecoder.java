@@ -801,6 +801,21 @@ public class BinDecoder {
     }// end method
 
     /**
+     * <strong>(FXY22042S)</strong>-This method returns the SST or the first
+     * temperature measurement made.
+     *
+     * @return <strong>(FXY22042S)</strong>-This method returns the SST or the
+     * first temperature measurement made. A value of -13.99 is returned when
+     * there is no value.
+     */
+    private double getSeaResistance() {
+        int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getSeaResistance(mt)[0];
+        int end = XBTProfileDataRanges.getSeaResistance(mt)[1];
+        return (toInteger(start, end) + 3200);
+    }// end method    
+
+    /**
      * <strong>(FXY7062S)</strong>-This method returns the depth below the
      * sea/water surface
      *
@@ -844,6 +859,62 @@ public class BinDecoder {
     }// end method
 
     /**
+     * <strong>(FXY22042S)</strong>-This method returns an array containing the
+     * Resistance measurements made.
+     *
+     * @return <strong>(FXY22042S)</strong>-This method returns an array
+     * containing the resistance measurements made. An empty array is returned
+     * when there are no values.
+     */
+    private double[] getResistancePoints() {
+        int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getResistancePoints(mt)[0];
+        int points = getTimesReplicated();
+
+        if (points < 0) {
+            return new double[0];
+        }
+
+        double resistance[] = new double[points];
+        int counter = 0;
+        for (int i = start; i < start + points * 14; i += 14) {
+            resistance[counter] = (toInteger(i, i + 13) + 3200);
+            counter++;
+
+        }//end for
+
+        return resistance;
+    }// end method    
+
+    /**
+     * <strong>(FXY22042S)</strong>-This method returns an array containing the
+     * resistance measurements made.
+     *
+     * @return <strong>(FXY22042S)</strong>-This method returns an array
+     * containing the resistance measurements made. An empty array is returned
+     * when there are no values.
+     */
+    private double[] getResistance() {
+        int mt = getNewMessageType();
+        int start = XBTProfileDataRanges.getResistancePoints(mt)[0];
+        int points = getTimesReplicated();
+
+        if (points < 0) {
+            return new double[0];
+        }
+
+        double temps[] = new double[points];
+        int counter = 0;
+        for (int i = start; i < start + points * 14; i += 14) {
+            temps[counter] = (toInteger(i, i + 13) + 3200);
+            counter++;
+
+        }//end for
+
+        return temps;
+    }// end method    
+
+    /**
      * <strong>(FXY205030A)</strong>-This method returns the rider's name.
      *
      * @return <strong>(FXY205030A)</strong>-This method returns the rider's
@@ -852,9 +923,14 @@ public class BinDecoder {
     private String getRiderNames() {
 
         int mt = getNewMessageType();
+        int bSize = 12;
+        if (mt == MessageType.MESSAGE_TYPE_4) {
+            bSize = 14;
+        }//end if
+
         int start = XBTProfileDataRanges.getRiderNames(mt)[0];
 
-        int s = start + 12 * getTimesReplicated();
+        int s = start + bSize * getTimesReplicated();
         return toString(s, s + getNumberOfRiderBlocks() * 40);
     }// end method
 
@@ -867,9 +943,13 @@ public class BinDecoder {
     private String getRiderEmails() {
 
         int mt = getNewMessageType();
+        int bSize = 12;
+        if (mt == MessageType.MESSAGE_TYPE_4) {
+            bSize = 14;
+        }//end if        
         int start = XBTProfileDataRanges.getRiderEmails(mt)[0];
 
-        int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40;
+        int s = start + bSize * getTimesReplicated() + getNumberOfRiderBlocks() * 40;
         return toString(s, s + getNumberOfRiderEmailBlocks() * 40);
     }// end method
 
@@ -883,8 +963,12 @@ public class BinDecoder {
     private String getRiderInstitutions() {
 
         int mt = getNewMessageType();
+        int bSize = 12;
+        if (mt == MessageType.MESSAGE_TYPE_4) {
+            bSize = 14;
+        }//end if        
         int start = XBTProfileDataRanges.getRiderInstituions(mt)[0];
-        int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
+        int s = start + bSize * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
         return toString(s, s + getNumberOfRiderInstitutionBlocks() * 40);
     }// end method
 
@@ -898,9 +982,13 @@ public class BinDecoder {
     private String getRiderPhones() {
 
         int mt = getNewMessageType();
+        int bSize = 12;
+        if (mt == MessageType.MESSAGE_TYPE_4) {
+            bSize = 14;
+        }//end if
         int start = XBTProfileDataRanges.getRiderPhones(mt)[0];
 
-        int s = start + 12 * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstitutionBlocks() * 40;
+        int s = start + bSize * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstitutionBlocks() * 40;
         return toString(s, s + getNumberOfRiderPhoneBlocks() * 40);
     }// end method
 
@@ -973,10 +1061,11 @@ public class BinDecoder {
             byte[] bytes;
             bytes = changeEndian(b).toByteArray();
             for (int i = 0; i < bytes.length; i++) {
-                x=(char)bytes[i];
+                x = (char) bytes[i];
                 x = (char) (x & 0x00ff);
-                if(x>=0 && x<=127)
-                str += x;
+                if (x >= 0 && x <= 127) {
+                    str += x;
+                }
             }
             return str;
         } catch (Exception e) {
@@ -993,9 +1082,10 @@ public class BinDecoder {
      */
     private BitSet changeEndian(BitSet b) {
         boolean temp;
-        int width =  b.length()-1;
-        if (b.length()!=b.size()-1)
-          width =  b.size();  
+        int width = b.length() - 1;
+        if (b.length() != b.size() - 1) {
+            width = b.size();
+        }
         for (int i = 0; i < width; i = i + 8) {
             for (int j = 0; j < 4; j++) {
                 temp = b.get(i + j);
@@ -1070,6 +1160,7 @@ public class BinDecoder {
         xBTProfile.setSeaSurfaceCurrentMeasurementMethod(getSeaSurfaceCurrentMeasurementMethod());
         xBTProfile.setSeaSurfaceCurrentSpeed(getSeaSurfaceCurrentSpeed());
         xBTProfile.setSeaSurfaceTemperature(getSeaTemperature());
+        xBTProfile.setSeaSurfaceResistance(getSeaResistance());
         xBTProfile.setSeasVersion(getSeasVersion());
         xBTProfile.setSequenceNum(getSequenceNumber());
         xBTProfile.setShipDirection(getShipDirection());
@@ -1077,6 +1168,7 @@ public class BinDecoder {
         xBTProfile.setShipSpeed(getShipSpeed());
         xBTProfile.setSoopLine(getSoopLine());
         xBTProfile.setTemperaturePoints(getTemperaturePoints());
+        xBTProfile.setResistancePoints(getResistancePoints());
         xBTProfile.setThisDataIs(getThisDataIs());
         xBTProfile.setTimesReplicated(getTimesReplicated());
         xBTProfile.setTotalWaterDepth(getTotalWaterDepth());
@@ -1100,6 +1192,5 @@ public class BinDecoder {
 
     }//end method
 
-   
 }//end class
 

@@ -13,7 +13,7 @@ import java.util.BitSet;
 import java.util.zip.CRC32;
 
 /**
- * This class is used to encode meta data into a SEAS XBT binary profile 
+ * This class is used to encode meta data into a SEAS XBT binary profile
  *
  * @author Others and Pedro Pena
  */
@@ -21,11 +21,13 @@ public class BinEncoder {
 
     private BitSet bits;
     private int newMessageType = 0;
-/**
- * The constructor takes an XBTProfile object that will be converted to a
- * SEAS binary XBT profile
- * @param xBTProfile an XBTProfile object
- */
+
+    /**
+     * The constructor takes an XBTProfile object that will be converted to a
+     * SEAS binary XBT profile
+     *
+     * @param xBTProfile an XBTProfile object
+     */
     public BinEncoder(XBTProfile xBTProfile) {
 
         bits = new BitSet();
@@ -33,11 +35,12 @@ public class BinEncoder {
         encodeProfile(xBTProfile);
 
     }
-/**
- * takes an XBTProfile object and creates a
- * SEAS binary XBT profile
- * @param xBTProfile an XBTProfile object
- */
+
+    /**
+     * takes an XBTProfile object and creates a SEAS binary XBT profile
+     *
+     * @param xBTProfile an XBTProfile object
+     */
     private void encodeProfile(XBTProfile xBTProfile) {
 
         int numberOfRiderBlocks;
@@ -104,31 +107,56 @@ public class BinEncoder {
         integerToBits(bits, xBTProfile.getNumberOfRiderEmailBlocks(), XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
         integerToBits(bits, xBTProfile.getNumberOfRiderPhoneBlocks(), XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
 
-        //********************Encode Temperature points************************
+        //********************Encode Temperature/Resistance points************************
         int last = 0;
-        double seaSurfaceTemperature = Math.round(xBTProfile.getSeaSurfaceTemperature()
-                * 100.00 + 400.00);
-        integerToBits(bits, Double.valueOf(seaSurfaceTemperature).intValue(), XBTProfileDataRanges.getSeaTemperature(newMessageType));
+        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
+            double seaSurfaceTemperature = Math.round(xBTProfile.getSeaSurfaceTemperature()
+                    * 100.00 + 400.00);
+            integerToBits(bits, Double.valueOf(seaSurfaceTemperature).intValue(), XBTProfileDataRanges.getSeaTemperature(newMessageType));
+        } else {
 
-        if (newMessageType == 1) {
+            double seaSurfaceResistance = Math.round(xBTProfile.getSeaSurfaceResistance() - 3200);
+            integerToBits(bits, Double.valueOf(seaSurfaceResistance).intValue(), XBTProfileDataRanges.getSeaResistance(newMessageType));
+
+        }//end else
+
+        if (newMessageType == MessageType.MESSAGE_TYPE_1) {
             double seaDepth = xBTProfile.getSeaDepth();
             integerToBits(bits, Double.valueOf(seaDepth).intValue(), XBTProfileDataRanges.getSeaDepth(newMessageType));
         }
+        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
+            int[] temperaturePointsRange = {-1, -1};
+            start = XBTProfileDataRanges.getTemperaturePoints(newMessageType)[0];
 
-        int[] temperaturePointsRange = {-1, -1};
-        start = XBTProfileDataRanges.getTemperaturePoints(newMessageType)[0];
+            for (int i = 0; i < xBTProfile.getTemperaturePoints().length; i++) {
+                // we had to round here because the doubles were being
+                // truncated to the wrong value
 
-        for (int i = 0; i < xBTProfile.getTemperaturePoints().length; i++) {
-            // we had to round here because the doubles were being
-            // truncated to the wrong value
+                double tp = Math.round(xBTProfile.getTemperaturePoints()[i] * 100.00) + 400.00;
+                temperaturePointsRange[0] = start + i * 12;
+                temperaturePointsRange[1] = start + i * 12 + 11;
+                integerToBits(bits, Double.valueOf(tp).intValue(), temperaturePointsRange);
+                last = i;
 
-            double tp = Math.round(xBTProfile.getTemperaturePoints()[i] * 100.00) + 400.00;
-            temperaturePointsRange[0] = start + i * 12;
-            temperaturePointsRange[1] = start + i * 12 + 11;
-            integerToBits(bits, Double.valueOf(tp).intValue(), temperaturePointsRange);
-            last = i;
+            }
+        } else {
 
-        }
+            int[] resistancePointsRange = {-1, -1};
+            start = XBTProfileDataRanges.getResistancePoints(newMessageType)[0];
+
+            for (int i = 0; i < xBTProfile.getResistancePoints().length; i++) {
+                // we had to round here because the doubles were being
+                // truncated to the wrong value
+
+                double rp = Math.round(xBTProfile.getResistancePoints()[i] - 3200);
+                resistancePointsRange[0] = start + i * 14;
+                resistancePointsRange[1] = start + i * 14 + 13;
+                integerToBits(bits, Double.valueOf(rp).intValue(), resistancePointsRange);
+                last = i;
+
+            }
+
+        }//end else
 
         //*************calculate Number of repeated fields.***************
         xBTProfile.setNumberOfRepeatedFields(1);
@@ -140,17 +168,28 @@ public class BinEncoder {
         integerToBits(bits, xBTProfile.getNumberOfRepeatedFields(), XBTProfileDataRanges.getNumberOfRepeatedFields(newMessageType));
 
         //*************Compute timesReplicated****************************
-        timesReplicated = xBTProfile.getTemperaturePoints().length;
-        xBTProfile.setTimesReplicated(timesReplicated);
-        integerToBits(bits, timesReplicated, XBTProfileDataRanges.getTimesReplicated(newMessageType));
+        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
+            timesReplicated = xBTProfile.getTemperaturePoints().length;
+            xBTProfile.setTimesReplicated(timesReplicated);
+            integerToBits(bits, timesReplicated, XBTProfileDataRanges.getTimesReplicated(newMessageType));
+        } else {
 
+            timesReplicated = xBTProfile.getResistancePoints().length;
+            xBTProfile.setTimesReplicated(timesReplicated);
+            integerToBits(bits, timesReplicated, XBTProfileDataRanges.getTimesReplicated(newMessageType));
+
+        }//end else
         //**************Encode Rider Name*********************************
-        start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + 12 * timesReplicated;
+        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
+            start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + 12 * timesReplicated;
+        } else {
+            start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + 14 * timesReplicated;
+        }//end else
 
-                if (xBTProfile.getRiderNames() != null) {
+        if (xBTProfile.getRiderNames() != null &&xBTProfile.getRiderNames().length() > 0 ) {
 
             numberOfRiderBlocks = (int) Math.ceil(((double) xBTProfile.getRiderNames().length()) / 5);
-            
+
             if (numberOfRiderBlocks > 0) {
                 integerToBits(bits, numberOfRiderBlocks, XBTProfileDataRanges.getNumberOfRiderBlocks(newMessageType));
 
@@ -166,9 +205,9 @@ public class BinEncoder {
         xBTProfile.setNumberOfRiderBlocks(numberOfRiderBlocks);
 
         //***********************Encode Rider Email***********************
-        if (xBTProfile.getRiderEmails() != null) {
+        if (xBTProfile.getRiderEmails() != null && xBTProfile.getRiderEmails().length() > 0) {
             numberOfRiderEmailBlocks = (int) Math.ceil(((double) xBTProfile.getRiderEmails().length()) / 5);
-            
+
             if (numberOfRiderEmailBlocks > 0) {
                 integerToBits(bits, numberOfRiderEmailBlocks, XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
                 start0 = start0 + numberOfRiderBlocks * 40;
@@ -182,7 +221,7 @@ public class BinEncoder {
         xBTProfile.setNumberOfRiderEmailBlocks(numberOfRiderEmailBlocks);
 
         //***********************Encode Rider Instituion********************
-        if (xBTProfile.getRiderInstitutions() != null) {
+        if (xBTProfile.getRiderInstitutions() != null && xBTProfile.getRiderInstitutions().length() > 0) {
             numberOfRiderInstitutionBlocks = (int) Math.ceil(((double) xBTProfile.getRiderInstitutions().length()) / 5);
             if (numberOfRiderInstitutionBlocks > 0) {
                 integerToBits(bits, numberOfRiderInstitutionBlocks, XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
@@ -199,7 +238,7 @@ public class BinEncoder {
         xBTProfile.setNumberOfRiderInstitutionBlocks(numberOfRiderInstitutionBlocks);
 
         //**************************Encode Rider Phone Number****************
-        if (xBTProfile.getRiderPhones() != null) {
+        if (xBTProfile.getRiderPhones() != null && xBTProfile.getRiderPhones().length() > 0) {
             numberOfRiderPhoneBlocks = (int) Math.ceil(((double) xBTProfile.getRiderPhones().length()) / 5);
             if (numberOfRiderPhoneBlocks > 0) {
                 integerToBits(bits, numberOfRiderPhoneBlocks, XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
@@ -220,8 +259,8 @@ public class BinEncoder {
      * This method accepts a String representing the filename that will be used
      * to create the binary file.
      *
-     * @param outputFile the filename that will be used
-     * to create the binary file.
+     * @param outputFile the filename that will be used to create the binary
+     * file.
      */
     public void writeOutBinFile(String outputFile) {
 
