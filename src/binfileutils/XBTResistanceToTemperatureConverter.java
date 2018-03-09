@@ -43,21 +43,5 @@ public class XBTResistanceToTemperatureConverter {
         }
         return temps;
     }
-    
-    public static void main(String args[]){
-    
-        double[] r = new double[]{3200,18600};
-        
-            
-    XBTResistanceToTemperatureConverter x = new XBTResistanceToTemperatureConverter();
-    
-    for (int i = 0; i< r.length ; i++){
-    
-    System.out.println(x.convertResistaceToTemperature(r[i]));
-    }//end for
-    
-    
-    
-    }//end main
 
 }
