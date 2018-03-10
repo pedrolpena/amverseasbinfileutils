@@ -812,7 +812,7 @@ public class BinDecoder {
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getSeaResistance(mt)[0];
         int end = XBTProfileDataRanges.getSeaResistance(mt)[1];
-        return (toInteger(start, end) + 3200);
+        return (((double)toInteger(start, end) + 0.00 )/ 100.00);
     }// end method    
 
     /**
@@ -877,8 +877,8 @@ public class BinDecoder {
 
         double resistance[] = new double[points];
         int counter = 0;
-        for (int i = start; i < start + points * 14; i += 14) {
-            resistance[counter] = (toInteger(i, i + 13) + 3200);
+        for (int i = start; i < start + points * 21; i += 21) {
+            resistance[counter] = (((double)toInteger(i, i + 20) - 0.00 ) / 100.00);
             counter++;
 
         }//end for
@@ -905,8 +905,8 @@ public class BinDecoder {
 
         double temps[] = new double[points];
         int counter = 0;
-        for (int i = start; i < start + points * 14; i += 14) {
-            temps[counter] = (toInteger(i, i + 13) + 3200);
+        for (int i = start; i < start + points * 21; i += 21) {
+            temps[counter] = (toInteger(i, i + 20)/100 + 0);
             counter++;
 
         }//end for
@@ -1128,7 +1128,7 @@ public class BinDecoder {
     }//end method
 
     private XBTProfile decodeXBTProfile() {
-
+        int messageType = getNewMessageType();
         XBTProfile xBTProfile = new XBTProfile();
         xBTProfile.setAgencyOwner(getAgencyOwner());
         xBTProfile.setDataQuality(getDataQuality());
@@ -1142,7 +1142,7 @@ public class BinDecoder {
         xBTProfile.setLongitude(getLongitude());
         xBTProfile.setMinute(getMinute());
         xBTProfile.setMonth(getMonth());
-        xBTProfile.setNewMessageType(getNewMessageType());
+        xBTProfile.setNewMessageType(messageType);
         xBTProfile.setNumberOfRepeatedFields(getNumberOfRepeatedFields());
         xBTProfile.setNumberOfRiderBlocks(getNumberOfRiderBlocks());
         xBTProfile.setNumberOfRiderEmailBlocks(getNumberOfRiderEmailBlocks());
@@ -1159,16 +1159,26 @@ public class BinDecoder {
         xBTProfile.setSeaSurfaceCurrentDirection(getSeaSurfaceCurrentDirection());
         xBTProfile.setSeaSurfaceCurrentMeasurementMethod(getSeaSurfaceCurrentMeasurementMethod());
         xBTProfile.setSeaSurfaceCurrentSpeed(getSeaSurfaceCurrentSpeed());
-        xBTProfile.setSeaSurfaceTemperature(getSeaTemperature());
-        xBTProfile.setSeaSurfaceResistance(getSeaResistance());
+        if (messageType == MessageType.MESSAGE_TYPE_4) {
+            xBTProfile.setSeaSurfaceResistance(getSeaResistance());
+        }//end if
+        else {
+            xBTProfile.setSeaSurfaceTemperature(getSeaTemperature());
+        }//end else
+
         xBTProfile.setSeasVersion(getSeasVersion());
         xBTProfile.setSequenceNum(getSequenceNumber());
         xBTProfile.setShipDirection(getShipDirection());
         xBTProfile.setShipName(getShipName());
         xBTProfile.setShipSpeed(getShipSpeed());
         xBTProfile.setSoopLine(getSoopLine());
-        xBTProfile.setTemperaturePoints(getTemperaturePoints());
-        xBTProfile.setResistancePoints(getResistancePoints());
+        if (messageType == MessageType.MESSAGE_TYPE_4) {
+            xBTProfile.setResistancePoints(getResistancePoints());
+        }//end if
+        else {
+            xBTProfile.setTemperaturePoints(getTemperaturePoints());
+        }//end else
+
         xBTProfile.setThisDataIs(getThisDataIs());
         xBTProfile.setTimesReplicated(getTimesReplicated());
         xBTProfile.setTotalWaterDepth(getTotalWaterDepth());

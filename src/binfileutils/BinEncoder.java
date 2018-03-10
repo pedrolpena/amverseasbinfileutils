@@ -107,56 +107,44 @@ public class BinEncoder {
         integerToBits(bits, xBTProfile.getNumberOfRiderEmailBlocks(), XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
         integerToBits(bits, xBTProfile.getNumberOfRiderPhoneBlocks(), XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
 
-        //********************Encode Temperature/Resistance points************************
+        //********************Encode measurement points************************
         int last = 0;
-        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
-            double seaSurfaceTemperature = Math.round(xBTProfile.getSeaSurfaceTemperature()
-                    * 100.00 + 400.00);
-            integerToBits(bits, Double.valueOf(seaSurfaceTemperature).intValue(), XBTProfileDataRanges.getSeaTemperature(newMessageType));
-        } else {
+        int bitLen = 12;
+        double scaleFactor = 2;
+        int offset = 400;
+        start = XBTProfileDataRanges.getTemperaturePoints(newMessageType)[0];
 
-            double seaSurfaceResistance = Math.round(xBTProfile.getSeaSurfaceResistance() - 3200);
-            integerToBits(bits, Double.valueOf(seaSurfaceResistance).intValue(), XBTProfileDataRanges.getSeaResistance(newMessageType));
+        if (newMessageType == MessageType.MESSAGE_TYPE_4) {
 
-        }//end else
+            bitLen = 21;
+            scaleFactor = 2;
+            offset = 0;
+            start = XBTProfileDataRanges.getResistancePoints(newMessageType)[0];
 
+        }
+
+  /*      double seaSurfaceMeasurementPoint = Math.round(xBTProfile.getSeaSurfaceMeasurement()
+                * Math.pow(10.0, scaleFactor) + offset);
+        integerToBits(bits, Double.valueOf(seaSurfaceMeasurementPoint).intValue(), XBTProfileDataRanges.getSeaTemperature(newMessageType));
+*/
         if (newMessageType == MessageType.MESSAGE_TYPE_1) {
             double seaDepth = xBTProfile.getSeaDepth();
             integerToBits(bits, Double.valueOf(seaDepth).intValue(), XBTProfileDataRanges.getSeaDepth(newMessageType));
         }
-        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
-            int[] temperaturePointsRange = {-1, -1};
-            start = XBTProfileDataRanges.getTemperaturePoints(newMessageType)[0];
 
-            for (int i = 0; i < xBTProfile.getTemperaturePoints().length; i++) {
-                // we had to round here because the doubles were being
-                // truncated to the wrong value
+        int[] measurementPointsRange = {-1, -1};
 
-                double tp = Math.round(xBTProfile.getTemperaturePoints()[i] * 100.00) + 400.00;
-                temperaturePointsRange[0] = start + i * 12;
-                temperaturePointsRange[1] = start + i * 12 + 11;
-                integerToBits(bits, Double.valueOf(tp).intValue(), temperaturePointsRange);
-                last = i;
+        for (int i = 0; i < xBTProfile.getMeasurementPoints().length; i++) {
+            // we had to round here because the doubles were being
+            // truncated to the wrong value
 
-            }
-        } else {
+            double mp = Math.round(xBTProfile.getMeasurementPoints()[i] * Math.pow(10.0, scaleFactor)) + offset;
+            measurementPointsRange[0] = start + i * bitLen;
+            measurementPointsRange[1] = start + i * bitLen + bitLen - 1;
+            integerToBits(bits, Double.valueOf(mp).intValue(), measurementPointsRange);
+            last = i;
 
-            int[] resistancePointsRange = {-1, -1};
-            start = XBTProfileDataRanges.getResistancePoints(newMessageType)[0];
-
-            for (int i = 0; i < xBTProfile.getResistancePoints().length; i++) {
-                // we had to round here because the doubles were being
-                // truncated to the wrong value
-
-                double rp = Math.round(xBTProfile.getResistancePoints()[i] - 3200);
-                resistancePointsRange[0] = start + i * 14;
-                resistancePointsRange[1] = start + i * 14 + 13;
-                integerToBits(bits, Double.valueOf(rp).intValue(), resistancePointsRange);
-                last = i;
-
-            }
-
-        }//end else
+        }
 
         //*************calculate Number of repeated fields.***************
         xBTProfile.setNumberOfRepeatedFields(1);
@@ -168,25 +156,14 @@ public class BinEncoder {
         integerToBits(bits, xBTProfile.getNumberOfRepeatedFields(), XBTProfileDataRanges.getNumberOfRepeatedFields(newMessageType));
 
         //*************Compute timesReplicated****************************
-        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
-            timesReplicated = xBTProfile.getTemperaturePoints().length;
-            xBTProfile.setTimesReplicated(timesReplicated);
-            integerToBits(bits, timesReplicated, XBTProfileDataRanges.getTimesReplicated(newMessageType));
-        } else {
+        timesReplicated = xBTProfile.getMeasurementPoints().length;
+        xBTProfile.setTimesReplicated(timesReplicated);
+        integerToBits(bits, timesReplicated, XBTProfileDataRanges.getTimesReplicated(newMessageType));
 
-            timesReplicated = xBTProfile.getResistancePoints().length;
-            xBTProfile.setTimesReplicated(timesReplicated);
-            integerToBits(bits, timesReplicated, XBTProfileDataRanges.getTimesReplicated(newMessageType));
-
-        }//end else
         //**************Encode Rider Name*********************************
-        if (newMessageType != MessageType.MESSAGE_TYPE_4) {
-            start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + 12 * timesReplicated;
-        } else {
-            start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + 14 * timesReplicated;
-        }//end else
+        start0 = XBTProfileDataRanges.getRiderNames(newMessageType)[0] + bitLen * timesReplicated;
 
-        if (xBTProfile.getRiderNames() != null &&xBTProfile.getRiderNames().length() > 0 ) {
+        if (xBTProfile.getRiderNames() != null && xBTProfile.getRiderNames().length() > 0) {
 
             numberOfRiderBlocks = (int) Math.ceil(((double) xBTProfile.getRiderNames().length()) / 5);
 

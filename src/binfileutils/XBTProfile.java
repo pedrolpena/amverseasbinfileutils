@@ -61,9 +61,11 @@ public class XBTProfile {
     private int timesReplicated = 0;
     private double seaSurfaceTemperature = 0;
     private double seaSurfaceResistance = 0;
+    private double seaSurfaceMeasurementPoint;
     private double seaDepth = 0;
     private double[] temperaturePoints;
     private double[] resistancePoints;
+    private double[] measurementPoints;
     private String riderName = "";
     private String riderEmail = "";
     private String riderInstitution = "";
@@ -649,6 +651,24 @@ public class XBTProfile {
     public double getSeaSurfaceResistance() {
         return seaSurfaceResistance;
     }    
+    
+    
+        /**
+     * <strong>(FXY22042S)</strong>-This method returns the SSM or the first
+     * measurement made.
+     *
+     * @return <strong>(FXY22042S)</strong>-This method returns the SSM or the
+     * first measurement made.
+     */
+    public double getSeaSurfaceMeasurement() {
+        double ssm = this.seaSurfaceMeasurementPoint;
+        if (this.newMessageType == MessageType.MESSAGE_TYPE_4) {
+            XBTResistanceToTemperatureConverter XBTR2T = new XBTResistanceToTemperatureConverter();
+            ssm = XBTR2T.convertResistaceToTemperature(seaSurfaceMeasurementPoint);
+
+        }//end if
+        return ssm;
+    }
 
     /**
      * <strong>(FXY7062S)</strong>-This method returns the depth below the
@@ -688,7 +708,19 @@ public class XBTProfile {
      */
     public double[] getResistancePoints() {
         return resistancePoints;
-    }    
+    } 
+    
+    /**
+     * <strong>(FXY22042S)</strong>-This method returns an array containing the
+     * measurements made.
+     *
+     * @return <strong>(FXY22042S)</strong>-This method returns an array
+     * containing the measurements made.
+     */
+    public double[] getMeasurementPoints() {
+
+        return measurementPoints;
+    }
 
     /**
      * <strong>(FXY205030A)</strong>-This method returns the rider's name.
@@ -1283,6 +1315,7 @@ public class XBTProfile {
      */
     public void setSeaSurfaceTemperature(double seaSurfaceTemperature) {
         this.seaSurfaceTemperature = seaSurfaceTemperature;
+        this.seaSurfaceMeasurementPoint = seaSurfaceTemperature;
     }
     
         /**
@@ -1294,7 +1327,20 @@ public class XBTProfile {
      */
     public void setSeaSurfaceResistance(double seaSurfaceResistance) {
         this.seaSurfaceResistance = seaSurfaceResistance;
+        this.seaSurfaceMeasurementPoint = seaSurfaceResistance;
     }
+    
+        /**
+     * <strong>(FXY22042S)</strong>-This method sets the SSM or the first
+     * Resistance measurement made.
+     *
+     * @param seaSurfacemeasurement the SST or the first
+     * temperature measurement made.
+     */
+    public void setSeaSurfaceMeasurementPoint(double seaSurfacemeasurement) {
+ 
+        this.seaSurfaceMeasurementPoint = seaSurfaceResistance;
+    }    
 
 
     /**
@@ -1320,19 +1366,48 @@ public class XBTProfile {
         if(temperaturePoints!=null && temperaturePoints.length > 0){
        this.seaSurfaceTemperature = temperaturePoints[0];
         }//end if
+        
+        this.measurementPoints = temperaturePoints;
+        if (measurementPoints != null && measurementPoints.length > 0) {
+            this.seaSurfaceMeasurementPoint = measurementPoints[0];
+        }//end if          
 
     }
+  
     /**
      * <strong>(FXY22042S)</strong>-This method sets an array containing the
      * resistance measurements made.
      *
      * @param resistancePoints An array containing the temperature 
-     * measurements made.
+     * measurements
+     * made.
      */
     public void setResistancePoints(double[] resistancePoints) {
         this.resistancePoints = resistancePoints;
-                if(resistancePoints!=null && resistancePoints.length > 0){
-       this.seaSurfaceResistance = resistancePoints[0];
+        if (resistancePoints != null && resistancePoints.length > 0) {
+            this.seaSurfaceResistance = resistancePoints[0];
+        }//end if
+
+        this.measurementPoints = resistancePoints;
+        if (measurementPoints != null && measurementPoints.length > 0) {
+            this.seaSurfaceMeasurementPoint = measurementPoints[0];
+        }//end if                
+                
+                
+
+    }  
+    
+    /**
+     * <strong>(FXY22042S)</strong>-This method sets an array containing the
+     * measurements made.
+     *
+     * @param measurementPoints An array containing the 
+     * measurements made.
+     */
+    public void setMeasurementPoints(double[] measurementPoints) {
+        this.measurementPoints = measurementPoints;
+                if(measurementPoints!=null && measurementPoints.length > 0){
+       this.seaSurfaceMeasurementPoint = measurementPoints[0];
         }//end if
 
     }    

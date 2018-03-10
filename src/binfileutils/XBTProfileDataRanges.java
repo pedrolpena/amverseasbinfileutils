@@ -65,7 +65,7 @@ public final class XBTProfileDataRanges {
         /*45*/ {{-1, -1, -1, 861, 861}, {-1, -1, -1, 866, 866}},//number of rider phone blocks
         /*46*/ {{-1, 597, 707, 867, 867}, {-1, 604, 714, 874, 874}},//number of repeated fields
         /*47*/ {{-1, 605, 715, 875, 875}, {-1, 620, 730, 890, 890}},//times replicated
-        /*48*/ {{-1, 621, 731, 891, 891}, {-1, 632, 742, 902, 906}},//sea surface temperature/resistance
+        /*48*/ {{-1, 621, 731, 891, 891}, {-1, 632, 742, 902, 911}},//sea surface temperature/resistance
         /*49*/ {{-1, 633, -1, -1,-1}, {-1, 646, -1, -1,-1}}, //sea depth
         /*50*/ {{-1, 621, 731, 891,891}, {-1, -1, -1, -1,-1}}, //temperature points
         /*51*/{{-1, -1, -1, -1, -1}, {-1, -1, -1, -1, -1}},// comment blocks
