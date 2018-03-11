@@ -925,7 +925,7 @@ public class BinDecoder {
         int mt = getNewMessageType();
         int bSize = 12;
         if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 14;
+            bSize = 21;
         }//end if
 
         int start = XBTProfileDataRanges.getRiderNames(mt)[0];
@@ -945,7 +945,7 @@ public class BinDecoder {
         int mt = getNewMessageType();
         int bSize = 12;
         if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 14;
+            bSize = 21;
         }//end if        
         int start = XBTProfileDataRanges.getRiderEmails(mt)[0];
 
@@ -965,7 +965,7 @@ public class BinDecoder {
         int mt = getNewMessageType();
         int bSize = 12;
         if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 14;
+            bSize = 21;
         }//end if        
         int start = XBTProfileDataRanges.getRiderInstituions(mt)[0];
         int s = start + bSize * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
@@ -984,7 +984,7 @@ public class BinDecoder {
         int mt = getNewMessageType();
         int bSize = 12;
         if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 14;
+            bSize = 21;
         }//end if
         int start = XBTProfileDataRanges.getRiderPhones(mt)[0];
 
