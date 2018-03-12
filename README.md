@@ -84,7 +84,7 @@ Allows one to edit an XBT profile's meta data on the command line.<br>
 --------------------------
 
 You should be able to just copy and paste these commands striaght into a terminal window/command prompt.<br>
-Make sure you are in the directory with the example programs and that you have java a JDK installed.<br>
+Make sure you are in the directory with the example programs and that you have a java JDK installed.<br>
 
 linux
 -----
