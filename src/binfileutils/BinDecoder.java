@@ -1067,7 +1067,7 @@ public class BinDecoder {
                     str += x;
                 }
             }
-            return str;
+            return str.replaceAll("\\p{C}", "");
         } catch (Exception e) {
             return null;
         }//end catch
