@@ -71,6 +71,25 @@ public class DepthCalculator {
     }//end methos
 
     /**
+     * This method returns a double that is the depth where the measurement was
+     * made.
+     *
+     * @param sequenceNumber A number from 0 to n that is the position of the
+     * measurement in the list of points.
+     * @return This method returns a double that is the depth where the
+     * measurement was made.
+     */
+    public double getMeasurementDepth(int sequenceNumber) {
+        double depth;
+        double time;
+
+        time = ((double) sequenceNumber + 1) / sampleFrequency;
+        depth = (A * time) + (.001 * B * time * time);
+
+        return depth;
+    }//end methos    
+
+    /**
      * This method returns a two dimensional array of doubles containing the
      * depths ad temperatures as measured by the recorder.
      *
