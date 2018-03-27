@@ -72,6 +72,9 @@ public class XBTProfile {
     private String riderPhone = "";
 
     public XBTProfile() {
+        temperaturePoints = new double[0];
+        resistancePoints = new double[0];
+        measurementPoints = new double[0];
     }
 
     /**
