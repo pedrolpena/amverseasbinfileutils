@@ -9,7 +9,7 @@ package binfileutils;
  * Z = A*t + .001 * B*t*t
  * Z is depth and t is time elapsed in seconds.
  * This values were copied from 
- * https://www.nodc.noaa.gov/woce/woce_v3/wocedata_1/woce-uot/document/wmocode.htm 
+ * https://www.nodc.noaa.gov/GTSPP/document/codetbls/wmocodes/table1770.html
  *
  * @author Pedro Pena
  * @version 1.0
