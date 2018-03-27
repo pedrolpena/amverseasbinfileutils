@@ -870,15 +870,16 @@ public class BinDecoder {
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getResistancePoints(mt)[0];
         int points = getTimesReplicated();
-
+        int bSize = XBTProfileDataRanges.getSeaTemperature(mt)[1]
+                - XBTProfileDataRanges.getSeaTemperature(mt)[0] + 1;
         if (points < 0) {
             return new double[0];
         }
 
         double resistance[] = new double[points];
         int counter = 0;
-        for (int i = start; i < start + points * 21; i += 21) {
-            resistance[counter] = (((double)toInteger(i, i + 20) - 0.00 ) / 100.00);
+        for (int i = start; i < start + points * bSize; i += bSize) {
+            resistance[counter] = (((double)toInteger(i, i + bSize - 1) - 0.00 ) / 100.00);
             counter++;
 
         }//end for
@@ -898,6 +899,8 @@ public class BinDecoder {
         int mt = getNewMessageType();
         int start = XBTProfileDataRanges.getResistancePoints(mt)[0];
         int points = getTimesReplicated();
+        int bSize = XBTProfileDataRanges.getSeaTemperature(mt)[1]
+                - XBTProfileDataRanges.getSeaTemperature(mt)[0] + 1;
 
         if (points < 0) {
             return new double[0];
@@ -905,8 +908,8 @@ public class BinDecoder {
 
         double temps[] = new double[points];
         int counter = 0;
-        for (int i = start; i < start + points * 21; i += 21) {
-            temps[counter] = (toInteger(i, i + 20)/100 + 0);
+        for (int i = start; i < start + points * bSize; i += bSize) {
+            temps[counter] = (toInteger(i, i + bSize - 1) / 100 + 0);
             counter++;
 
         }//end for
@@ -923,11 +926,9 @@ public class BinDecoder {
     private String getRiderNames() {
 
         int mt = getNewMessageType();
-        int bSize = 12;
-        if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 21;
-        }//end if
 
+        int bSize = XBTProfileDataRanges.getSeaTemperature(mt)[1]
+                - XBTProfileDataRanges.getSeaTemperature(mt)[0] + 1;
         int start = XBTProfileDataRanges.getRiderNames(mt)[0];
 
         int s = start + bSize * getTimesReplicated();
@@ -943,10 +944,8 @@ public class BinDecoder {
     private String getRiderEmails() {
 
         int mt = getNewMessageType();
-        int bSize = 12;
-        if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 21;
-        }//end if        
+        int bSize = XBTProfileDataRanges.getSeaTemperature(mt)[1]
+                - XBTProfileDataRanges.getSeaTemperature(mt)[0] + 1;      
         int start = XBTProfileDataRanges.getRiderEmails(mt)[0];
 
         int s = start + bSize * getTimesReplicated() + getNumberOfRiderBlocks() * 40;
@@ -963,10 +962,8 @@ public class BinDecoder {
     private String getRiderInstitutions() {
 
         int mt = getNewMessageType();
-        int bSize = 12;
-        if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 21;
-        }//end if        
+        int bSize = XBTProfileDataRanges.getSeaTemperature(mt)[1]
+                - XBTProfileDataRanges.getSeaTemperature(mt)[0] + 1;      
         int start = XBTProfileDataRanges.getRiderInstituions(mt)[0];
         int s = start + bSize * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40;
         return toString(s, s + getNumberOfRiderInstitutionBlocks() * 40);
@@ -982,10 +979,8 @@ public class BinDecoder {
     private String getRiderPhones() {
 
         int mt = getNewMessageType();
-        int bSize = 12;
-        if (mt == MessageType.MESSAGE_TYPE_4) {
-            bSize = 21;
-        }//end if
+        int bSize = XBTProfileDataRanges.getSeaTemperature(mt)[1]
+                - XBTProfileDataRanges.getSeaTemperature(mt)[0] + 1;
         int start = XBTProfileDataRanges.getRiderPhones(mt)[0];
 
         int s = start + bSize * getTimesReplicated() + getNumberOfRiderBlocks() * 40 + getNumberOfRiderEmailBlocks() * 40 + getNumberOfRiderInstitutionBlocks() * 40;

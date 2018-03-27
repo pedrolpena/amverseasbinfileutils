@@ -109,15 +109,13 @@ public class BinEncoder {
 
         //********************Encode measurement points************************
         int last = 0;
-        int bitLen = 12;
+        int bitLen = XBTProfileDataRanges.getSeaTemperature(newMessageType)[1] - XBTProfileDataRanges.getSeaTemperature(newMessageType)[0] + 1;
         double scaleFactor = 2;
         int offset = 400;
         start = XBTProfileDataRanges.getTemperaturePoints(newMessageType)[0];
 
         if (newMessageType == MessageType.MESSAGE_TYPE_4) {
-
-            bitLen = 21;
-            scaleFactor = 2;
+            
             offset = 0;
             start = XBTProfileDataRanges.getResistancePoints(newMessageType)[0];
 
