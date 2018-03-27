@@ -5,6 +5,11 @@ package binfileutils;
  * , the A and B coefficients used in the XBT fall rate equation, The Maximum 
  * Depth for the probe and a Description of the probe. There are methods to 
  * get the vales for each probe type.
+ * To calculate the depth, use the following equation.
+ * Z = A*t + .001 * B*t*t
+ * Z is depth and t is time elapsed in seconds.
+ * This values were copied from 
+ * https://www.nodc.noaa.gov/woce/woce_v3/wocedata_1/woce-uot/document/wmocode.htm 
  *
  * @author Pedro Pena
  * @version 1.0
