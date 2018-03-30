@@ -306,7 +306,7 @@ public class EditBinFile {
             }//end if 
             if (line.hasOption("height")) {
                 height = line.getOptionValue("height");
-                xBTProfileOut.setLaunchHeight(Integer.parseInt(height));
+                xBTProfileOut.setLaunchHeight(Double.parseDouble(height));
 
             }//end if 
             if (line.hasOption("shipdir")) {
