@@ -78,6 +78,7 @@ public class EditBinFile {
         String inFile;
         String outFile;
         String callsign;
+        String messagetype;
         String latitude;
         String longitude;
         String transectname;
@@ -129,6 +130,7 @@ public class EditBinFile {
         options.addOption("i", true, "input file.");
         options.addOption("o", true, "output file name.");
         options.addOption("callsign", true, "the ship's callsign.");
+        options.addOption("messagetype", true, "a number denoting the bin files message type.");
         options.addOption("latitude", true, "latitude in decimal degress.");
         options.addOption("longitude", true, "longitude in decimal degrees.");
         options.addOption("transectname", true, "the name give to the transect. e.g. AX07");
@@ -200,8 +202,13 @@ public class EditBinFile {
             if (line.hasOption("callsign")) {
                 callsign = line.getOptionValue("callsign");
                 xBTProfileOut.setCallsign(callsign);
-
+                
             }//end if 
+            if (line.hasOption("messagetype")) {
+                messagetype = line.getOptionValue("messagetype");
+                xBTProfileOut.setNewMessageType(Integer.parseInt(messagetype));
+                
+            }//end if             
             if (line.hasOption("latitude")) {
                 latitude = line.getOptionValue("latitude");
                 xBTProfileOut.setLatitude(Double.parseDouble(latitude));
