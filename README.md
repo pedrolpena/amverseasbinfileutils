@@ -86,7 +86,7 @@ Allows one to edit an XBT profile's meta data on the command line.<br>
 You should be able to just copy and paste these commands striaght into a terminal window/command prompt.<br>
 Make sure you are in the directory with the example programs and that you have a java JDK installed.<br>
 
-linux
+linux/Mac OSX
 -----
 ```bash
 javac -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTest.java
@@ -110,7 +110,7 @@ javac -cp .;lib/AmverseasBinFileUtils.jar;lib/commons-math3-3.6.1.jar;lib/common
 -Run example programs-
 ----------------------
 
-linux
+linux/Mac OSX
 -----
 ```bash
 java -cp .:lib/AmverseasBinFileUtils.jar:lib/commons-math3-3.6.1.jar DecoderTest profile.bin
