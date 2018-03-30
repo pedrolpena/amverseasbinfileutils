@@ -8,10 +8,8 @@
 import binfileutils.BinDecoder;
 import binfileutils.BinEncoder;
 import binfileutils.XBTProfile;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -108,6 +106,7 @@ public class EditBinFile {
         String rideremail;
         String institution;
         String depth;
+        String[] stringTemps;
 
         CommandLineParser parser = new DefaultParser();
 // create the Options
@@ -153,7 +152,7 @@ public class EditBinFile {
         options.addOption("rideremail", true, "the rider(s) emails.");
         options.addOption("institution", true, "the rider(s) institution.");
         options.addOption("depth", true, "the total water depth.");
-
+        options.addOption("temps", true, "temperature points delimited by \"@\"");
         // create the parser
         try {
             // parse the command line arguments
@@ -369,17 +368,28 @@ public class EditBinFile {
                 depth = line.getOptionValue("depth");
                 xBTProfileOut.setTotalWaterDepth(Integer.parseInt(depth));
 
-            }//end if            
+            }//end if 
+            if (line.hasOption("temps")) {
+                stringTemps = line.getOptionValue("temps").split("@");
+                double[] doubleTemps = new double[stringTemps.length];
+
+                for (int i = 0; i < stringTemps.length; i++) {
+                    doubleTemps[i] = Double.parseDouble(stringTemps[i]);
+                }//end for
+                xBTProfileOut.setTemperaturePoints(doubleTemps);
+
+            }//end if             
             if (line.hasOption("o")) {
                 outFile = line.getOptionValue("o");
                 BinEncoder encodedXBTProfile = new BinEncoder(xBTProfileOut);
                 encodedXBTProfile.writeOutBinFile(outFile);
             }//end if  
+            
             else {
                 System.out.println(xBTProfileOut.toString());
             }//end else            
 
-        }//end try
+        }//end try//end try
         catch (ParseException exp) {
             // oops, something went wrong
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
