@@ -43,7 +43,7 @@ public class EditBinFile {
 //Minute                         | 15
 //Ship Name                      | CMA CGM MOLIERE
 //IMO Number                     | 9401099
-//SEAS ID                        | CE01E9D4
+//SEAS ID                        | 4AC81578
 //SEAS Version                   | 930
 //Probe Serial Number            | 1227259
 //Probe Manufacture Date         | 01/01/1970
@@ -62,7 +62,16 @@ public class EditBinFile {
 //Current Direction              | 511
 //Current Speed (knots)          | 81.91
 //Total Water Depth (meters)     | 0
+//XBT Launcher Type              | AOML XBT V8.1 Autolauncher (up to 8 Deep Blue and Fast Deep probes)
+//XBT Recorder Serial Number     | 00000000
+//XBT Recorder Manufacture Date  | 01/01/1970
+//Agency in charge of Operation  | USA, NOAA Atlantic Oceanographic and Meteorological Laboratories (AOML)
+//Ship Rider                     | Grant Rawson
+//Ship Rider Institution         | AOML
+//Ship Rider Email               | grant.rawson@noaa.gov
+//Ship Rider Telephone Number    | 305-361-4363
 //===================================================================
+
 
         // create the command line parser
         String help;
@@ -100,6 +109,11 @@ public class EditBinFile {
         String currentmethod;
         String currentdir;
         String currentspeed;
+        String launcher;
+        String recorderserial;
+        String recorderyear;
+        String recordermonth;
+        String recorderday;
         String agency;
         String rider;
         String riderphone;
@@ -146,6 +160,11 @@ public class EditBinFile {
         options.addOption("currentmethod", true, "a number that denotes the sea surface current measurement method.");
         options.addOption("currentdir", true, "a decimal number that denotes the sea surface current direction.");
         options.addOption("currentspeed", true, "a decimal number that denotes the sea surface current speed.");
+        options.addOption("launcher", true, "a number that denotes the type of launcher used.");
+        options.addOption("recorderserial", true, "a number that denotes the serial number for the recording device.");
+        options.addOption("recorderyear", true, "four digit number for the year the recorder was manufactured");
+        options.addOption("recordermonth", true, "two digit number for the monthe the recorder was manufactured.");
+        options.addOption("recorderday", true, "two digit number for the monthe the recorder was manufactured.");
         options.addOption("agency", true, "a number denoting the agency in charge of operating the observation platform.");
         options.addOption("rider", true, "the rider(s) name.");
         options.addOption("riderphone", true, "the rider(s) phone numbers.");
@@ -326,23 +345,48 @@ public class EditBinFile {
             if (line.hasOption("currentmethod")) {
                 currentmethod = line.getOptionValue("currentmethod");
                 xBTProfileOut.setSeaSurfaceCurrentMeasurementMethod(Integer.parseInt(currentmethod));
-
+                
             }//end if 
             if (line.hasOption("currentdir")) {
                 currentdir = line.getOptionValue("currentdir");
                 xBTProfileOut.setSeaSurfaceCurrentDirection(Integer.parseInt(currentdir));
-
+                
             }//end if 
             if (line.hasOption("currentspeed")) {
                 currentspeed = line.getOptionValue("currentspeed");
                 xBTProfileOut.setSeaSurfaceCurrentSpeed(Double.parseDouble(currentspeed));
-
+                
             }//end if 
+            if (line.hasOption("launcher")) {
+                launcher = line.getOptionValue("launcher");
+                xBTProfileOut.setXBTLauncherType(Integer.parseInt(launcher));
+                
+            }//end if    
+            if (line.hasOption("recorderserial")) {
+                recorderserial = line.getOptionValue("recorderserial");
+                xBTProfileOut.setXBTRecorderSerialNumber(recorderserial);
+                
+            }//end if 
+            if (line.hasOption("recorderyear")) {
+                recorderyear = line.getOptionValue("recorderyear");
+                xBTProfileOut.setXBTRecorderManufacturedYear(Integer.parseInt(recorderyear));
+                
+            }//end if 
+            if (line.hasOption("recordermonth")) {
+                recordermonth = line.getOptionValue("recordermonth");
+                xBTProfileOut.setXBTRecorderManufacturedMonth(Integer.parseInt(recordermonth));
+                
+            }//end if 
+            if (line.hasOption("recorderday")) {
+                recorderday = line.getOptionValue("recorderday");
+                xBTProfileOut.setXBTRecorderManufacturedDay(Integer.parseInt(recorderday));
+                
+            }//end if             
 
             if (line.hasOption("agency")) {
                 agency = line.getOptionValue("agency");
                 xBTProfileOut.setAgencyOwner(Integer.parseInt(agency));
-
+                
             }//end if
             if (line.hasOption("rider")) {
                 rider = line.getOptionValue("rider");
@@ -371,11 +415,22 @@ public class EditBinFile {
             }//end if 
             if (line.hasOption("temps")) {
                 stringTemps = line.getOptionValue("temps").split("@");
-                double[] doubleTemps = new double[stringTemps.length];
 
-                for (int i = 0; i < stringTemps.length; i++) {
-                    doubleTemps[i] = Double.parseDouble(stringTemps[i]);
-                }//end for
+                double[] doubleTemps;
+
+                if (stringTemps.length > 0 && !stringTemps[0].equals("null")) {
+
+                    doubleTemps = new double[stringTemps.length];
+
+                    for (int i = 0; i < stringTemps.length; i++) {
+                        doubleTemps[i] = Double.parseDouble(stringTemps[i]);
+                    }//end for
+
+                }//end if
+                else {
+                    doubleTemps = new double[0];
+                }//end else
+
                 xBTProfileOut.setTemperaturePoints(doubleTemps);
 
             }//end if             
