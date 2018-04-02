@@ -11,6 +11,6 @@ PROGRAM="./"
 CP=".:$LIB/AmverseasBinFileUtils.jar:$LIB/commons-math3-3.6.1.jar:$PROGRAM"
 #uncomment this line to compile the program. once compiled, comment this again.
 #javac -cp $CP DecoderTestASCII.java
-java -cp $CP DecoderTestASCII "$@"
+java -cp $CP BinConverter "$@"
 
 
