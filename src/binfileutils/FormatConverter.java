@@ -9,6 +9,7 @@ import static binfileutils.XBTProbe.getCoefficientB;
 import static binfileutils.XBTProbe.getMaxDepth;
 import static binfileutils.XBTProbe.getProbeDescription;
 import static binfileutils.XBTRecorder.getRecorderDescription;
+import static binfileutils.XBTRecorder.getRecorderFrequency;
 
 /**
  * This class contains routines to convert a SEAS XBT temperature xBTprofile
@@ -159,17 +160,19 @@ public class FormatConverter {
         double sv ;
         double temp;
         double depth;
+        double time = 0.0;
         double [] resistances = xBTprofile.getResistancePoints();
         double resistance;
         for (int i = 0; i < depthsAndTemps.length ; i++) {
             depth = dc.getMeasurementDepth(i-1);
             temp = depthsAndTemps[i][1];
             pressure = pc.getPressure(depth, xBTprofile.getLatitude());
+            time = i / getRecorderFrequency(xBTprofile.getInstrumentType());
             resistance = -9999.99;
             if (resistances != null && resistances.length > i )
             resistance =resistances[i] ;
             sv = ss.getSoundSpeedChenMillero(pressure, salinity, temp);
-            tmp += String.format("%5.1f %8.3f    %7.2f   %5.2f   %7.2f",(double)i/10.00,resistance, depth, temp , sv).trim()+"\n";
+            tmp += String.format("%5.1f %8.3f    %7.2f   %5.2f   %7.2f",time,resistance, depth, temp , sv).trim()+"\n";
         } //end for 
         return tmp;
     }//ENDGETasciiedf
