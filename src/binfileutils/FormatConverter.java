@@ -204,7 +204,7 @@ public class FormatConverter {
         if (lat < 0) {
             dir = "S";
         }//end if
-        return String.format("%02d %07.4f " + dir, x, y);
+        return String.format("%02d %07.4f" + dir, x, y);
     }
 
     private String decimalDegreesLonToDMSEDF(double lon) {
@@ -215,7 +215,7 @@ public class FormatConverter {
         if (lon < 0) {
             dir = "W";
         }//end if
-        return String.format("%03d %07.4f " + dir, x, y);
+        return String.format("%03d %07.4f" + dir, x, y);
     }
 
 }
