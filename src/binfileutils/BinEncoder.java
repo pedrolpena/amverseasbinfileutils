@@ -358,9 +358,10 @@ public class BinEncoder {
         tmpBitSet.set(8, true);
         int sBytes = 2 * (8 * s.length()) % 40;
         int sBytes5 = s.length() % 5;
-        if (sBytes == 0 && sBytes5 == 0) {
+       /* if (sBytes == 0 && sBytes5 == 0) {
             setBitWithinBits(b, tmpBitSet, range[0] + 40 * blocks + sBytes - 8);
-        }
+        }*/
+        setBitWithinBits(b, tmpBitSet, range[0] + 40 * blocks + sBytes - 8);
         stringToBits(b, s, range);
     }
 
