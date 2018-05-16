@@ -8,6 +8,7 @@
 import binfileutils.BinDecoder;
 import binfileutils.BinEncoder;
 import binfileutils.XBTProfile;
+import binfileutils.MessageType;
 import java.util.Collection;
 import java.util.Iterator;
 import org.apache.commons.cli.CommandLine;
@@ -122,6 +123,7 @@ public class EditBinFile {
         String institution;
         String depth;
         String[] stringTemps;
+        String[] stringRes;        
 
         CommandLineParser parser = new DefaultParser();
 // create the Options
@@ -174,6 +176,7 @@ public class EditBinFile {
         options.addOption("institution", true, "the rider(s) institution.");
         options.addOption("depth", true, "the total water depth.");
         options.addOption("temps", true, "temperature points delimited by \"@\"");
+        options.addOption("res", true, "resistance points delimited by \"@\"");
         // create the parser
         try {
             // parse the command line arguments
@@ -440,7 +443,33 @@ public class EditBinFile {
 
                 xBTProfileOut.setTemperaturePoints(doubleTemps);
 
-            }//end if             
+            }//end if
+                if (line.hasOption("res")) {
+                stringRes = line.getOptionValue("res").split("@");
+
+                double[] doubleRes;
+
+                if (stringRes.length > 0 && !stringRes[0].equals("null")) {
+
+                    doubleRes = new double[stringRes.length];
+
+                    for (int i = 0; i < stringRes.length; i++) {
+                        doubleRes[i] = Double.parseDouble(stringRes[i]);
+                        if (doubleRes[i] < 3199.61){
+							doubleRes[i] = 3199.61;
+							}//end if
+                    }//end for
+
+                }//end if
+                else {
+                    doubleRes = new double[0];
+                }//end else
+                
+                xBTProfileOut.setNewMessageType(MessageType.MESSAGE_TYPE_4);
+                xBTProfileOut.setResistancePoints(doubleRes);
+                
+
+            }//end if  
             if (line.hasOption("o")) {
                 outFile = line.getOptionValue("o");
                 BinEncoder encodedXBTProfile = new BinEncoder(xBTProfileOut);
