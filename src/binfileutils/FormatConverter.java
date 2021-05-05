@@ -10,6 +10,7 @@ import static binfileutils.XBTProbe.getMaxDepth;
 import static binfileutils.XBTProbe.getProbeDescription;
 import static binfileutils.XBTRecorder.getRecorderDescription;
 import static binfileutils.XBTRecorder.getRecorderFrequency;
+import java.util.zip.CRC32;
 
 /**
  * This class contains routines to convert a SEAS XBT temperature xBTprofile
@@ -107,7 +108,7 @@ public class FormatConverter {
         return tmp;
     }//end mehtod
 
-    public String getASCIIEDF(String fileName,double salinity) {
+    public String getASCIIEDF(String fileName, double salinity) {
         double[][] depthsAndTemps;               //array of doubles that holds depths & temperature measurements
         DepthCalculator dc = new DepthCalculator(xBTprofile);
         depthsAndTemps = dc.getDepthsAndTemperaturePoints();
@@ -134,12 +135,12 @@ public class FormatConverter {
         tmp += "Time of Launch   :  " + String.format("%02d:%02d:%02d\n",
                 xBTprofile.getHour(),
                 xBTprofile.getMinute(), 0);
-        tmp += "Sequence Number  :  " + xBTprofile.getSequenceNumber() + "\n";;
-        tmp += "Latitude         :  " + decimalDegreesLatToDMSEDF(xBTprofile.getLatitude()) + "\n";;
-        tmp += "Longitude        :  " + decimalDegreesLonToDMSEDF(xBTprofile.getLongitude()) + "\n";;
+        tmp += "Sequence Number  :  " + xBTprofile.getSequenceNumber() + "\n";
+        tmp += "Latitude         :  " + decimalDegreesLatToDMSEDF(xBTprofile.getLatitude()) + "\n";
+        tmp += "Longitude        :  " + decimalDegreesLonToDMSEDF(xBTprofile.getLongitude()) + "\n";
         tmp += "Serial Number    :  " + xBTprofile.getXBTRecorderSerialNumber() + "\n";
         tmp += "// Memo\n";
-        tmp += xBTprofile.getShipName() + "\n";;
+        tmp += xBTprofile.getShipName() + "\n";
         tmp += "// Hardware\n";
         tmp += "Recorder Device  : " + getRecorderDescription(xBTprofile.getRecorderType()) + "\n";
         tmp += "// Information - XBT\n";
@@ -157,25 +158,161 @@ public class FormatConverter {
         PressureCalculator pc = new PressureCalculator();
         SoundSpeedInSeaWater ss = new SoundSpeedInSeaWater();
         double pressure;
-        double sv ;
+        double sv;
         double temp;
         double depth;
         double time = 0.0;
-        double [] resistances = xBTprofile.getResistancePoints();
+        double[] resistances = xBTprofile.getResistancePoints();
         double resistance;
-        for (int i = 0; i < depthsAndTemps.length ; i++) {
-            depth = dc.getMeasurementDepth(i-1);
+        for (int i = 0; i < depthsAndTemps.length; i++) {
+            depth = dc.getMeasurementDepth(i - 1);
             temp = depthsAndTemps[i][1];
             pressure = pc.getPressure(depth, xBTprofile.getLatitude());
             time = i / getRecorderFrequency(xBTprofile.getInstrumentType());
             resistance = -9999.99;
-            if (resistances != null && resistances.length > i )
-            resistance =resistances[i] ;
+            if (resistances != null && resistances.length > i) {
+                resistance = resistances[i];
+            }
             sv = ss.getSoundSpeedChenMillero(pressure, salinity, temp);
-            tmp += String.format("%5.1f %8.3f    %7.2f   %5.2f   %7.2f",time,resistance, depth, temp , sv).trim()+"\n";
+            tmp += String.format("%5.1f %8.3f    %7.2f   %5.2f   %7.2f", time, resistance, depth, temp, sv).trim() + "\n";
         } //end for 
         return tmp;
     }//ENDGETasciiedf
+
+    public String getASCIINDC() {
+
+        String tmp = "";
+        DepthCalculator dc = new DepthCalculator(xBTprofile);
+        double[][] inflectionPoints = dc.getDepthsAndTemperaturePointsInflectionPoints();
+        double[][] twoMeterResolution = dc.getDepthsAndTemperaturePointsTwoMeterResolution();
+        double[][] fullResolution = dc.getDepthsAndTemperaturePoints();
+
+        tmp += " SEAS Version:  " + String.format("%05.2f", (double) xBTprofile.getSeasVersion() / 100.00) + "\r\n";
+        tmp += " Ship Name: " + xBTprofile.getShipName() + "\r\n";
+        tmp += " Call Sign: " + xBTprofile.getWMOId() + "\r\n";
+        tmp += " Lloyds Number:  " + xBTprofile.getLloyds() + "\r\n";
+
+        tmp += " Date/Time(dd/mm/yyyy): " + String.format("%02d/%02d/%04d %02d:%02d GMT\r\n",
+                xBTprofile.getDay(),
+                xBTprofile.getMonth(),
+                xBTprofile.getYear(),
+                xBTprofile.getHour(),
+                xBTprofile.getMinute());
+        tmp += " Latitude(ddd.ddd): " + decimalDegreesLatToDMSNDC(xBTprofile.getLatitude()) + "\r\n";
+        tmp += " Longitude(ddd.ddd): " + decimalDegreesLonToDMSNDC(xBTprofile.getLongitude()) + "\r\n";
+        tmp += " Probe Type: " + XBTProbe.getProbeDescription(xBTprofile.getInstrumentType()) + "\r\n";
+        tmp += " Probe Code:  " + xBTprofile.getInstrumentType() + "\r\n";
+        tmp += " Probe Serial No: " + xBTprofile.getProbeSerialNumber() + "\r\n";
+        tmp += " Recorder Type: " + XBTRecorder.getRecorderDescription(xBTprofile.getRecorderType()) + "\r\n";
+        tmp += " Recorder Code:  " + xBTprofile.getRecorderType() + "\r\n";
+        tmp += " Dry Bulb Temp:  " + String.format("%05.2f", xBTprofile.getDryBulbTemperature() - 273.15) + "\r\n";
+        tmp += " Wind Instr Type: " + WindInstrument.getInstrumentDescription(xBTprofile.getWindInstrumentType()) + "\r\n";
+        tmp += " Wind Speed: " + String.format("%04.1f", xBTprofile.getWindSpeed()) + "\r\n";
+        tmp += " Wind Dir:   " + String.format("%04.1f", xBTprofile.getWindDirection()) + "\r\n";
+        tmp += " Current Measurement Method: "
+                + SurfaceCurrentInstrument.getInstrumentDescription(
+                        xBTprofile.getSeaSurfaceCurrentMeasurementMethod()) + "\r\n";
+
+        tmp += " Current Speed: " + String.format("%2.2f", xBTprofile.getSeaSurfaceCurrentSpeed()) + "\r\n";
+        tmp += " Current Dir:   " + xBTprofile.getSeaSurfaceCurrentDirection() + "\r\n";
+        tmp += " Bottom Depth:    " + xBTprofile.getTotalWaterDepth() + " M\r\n";
+
+        String s = String.format("%x", xBTprofile.getUniqueTag());
+
+        s = s.toUpperCase();
+
+        tmp += " GTS CRC: " + String.format("%s", "FFFFFFFF") + "\r\n";
+        tmp += " SEAS ID: " + s + "\r\n";
+        tmp += " Ship Speed at Launch (knots): " + String.format("%4.2f", xBTprofile.getShipSpeed() * 1.94384) + "\r\n";
+        tmp += " Ship Direction at Launch (Degrees):   " + String.format("%02d", (int) xBTprofile.getShipDirection()) + "\r\n";
+        tmp += " Sequence Number:   " + xBTprofile.getSequenceNumber() + "\r\n";
+        tmp += " Transect Number:    " + xBTprofile.getTransectNumber() + "\r\n";
+        tmp += " Launch Height (Meters):  " + String.format("%4.2f", xBTprofile.getLaunchHeight()) + "\r\n";
+        tmp += " SOOP Line: " + xBTprofile.getSoopLine() + "\r\n";
+        tmp += " XBT Launcher Type: " + Launchers.getLauncherDescription(xBTprofile.getXBTLauncherType()) + "\r\n";
+        tmp += " XBT Recorder Serial Number: " + xBTprofile.getXBTRecorderSerialNumber() + "\r\n";
+
+        tmp += " XBT Recorder Manufacture Date: "
+                + String.format("%02d/%02d/%04d\r\n",
+                        xBTprofile.getXBTRecorderManufacturedMonth(),
+                        xBTprofile.getXBTRecorderManufacturedDay(),
+                        xBTprofile.getXBTRecorderManufacturedYear());
+
+        tmp += " Probe Manufacture Date: "
+                + String.format("%02d/%02d/%04d\r\n",
+                        xBTprofile.getXBTProbeManufacturedMonth(),
+                        xBTprofile.getXBTProbeManufacturedDay(),
+                        xBTprofile.getXBTProbeManufacturedYear());
+
+        tmp += " Agency in charge of Operation: " + Agency.getAgencyDescription(xBTprofile.getAgencyOwner()) + "\r\n";
+        tmp += " Ship Rider: " + xBTprofile.getRiderNames() + "\r\n";
+        tmp += " Ship Rider Institution: " + xBTprofile.getRiderInstitutions() + "\r\n";
+        tmp += " Ship Rider Email: " + xBTprofile.getRiderEmails() + "\r\n";
+        tmp += " Ship Rider Telephone Number: " + xBTprofile.getRiderPhones() + "\r\n";
+
+        if (inflectionPoints.length > 0) {
+            tmp += "\r\n\r\nINFPTS: " + inflectionPoints.length;
+
+            int count = 0;
+            for (double[] inflectionPoint : inflectionPoints) {
+                int depth = (int) (inflectionPoint[0] * 10);
+                int temp = (int) (inflectionPoint[1] * 100);
+
+                if ((count) % 8 != 0) {
+                    tmp = tmp + String.format(" %4d %4d", depth, temp);
+                } else {
+                    tmp = tmp + "\r\n" + String.format(" %4d %4d", depth, temp) + " ";
+                }
+                count++;
+            } //end for
+        }
+
+        if (twoMeterResolution.length > 0) {
+            tmp += "\r\n\r\n\r\nTWOMETER: " + twoMeterResolution.length;
+
+            int count = 0;
+            for (double[] twoMeterProfile : twoMeterResolution) {
+                int depth = (int) (twoMeterProfile[0] * 10);
+                int temp = (int) (twoMeterProfile[1] * 100 + .5);
+
+                if ((count) % 8 != 0) {
+                    tmp = tmp + String.format(" %4d %4d", depth, temp);
+                } else {
+                    tmp = tmp + "\r\n" + String.format(" %4d %4d", depth, temp) + " ";
+                }
+                count++;
+            } //end for
+        }
+
+        if (fullResolution.length > 0) {
+            tmp += "\r\n\r\n\r\nXBT: " + fullResolution.length;
+
+            int count = 0;
+            for (double[] fullProfile : fullResolution) {
+                int temp = (int) (fullProfile[1] * 100 + .5);
+
+                if ((count) % 20 != 0) {
+                    tmp = tmp + String.format("%4d", temp);
+                } else {
+                    tmp = tmp + "\r\n" + String.format("%4d", temp);
+                }
+                count++;
+            } //end for
+        }
+
+        // calculating the GTS CRC from the string, weird.......
+        int crc;
+        String GTSCRC = tmp;
+        GTSCRC += '\0';
+        CRC32 generator = new CRC32();
+        generator.reset();
+        generator.update(GTSCRC.getBytes());
+        s = Long.toHexString(generator.getValue());
+        tmp = tmp.replaceAll("GTS CRC: FFFFFFFF", "GTS CRC: " + s.toUpperCase());
+
+        return tmp;
+
+    }
 
     private String decimalDegreesLatToDMSAOML(double lat) {
         double tmp = Math.abs(lat);
@@ -221,4 +358,26 @@ public class FormatConverter {
         return String.format("%03d %07.4f" + dir, x, y);
     }
 
-}
+    private String decimalDegreesLatToDMSNDC(double lat) {
+        double tmp = Math.abs(lat);
+        int x = (int) tmp;
+        double y = 60 * (tmp - (double) x);
+        String dir = "N";
+        if (lat < 0) {
+            dir = "S";
+        }//end if
+        return String.format("%07.3f" + " " + dir, tmp);
+    }
+
+    private String decimalDegreesLonToDMSNDC(double lon) {
+        double tmp = Math.abs(lon);
+        int x = (int) tmp;
+        double y = 60 * (tmp - (double) x);
+        String dir = "E";
+        if (lon < 0) {
+            dir = "W";
+        }//end if
+        return String.format("%07.3f" + " " + dir, tmp);
+    }
+
+}//end class
