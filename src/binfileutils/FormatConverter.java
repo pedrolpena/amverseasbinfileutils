@@ -182,14 +182,20 @@ public class FormatConverter {
     public String getASCIINDC() {
 
         String tmp = "";
+        String tmp2;
         DepthCalculator dc = new DepthCalculator(xBTprofile);
         double[][] inflectionPoints = dc.getDepthsAndTemperaturePointsInflectionPoints();
         double[][] twoMeterResolution = dc.getDepthsAndTemperaturePointsTwoMeterResolution();
         double[][] fullResolution = dc.getDepthsAndTemperaturePoints();
 
         tmp += " SEAS Version:  " + String.format("%05.2f", (double) xBTprofile.getSeasVersion() / 100.00) + "\r\n";
-        tmp += " Ship Name: " + xBTprofile.getShipName() + "\r\n";
-        tmp += " Call Sign: " + xBTprofile.getWMOId() + "\r\n";
+        tmp2 = xBTprofile.getShipName();
+        tmp2 = tmp2 == null ? "" : tmp2;
+        tmp += " Ship Name: " + tmp2 + "\r\n";
+        
+        tmp2 = xBTprofile.getWMOId();
+        tmp2 = tmp2 == null ? "" : tmp2;        
+        tmp += " Call Sign: " + tmp2 + "\r\n";
         tmp += " Lloyds Number:  " + xBTprofile.getLloyds() + "\r\n";
 
         tmp += " Date/Time(dd/mm/yyyy): " + String.format("%02d/%02d/%04d %02d:%02d GMT\r\n",
@@ -205,17 +211,17 @@ public class FormatConverter {
         tmp += " Probe Serial No: " + xBTprofile.getProbeSerialNumber() + "\r\n";
         tmp += " Recorder Type: " + XBTRecorder.getRecorderDescription(xBTprofile.getRecorderType()) + "\r\n";
         tmp += " Recorder Code:  " + xBTprofile.getRecorderType() + "\r\n";
-        tmp += " Dry Bulb Temp:  " + String.format("%05.2f", xBTprofile.getDryBulbTemperature() - 273.15) + "\r\n";
+        tmp += " Dry Bulb Temp:  " + String.format("%04.1f", xBTprofile.getDryBulbTemperature() - 273.15) + "\r\n";
         tmp += " Wind Instr Type: " + WindInstrument.getInstrumentDescription(xBTprofile.getWindInstrumentType()) + "\r\n";
-        tmp += " Wind Speed: " + String.format("%04.1f", xBTprofile.getWindSpeed()) + "\r\n";
-        tmp += " Wind Dir:   " + String.format("%04.1f", xBTprofile.getWindDirection()) + "\r\n";
+        tmp += " Wind Speed:  " + String.format("%04.1f", xBTprofile.getWindSpeed()) + "\r\n";
+        tmp += " Wind Dir:    " + String.format("%04.1f", xBTprofile.getWindDirection()) + "\r\n";
         tmp += " Current Measurement Method: "
                 + SurfaceCurrentInstrument.getInstrumentDescription(
                         xBTprofile.getSeaSurfaceCurrentMeasurementMethod()) + "\r\n";
 
         tmp += " Current Speed: " + String.format("%2.2f", xBTprofile.getSeaSurfaceCurrentSpeed()) + "\r\n";
-        tmp += " Current Dir:   " + xBTprofile.getSeaSurfaceCurrentDirection() + "\r\n";
-        tmp += " Bottom Depth:    " + xBTprofile.getTotalWaterDepth() + " M\r\n";
+        tmp += " Current Dir:    " + xBTprofile.getSeaSurfaceCurrentDirection() + "\r\n";
+        tmp += " Bottom Depth: " + xBTprofile.getTotalWaterDepth() + " M\r\n";
 
         String s = String.format("%x", xBTprofile.getUniqueTag());
 
@@ -224,10 +230,10 @@ public class FormatConverter {
         tmp += " GTS CRC: " + String.format("%s", "FFFFFFFF") + "\r\n";
         tmp += " SEAS ID: " + s + "\r\n";
         tmp += " Ship Speed at Launch (knots): " + String.format("%4.2f", xBTprofile.getShipSpeed() * 1.94384) + "\r\n";
-        tmp += " Ship Direction at Launch (Degrees):   " + String.format("%02d", (int) xBTprofile.getShipDirection()) + "\r\n";
+        tmp += " Ship Direction at Launch (Degrees):  " + String.format("%02d", (int) xBTprofile.getShipDirection()) + "\r\n";
         tmp += " Sequence Number:   " + xBTprofile.getSequenceNumber() + "\r\n";
         tmp += " Transect Number:    " + xBTprofile.getTransectNumber() + "\r\n";
-        tmp += " Launch Height (Meters):  " + String.format("%4.2f", xBTprofile.getLaunchHeight()) + "\r\n";
+        tmp += " Launch Height (Meters): " + String.format("%4.2f", xBTprofile.getLaunchHeight()) + "\r\n";
         tmp += " SOOP Line: " + xBTprofile.getSoopLine() + "\r\n";
         tmp += " XBT Launcher Type: " + Launchers.getLauncherDescription(xBTprofile.getXBTLauncherType()) + "\r\n";
         tmp += " XBT Recorder Serial Number: " + xBTprofile.getXBTRecorderSerialNumber() + "\r\n";
@@ -245,10 +251,19 @@ public class FormatConverter {
                         xBTprofile.getXBTProbeManufacturedYear());
 
         tmp += " Agency in charge of Operation: " + Agency.getAgencyDescription(xBTprofile.getAgencyOwner()) + "\r\n";
-        tmp += " Ship Rider: " + xBTprofile.getRiderNames() + "\r\n";
+        tmp2 = xBTprofile.getRiderNames();
+        tmp2 = tmp2 == null ? "" : tmp2;
+        tmp += " Ship Rider: " + tmp2 + "\r\n";
         tmp += " Ship Rider Institution: " + xBTprofile.getRiderInstitutions() + "\r\n";
-        tmp += " Ship Rider Email: " + xBTprofile.getRiderEmails() + "\r\n";
-        tmp += " Ship Rider Telephone Number: " + xBTprofile.getRiderPhones() + "\r\n";
+        
+        tmp2 = xBTprofile.getRiderEmails();
+        tmp2 = tmp2 == null ? "" : tmp2;
+        
+        tmp += " Ship Rider Email: " + tmp2 + "\r\n";
+        
+        tmp2 = xBTprofile.getRiderPhones();
+        tmp2 = tmp2 == null ? "" : tmp2;        
+        tmp += " Ship Rider Telephone Number: " + tmp2 + "\r\n";
 
         if (inflectionPoints.length > 0) {
             tmp += "\r\n\r\nINFPTS: " + inflectionPoints.length;
@@ -309,6 +324,7 @@ public class FormatConverter {
         generator.update(GTSCRC.getBytes());
         s = Long.toHexString(generator.getValue());
         tmp = tmp.replaceAll("GTS CRC: FFFFFFFF", "GTS CRC: " + s.toUpperCase());
+        
 
         return tmp;
 
