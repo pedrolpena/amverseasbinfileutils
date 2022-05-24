@@ -245,6 +245,61 @@ public final class XBTProbe {
     public static final double SIPPICAN_12_MAX_DEPTH = 2000.00;
     public static final String SIPPICAN_12_DESCRIPTION = "Sippican T-12 (LMP5-T1)";
 
+    
+    private static int[] XBTProbeList = {
+        SIPPICAN_T4_OLD,
+        SIPPICAN_T4,
+        SIPPICAN_T5,
+        SIPPICAN_FAST_DEEP,
+        SIPPICAN_T6_OLD,
+        SIPPICAN_T6,
+        SIPPICAN_T7_OLD,
+        SIPPICAN_T7,
+        SIPPICAN_DEEP_BLUE_OLD,
+        SIPPICAN_DEEP_BLUE,
+        SIPPICAN_T10,
+        SIPPICAN_T11,
+        SIPPICAN_AXBT,
+        TSK_T4_OLD,
+        TSK_T4,
+        TSK_T6_OLD,
+        TSK_T6,
+        TSK_T7_OLD,
+        TSK_T7,
+        TSK_T5,
+        TSK_T10,
+        TSK_DEEP_BLUE_OLD,
+        TSK_DEEP_BLUE,
+        TSK_AXBT,
+        SPARTON_XBT1,
+        SPARTON_XBT3,
+        SPARTON_XBT4,
+        SPARTON_XBT5,
+        SPARTON_XBT5DB,
+        SPARTON_XBT6,
+        SPARTON_XBT7_OLD,
+        SPARTON_XBT7,
+        SPARTON_XBT7DB,
+        SPARTON_XBT10,
+        SPARTON_XBT20,
+        SPARTON_XBT20DB,
+        SPARTON_536AXBT,
+        SIPPICAN_12
+    };
+
+    /**
+     * This method returns an integer array of the different probe types.
+     *
+     * @return This method returns an integer array of the different probe types
+     * @param probeType the type of probe used.
+     */
+    public static int[] getXBTProbelist(int probeType) {
+
+        return XBTProbeList;
+
+    }//end getXBTProbelist
+    
+    
      /**
      * This method returns the A coefficient used in the fall rate equation.
      *
