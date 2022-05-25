@@ -63,7 +63,7 @@ public final class Launchers {
      * @return This method returns an integer array of the different launcher
      * types
      */
-    public static int[] getAgencylist() {
+    public static int[] getLauncherlist() {
 
         return launcherList;
 
@@ -71,8 +71,8 @@ public final class Launchers {
 
     /**
      * This method return the launcher descriptions
-     * @param launcher the value assigne to the type of launcher
-     * @return the descriptio of the launcher
+     * @param launcher the value assigned to the type of launcher
+     * @return the description of the launcher
      */
     
     public static final String getLauncherDescription(int launcher) {
