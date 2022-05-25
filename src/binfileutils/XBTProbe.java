@@ -291,9 +291,8 @@ public final class XBTProbe {
      * This method returns an integer array of the different probe types.
      *
      * @return This method returns an integer array of the different probe types
-     * @param probeType the type of probe used.
      */
-    public static int[] getXBTProbelist(int probeType) {
+    public static int[] getXBTProbelist() {
 
         return XBTProbeList;
 
