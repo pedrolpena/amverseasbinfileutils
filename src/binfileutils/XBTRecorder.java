@@ -138,6 +138,55 @@ public final class XBTRecorder {
     public static final double UNKNOWN_SAMPLE_FREQUENCY = 10.0;
     public static final String UNKNOWN_DESCRIPTION = "Unknown";
 
+    private static int[] xBTRecorderList = {
+        SIPPICAN_STRIP_CHART_RECORDER,
+        SIPPICAN_MK2A_SSQ61,
+        SIPPICAN_MK_9,
+        SIPPICAN_AN_BHQ7_MK8,
+        SIPPICAN_MK_12,
+        SIPPICAN_MK_21,
+        SPARTON_SOC_BT_SV_PROCESSOR_MODEL10,
+        LOCKHEED_SANDERS_MODEL_QL5005,
+        ARGOS_XBT_ST,
+        CLS_ARGOS_PROTECNO_XBT_ST_MODEL_1,
+        CLS_ARGOS_PROTECNO_XBT_ST_MODEL_2,
+        BATHY_SYSTEMS_SA_810,
+        SCRIPPS_METROBYTE_CONTROLLER,
+        MURAYAMA_DENKI_Z_60_16_III,
+        MURAYAMA_DENKI_Z_60_16_II,
+        PROTECNO_ETSM2,
+        NAUTILUS_MARINE_SERVICE_NMS_XBT,
+        TSK_MK_2A,
+        TSK_MK_2S,
+        TSK_MK_30,
+        TSK_MK_30N,
+        TSK_MK_100,
+        TSK_MK_130,
+        TSK_AXBT_RECEIVER_MK_300,
+        JMA_ASTOS,
+        ARGOS_COMMUNICATIONS_SAMPLING_ON_UP_TRANSIT,
+        ARGOS_COMMUNICATIONS_SAMPLING_ON_DOWN_TRANSIT,
+        ORBCOMM_COMMUNICATIONS_SAMPLING_ON_UP_TRANSIT,
+        ORBCOMM_COMMUNICATIONS_SAMPLING_ON_DOWN_TRANSIT,
+        CSIRO_DEVIL_1,
+        CSIRO_DEVIL_2,
+        UNKNOWN
+    };
+    
+    
+    /**
+     * This method returns an integer array of the different XBT recorder.
+     *
+     * @return This method returns an integer array of the different recorder
+     * types
+     */
+    public static int[] getXBTRecorderlist() {
+
+        return xBTRecorderList;
+
+    }//end getxBTRecorderList    
+    
+    
     public static final double getRecorderFrequency(int recorderType) {
         double sampleFrequency = 10.00;
         switch (recorderType) {

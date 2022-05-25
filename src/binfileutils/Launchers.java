@@ -39,6 +39,36 @@ public final class Launchers {
     public static final int MISSING = 255;
     public static final String MISSING_DESCRIPTION = "Missing";
 
+    
+    private static int[]  launcherList= {
+        UNKNOWN,
+        LM_2A_DECK_MOUNTED,
+        LM_3A_HAND_HELD,
+        LM_4A_THRU_HULL,
+        AL_12_TSK_AUTOLAUNCHER,
+        SIO_XBT_AUTOLAUNCHER,
+        AOML_XBT_V6_AUTOLAUNCHER,
+        AOML_XBT_V8_0_AUTOLAUNCHER,
+        AOML_XBT_V8_1_AUTOLAUNCHER,
+        CSIRO_DEVIL_AUTOLAUNCHER,
+        TURO_CSIRO_QUOLL_AUTOLAUNCHER,
+        MFSTEP_AUTOLAUNCHER,
+        MISSING
+    };
+    
+    
+    /**
+     * This method returns an integer array of the different launchers.
+     *
+     * @return This method returns an integer array of the different launcher
+     * types
+     */
+    public static int[] getAgencylist() {
+
+        return launcherList;
+
+    }//end getLauncherList
+
     /**
      * This method return the launcher descriptions
      * @param launcher the value assigne to the type of launcher

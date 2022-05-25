@@ -29,6 +29,33 @@ public final class WindInstrument {
     public static final int CERTIFIED_INSTRUMENT_KPH = 5;
     public static final String CERTIFIED_INSTRUMENT_KPH_DESCRIPTION = "Certified Instruments kilometers/hour";
 
+    
+    private static int[] windInstrumentList = {
+        UNCERTIFIED_INSTRUMENT_MPS,
+        CERTIFIED_INSTRUMENT_MPS,
+        UNCERTIFIED_INSTRUMENT_KNOTS,
+        CERTIFIED_INSTRUMENT_KNOTS,
+        UNCERTIFIED_INSTRUMENT_KPH,
+        CERTIFIED_INSTRUMENT_KPH
+
+    };
+
+    
+    
+    /**
+     * This method returns an integer array of the different wind instruments.
+     *
+     * @return This method returns an integer array of the different wind
+     * instruments types
+     */
+    public static int[] getWindInstrumentList() {
+
+        return windInstrumentList;
+
+    }//end getWindInstrumentList  
+
+
+    
     public static String getInstrumentDescription(int code) {
 
         String description = "Missing";

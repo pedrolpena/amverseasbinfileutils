@@ -30,6 +30,30 @@ public final class SurfaceCurrentInstrument {
     public static final int DRIFT_OF_BUOY = 5;
     public static final String DRIFT_OF_BUOY_DESCRIPTION = "Drift of buoy";
 
+    
+    private static int[] surfaceCurrentInstrumentList = {
+        ADCP,
+        GEK,
+        DRIFT_FIX_3_6,
+        DRIFT_FIX_6_12,
+        DRIFT_OF_BUOY
+
+    };
+
+    
+    
+    /**
+     * This method returns an integer array of the different surface current instruments.
+     *
+     * @return This method returns an integer array of the different surface current instruments
+     * types
+     */
+    public static int[] getSurfaceCurrentInstrumentList() {
+
+        return surfaceCurrentInstrumentList;
+
+    }//end getSurfaceCurrentInstrumentList    
+    
     public static String getInstrumentDescription(int code) {
 
         String description = "Missing";

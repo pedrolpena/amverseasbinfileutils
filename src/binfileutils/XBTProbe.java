@@ -246,7 +246,7 @@ public final class XBTProbe {
     public static final String SIPPICAN_12_DESCRIPTION = "Sippican T-12 (LMP5-T1)";
 
     
-    private static int[] XBTProbeList = {
+    private static int[] xBTProbeList = {
         SIPPICAN_T4_OLD,
         SIPPICAN_T4,
         SIPPICAN_T5,
@@ -294,7 +294,7 @@ public final class XBTProbe {
      */
     public static int[] getXBTProbelist() {
 
-        return XBTProbeList;
+        return xBTProbeList;
 
     }//end getXBTProbelist
     
