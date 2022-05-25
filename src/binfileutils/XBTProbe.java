@@ -395,6 +395,9 @@ public final class XBTProbe {
             case SPARTON_XBT5DB:
                 A = SPARTON_XBT5DB_COEFFICIENT_A;
                 break;
+             case SPARTON_XBT6:
+                A = SPARTON_XBT6_COEFFICIENT_A;
+                break;               
             case SPARTON_XBT7_OLD:
                 A = SPARTON_XBT7_OLD_COEFFICIENT_A;
                 break;
@@ -520,6 +523,9 @@ public final class XBTProbe {
             case SPARTON_XBT5DB:
                 B = SPARTON_XBT5DB_COEFFICIENT_B;
                 break;
+            case SPARTON_XBT6:
+                B = SPARTON_XBT6_COEFFICIENT_B;
+                break;
             case SPARTON_XBT7_OLD:
                 B = SPARTON_XBT7_OLD_COEFFICIENT_B;
                 break;
@@ -644,6 +650,9 @@ public final class XBTProbe {
             case SPARTON_XBT5DB:
                 maxDepth = SPARTON_XBT5DB_MAX_DEPTH;
                 break;
+            case SPARTON_XBT6:
+                maxDepth = SPARTON_XBT6_MAX_DEPTH;
+                break;
             case SPARTON_XBT7_OLD:
                 maxDepth = SPARTON_XBT7_OLD_MAX_DEPTH;
                 break;
@@ -686,6 +695,7 @@ public final class XBTProbe {
                 probeDescription = SIPPICAN_T4_OLD_DESCRIPTION;
                 break;
             case SIPPICAN_T4:
+                probeDescription = SIPPICAN_T4_DESCRIPTION;
                 break;
             case SIPPICAN_T5:
                 probeDescription = SIPPICAN_T5_DESCRIPTION;
@@ -768,6 +778,9 @@ public final class XBTProbe {
             case SPARTON_XBT5DB:
                 probeDescription = SPARTON_XBT5DB_DESCRIPTION;
                 break;
+             case SPARTON_XBT6:
+                probeDescription = SPARTON_XBT6_DESCRIPTION;
+                break;               
             case SPARTON_XBT7_OLD:
                 probeDescription = SPARTON_XBT7_OLD_DESCRIPTION;
                 break;

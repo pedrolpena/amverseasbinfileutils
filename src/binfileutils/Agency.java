@@ -192,6 +192,9 @@ public final class Agency {
             case CANADA_MARINE_ENVIRONMENTAL_DATA_SERVICES:
                 description = CANADA_MARINE_ENVIRONMENTAL_DATA_SERVICES_DESCRIPTION;
                 break;
+            case CANADA_INSTITUTE_OF_OCEAN_SCIENCES:
+                description = CANADA_INSTITUTE_OF_OCEAN_SCIENCES_DESCRIPTION;
+                break;
             case CHINA_THE_STATE_OCEANIC_ADMINISTRATION:
                 description = CHINA_THE_STATE_OCEANIC_ADMINISTRATION_DESCRIPTION;
                 break;
