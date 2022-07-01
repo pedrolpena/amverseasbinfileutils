@@ -33,7 +33,7 @@ public class BinDecoder {
             byte[] data = Files.readAllBytes(path);
             bits = changeEndian(BitSet.valueOf(data));
             xBTProfile = decodeXBTProfile();
-            if (xBTProfile.getNewMessageType() == 0){
+            if (xBTProfile.getNewMessageType() == 0  || xBTProfile.getOldMessageType()!=63){
             throw new DataFormatException("The file is not an AOML XBT binary.");
             }
 
