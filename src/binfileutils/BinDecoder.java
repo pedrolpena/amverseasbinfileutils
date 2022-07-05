@@ -26,20 +26,22 @@ public class BinDecoder {
      * @param filePath A string representing the absolute filename of the bin
      * file to decode.
      */
-    public BinDecoder(String filePath) {//constructor accepts a sting representing the file and populates bits.
+    public BinDecoder(String filePath) throws DataFormatException {//constructor accepts a sting representing the file and populates bits.
+        byte[] data=null;
         try {
 
             Path path = Paths.get(filePath);
-            byte[] data = Files.readAllBytes(path);
+            data = Files.readAllBytes(path);
+                    } catch (Exception e) {
+            System.out.println(e);
+        }
             bits = changeEndian(BitSet.valueOf(data));
             xBTProfile = decodeXBTProfile();
             if (xBTProfile.getNewMessageType() == 0  || xBTProfile.getOldMessageType()!=63){
             throw new DataFormatException("The file is not an AOML XBT binary.");
             }
 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+
 
     }//end constructor
 
