@@ -33,6 +33,9 @@ public final class SurfaceCurrentInstrument {
 
     public static final int DRIFT_OF_BUOY = 5;
     public static final String DRIFT_OF_BUOY_DESCRIPTION = "Drift of buoy";
+    
+    public static final int MISSING_VALUE = 7;
+    public static final String MISSING_VALUE_DESCRIPTION = "Missing Value";    
 
     
     private static final int[] surfaceCurrentInstrumentList = {
@@ -42,7 +45,8 @@ public final class SurfaceCurrentInstrument {
         DRIFT_FIX_3_6,
         DRIFT_FIX_6_12,
         DRIFT_OF_BUOY,
-        RESERVED
+        RESERVED,
+        MISSING_VALUE
 
     };
 
@@ -88,6 +92,11 @@ public final class SurfaceCurrentInstrument {
             case DRIFT_OF_BUOY:
                 description = DRIFT_OF_BUOY_DESCRIPTION;
                 break;
+
+            case MISSING_VALUE:
+                description = MISSING_VALUE_DESCRIPTION;
+                break;
+
         }
 
         return description;
