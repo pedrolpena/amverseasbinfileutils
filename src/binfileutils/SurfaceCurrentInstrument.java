@@ -10,6 +10,10 @@ package binfileutils;
  * @author pedro
  */
 public final class SurfaceCurrentInstrument {
+    
+    public static final int RESERVED = 0;
+    public static final String RESERVED_DESCRIPTION
+            = "Reserved";    
 
     public static final int ADCP = 1;
     public static final String ADCP_DESCRIPTION
@@ -31,12 +35,14 @@ public final class SurfaceCurrentInstrument {
     public static final String DRIFT_OF_BUOY_DESCRIPTION = "Drift of buoy";
 
     
-    private static int[] surfaceCurrentInstrumentList = {
+    private static final int[] surfaceCurrentInstrumentList = {
+        RESERVED,
         ADCP,
         GEK,
         DRIFT_FIX_3_6,
         DRIFT_FIX_6_12,
-        DRIFT_OF_BUOY
+        DRIFT_OF_BUOY,
+        RESERVED
 
     };
 
@@ -59,6 +65,10 @@ public final class SurfaceCurrentInstrument {
         String description = "Missing";
         switch (code) {
 
+            case RESERVED:
+                description = RESERVED_DESCRIPTION;
+                break;
+                
             case ADCP:
                 description = ADCP_DESCRIPTION;
                 break;
