@@ -1,6 +1,4 @@
 package binfileutils;
-
-;
 import static binfileutils.XBTProbe.*;
 import static binfileutils.XBTRecorder.*;
 import java.util.Vector;
