@@ -4,7 +4,7 @@ if [ -d "lib" ]; then
 fi
 mkdir ./lib
 cp ./libs/* ./lib
-javac -source 1.7 -target 1.7 -d ./  -cp ./lib/commons-math3-3.6.1.jar ./src/binfileutils/*.java
+javac -d ./  -cp ./lib/commons-math3-3.6.1.jar ./src/binfileutils/*.java
 jar cfm AmverseasBinFileUtils.jar manifest.txt binfileutils/*.class 
 
 rm -r ./binfileutils
