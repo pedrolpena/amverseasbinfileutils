@@ -12,7 +12,7 @@ rmdir /q /s .\lib  > nul
 
 mkdir .\lib
 copy .\libs\*.* .\lib
-javac -source 1.7 -target 1.7 -d .\ -cp .\lib\commons-math3-3.6.1.jar .\src\binfileutils\*.java
+javac -d .\ -cp .\lib\commons-math3-3.6.1.jar .\src\binfileutils\*.java
 jar cfm AmverseasBinFileUtils.jar manifest.txt binfileutils\*.class
 
 move /y AmverseasBinFileUtils.jar .\lib > nul
