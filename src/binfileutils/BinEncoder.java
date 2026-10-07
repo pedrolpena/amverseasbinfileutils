@@ -19,7 +19,9 @@ import java.util.zip.CRC32;
  */
 public class BinEncoder {
 
+    private static final int MISSING_VALUE = -999;
     private BitSet bits;
+    private int bitsLength = 0; // number of bits in the message
     private int newMessageType = 0;
 
     /**
@@ -55,10 +57,10 @@ public class BinEncoder {
         stringToBits(bits, xBTProfile.getWMOId(), XBTProfileDataRanges.getWMOID(newMessageType));
         integerToBits(bits, xBTProfile.getOldMessageType(), XBTProfileDataRanges.getOldMessageType(newMessageType));
         integerToBits(bits, xBTProfile.getNewMessageType(), XBTProfileDataRanges.getNewMessageType(newMessageType));
-        double latitude = Math.round(xBTProfile.getLatitude() * 100000.0 + 9000000);
-        integerToBits(bits, Double.valueOf(latitude).intValue(), XBTProfileDataRanges.getLattitude(newMessageType));
-        double longitude = Math.round(xBTProfile.getLongitude() * 100000.0 + 18000000);
-        integerToBits(bits, Double.valueOf(longitude).intValue(), XBTProfileDataRanges.getLongitude(newMessageType));
+        int latitude = scaleValue(xBTProfile.getLatitude(), 100000.0, 9000000);
+        integerToBits(bits, latitude, XBTProfileDataRanges.getLattitude(newMessageType));
+        int longitude = scaleValue(xBTProfile.getLongitude(), 100000.0, 18000000);
+        integerToBits(bits, longitude, XBTProfileDataRanges.getLongitude(newMessageType));
         stringToBits(bits, xBTProfile.getSoopLine(), XBTProfileDataRanges.getSoopLine(newMessageType));
         integerToBits(bits, xBTProfile.getTransectNumber(), XBTProfileDataRanges.getTransectNumber(newMessageType));
         integerToBits(bits, xBTProfile.getSequenceNumber(), XBTProfileDataRanges.getSequenceNumber(newMessageType));
@@ -74,25 +76,25 @@ public class BinEncoder {
         integerToBits(bits, xBTProfile.getProbeSerialNumber(), XBTProfileDataRanges.getProbeSerialNumber(newMessageType));
         integerToBits(bits, xBTProfile.getThisDataIs(), XBTProfileDataRanges.getThisDataIs(newMessageType));
         integerToBits(bits, xBTProfile.getDataQuality(), XBTProfileDataRanges.getDataQuality(newMessageType));
-        double launchHeight = Math.round(xBTProfile.getLaunchHeight() * 100.0);
-        integerToBits(bits, Double.valueOf(launchHeight).intValue(), XBTProfileDataRanges.getLaunchHeight(newMessageType));
-        double shipDirection = Math.round(xBTProfile.getShipDirection());
-        integerToBits(bits, Double.valueOf(shipDirection).intValue(), XBTProfileDataRanges.getShipDirection(newMessageType));
-        double shipSpeed = Math.round(xBTProfile.getShipSpeed() * 100.0);
-        integerToBits(bits, Double.valueOf(shipSpeed).intValue(), XBTProfileDataRanges.getShipSpeed(newMessageType));
+        int launchHeight = scaleValue(xBTProfile.getLaunchHeight(), 100.0, 0);
+        integerToBits(bits, launchHeight, XBTProfileDataRanges.getLaunchHeight(newMessageType));
+        int shipDirection = scaleValue(xBTProfile.getShipDirection(), 1.0, 0);
+        integerToBits(bits, shipDirection, XBTProfileDataRanges.getShipDirection(newMessageType));
+        int shipSpeed = scaleValue(xBTProfile.getShipSpeed(), 100.0, 0);
+        integerToBits(bits, shipSpeed, XBTProfileDataRanges.getShipSpeed(newMessageType));
         integerToBits(bits, xBTProfile.getInstrumentType(), XBTProfileDataRanges.getInstrumentType(newMessageType));
         integerToBits(bits, xBTProfile.getRecorderType(), XBTProfileDataRanges.getRecorderType(newMessageType));
         integerToBits(bits, xBTProfile.getWindInstrumentType(), XBTProfileDataRanges.getWindInstrumentType(newMessageType));
         double windDirection = xBTProfile.getWindDirection();
         integerToBits(bits, Double.valueOf(windDirection).intValue(), XBTProfileDataRanges.getWindDirection(newMessageType));
-        double windSpeed = Math.round(xBTProfile.getWindSpeed() * 10.0);
-        integerToBits(bits, Double.valueOf(windSpeed).intValue(), XBTProfileDataRanges.getWindSpeed(newMessageType));
-        double dryBulbTemperature = Math.round(xBTProfile.getDryBulbTemperature() * 10.0);
-        integerToBits(bits, Double.valueOf(dryBulbTemperature).intValue(), XBTProfileDataRanges.getDryBulbTemperature(newMessageType));
+        int windSpeed = scaleValue(xBTProfile.getWindSpeed(), 10.0, 0);
+        integerToBits(bits, windSpeed, XBTProfileDataRanges.getWindSpeed(newMessageType));
+        int dryBulbTemperature = scaleValue(xBTProfile.getDryBulbTemperature(), 10.0, 0);
+        integerToBits(bits, dryBulbTemperature, XBTProfileDataRanges.getDryBulbTemperature(newMessageType));
         integerToBits(bits, xBTProfile.getSeaSurfaceCurrentMeasurementMethod(), XBTProfileDataRanges.getSeaSurfaceCurrentMeasurementMethod(newMessageType));
         integerToBits(bits, xBTProfile.getSeaSurfaceCurrentDirection(), XBTProfileDataRanges.getSeaSurfaceCurrentDirection(newMessageType));
-        double seaSurfaceCurrentSpeed = Math.round(xBTProfile.getSeaSurfaceCurrentSpeed() * 100.00);
-        integerToBits(bits, Double.valueOf(seaSurfaceCurrentSpeed).intValue(), XBTProfileDataRanges.getSeaSurfaceCurrentSpeed(newMessageType));
+        int seaSurfaceCurrentSpeed = scaleValue(xBTProfile.getSeaSurfaceCurrentSpeed(), 100.0, 0);
+        integerToBits(bits, seaSurfaceCurrentSpeed, XBTProfileDataRanges.getSeaSurfaceCurrentSpeed(newMessageType));
         integerToBits(bits, xBTProfile.getTotalWaterDepth(), XBTProfileDataRanges.getTotalWaterDepth(newMessageType));
         integerToBits(bits, xBTProfile.getAgencyOwner(), XBTProfileDataRanges.getAgencyOwner(newMessageType));
         integerToBits(bits, xBTProfile.getXBTLauncherType(), XBTProfileDataRanges.getXBTLauncherType(newMessageType));
@@ -103,9 +105,12 @@ public class BinEncoder {
         integerToBits(bits, xBTProfile.getXBTProbeManufacturedYear(), XBTProfileDataRanges.getXBTProbeManufacturedYear(newMessageType));
         integerToBits(bits, xBTProfile.getXBTProbeManufacturedMonth(), XBTProfileDataRanges.getXBTProbeManufacturedMonth(newMessageType));
         integerToBits(bits, xBTProfile.getXBTProbeManufacturedDay(), XBTProfileDataRanges.getXBTProbeManufacturedDay(newMessageType));
-        integerToBits(bits, xBTProfile.getNumberOfRiderInstitutionBlocks(), XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
-        integerToBits(bits, xBTProfile.getNumberOfRiderEmailBlocks(), XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
-        integerToBits(bits, xBTProfile.getNumberOfRiderPhoneBlocks(), XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
+        // Amverseas defaults the rider block counts to 0, the real counts are
+        // written below when the rider strings are encoded.
+        integerToBits(bits, 0, XBTProfileDataRanges.getNumberOfRiderBlocks(newMessageType));
+        integerToBits(bits, 0, XBTProfileDataRanges.getNumberOfRiderInstitutionBlocks(newMessageType));
+        integerToBits(bits, 0, XBTProfileDataRanges.getNumberOfRiderEmailBlocks(newMessageType));
+        integerToBits(bits, 0, XBTProfileDataRanges.getNumberOfRiderPhoneBlocks(newMessageType));
 
         //********************Encode measurement points************************
         int last = 0;
@@ -228,6 +233,12 @@ public class BinEncoder {
         }
         xBTProfile.setNumberOfRiderPhoneBlocks(numberOfRiderPhoneBlocks);
 
+        // Amverseas fills the unused bits of the last byte with ones.
+        while (bitsLength % 8 != 0) {
+            bits.set(bitsLength, true);
+            bitsLength++;
+        }
+
     }
 
     /**
@@ -243,12 +254,10 @@ public class BinEncoder {
         FileOutputStream fos = null;
         setMessageCRC(bits);
 
-        bits = changeEndian(bits);
-
         try {
             fos = new FileOutputStream(inputFile);
             // Writes bytes from the specified byte array to this file output stream 
-            fos.write(bits.toByteArray());
+            fos.write(toByteArray(bits));
         } catch (FileNotFoundException e) {
             System.out.println("File not found " + e + "\n");
         } catch (IOException ioe) {
@@ -288,6 +297,40 @@ public class BinEncoder {
     }
 
     /**
+     * This method scales and offsets a value so it can be stored as an
+     * integer. Missing values are passed through so integerToBits can encode
+     * them.
+     *
+     * @param value the value to scale
+     * @param scale the scale factor
+     * @param offset the offset added after scaling
+     * @return the scaled value or MISSING_VALUE
+     */
+    private int scaleValue(double value, double scale, double offset) {
+        if (value == MISSING_VALUE) {
+            return MISSING_VALUE;
+        }
+        return (int) Math.round(value * scale + offset);
+    }
+
+    /**
+     * This method converts the message bits to bytes, the first bit of the
+     * message is the most significant bit of the first byte.
+     *
+     * @param b BitSet that holds the message
+     * @return the message as a byte array
+     */
+    private byte[] toByteArray(BitSet b) {
+        byte[] bytes = new byte[(bitsLength + 7) / 8];
+        for (int i = 0; i < bitsLength; i++) {
+            if (b.get(i)) {
+                bytes[i / 8] |= (byte) (0x80 >>> (i % 8));
+            }
+        }
+        return bytes;
+    }
+
+    /**
      * This method extracts the bits from the integer passed and stores it in a
      * BitSet object.
      *
@@ -305,6 +348,10 @@ public class BinEncoder {
         startPos = range[0];
         endPos = range[1];
         int bitLength = endPos - startPos + 1;
+        // Amverseas encodes a missing value by setting every bit in the field.
+        if (intValue == MISSING_VALUE) {
+            intValue = -1;
+        }
         BitSet tempBS = new BitSet();
         int bitZero;
 
@@ -317,7 +364,7 @@ public class BinEncoder {
                 tempBS.set((bitLength - 1) - i, false);
             }
         }
-        setBitWithinBits(b, tempBS, startPos);
+        setBitWithinBits(b, tempBS, startPos, bitLength);
     }
 
     /**
@@ -338,7 +385,7 @@ public class BinEncoder {
         int startPos = range[0];
         BitSet bs = BitSet.valueOf(metaData);
         bs = changeEndian(bs);
-        setBitWithinBits(b, bs, startPos);
+        setBitWithinBits(b, bs, startPos, 8 * metaData.length);
     }
 
     /**
@@ -353,16 +400,13 @@ public class BinEncoder {
      * the string.
      */
     private void encodeCommentBlocks(BitSet b, String s, int[] range, int blocks) {
-        BitSet tmpBitSet = new BitSet();
-        tmpBitSet.set(0, 7, false);
-        tmpBitSet.set(8, true);
-        int sBytes = 2 * (8 * s.length()) % 40;
-        int sBytes5 = s.length() % 5;
-       /* if (sBytes == 0 && sBytes5 == 0) {
-            setBitWithinBits(b, tmpBitSet, range[0] + 40 * blocks + sBytes - 8);
-        }*/
-        setBitWithinBits(b, tmpBitSet, range[0] + 40 * blocks + sBytes - 8);
-        stringToBits(b, s, range);
+        // Amverseas always writes whole 40 bit blocks, the unused characters
+        // of the last block are filled with zeros.
+        StringBuilder padded = new StringBuilder(s);
+        while (padded.length() < 5 * blocks) {
+            padded.append('\0');
+        }
+        stringToBits(b, padded.toString(), range);
     }
 
     /**
@@ -372,9 +416,13 @@ public class BinEncoder {
      * @param b BitSet the bits will be stored.
      * @param subBits BitSet that holds the bits to be stored.
      * @param startPos The start position to begin storing the bits.
+     * @param length The number of bits to store.
      */
-    private void setBitWithinBits(BitSet b, BitSet subBits, int startPos) {
-        for (int i = 0; i < subBits.length(); i++) {
+    private void setBitWithinBits(BitSet b, BitSet subBits, int startPos, int length) {
+        if (b == bits) {
+            bitsLength = Math.max(bitsLength, startPos + length);
+        }
+        for (int i = 0; i < length; i++) {
             if (subBits.get(i)) {
                 b.set(i + startPos, true);
             } else {
@@ -391,12 +439,10 @@ public class BinEncoder {
      */
     private void setMessageCRC(BitSet b) {
         CRC32 generator = new CRC32();
-        BitSet tmpBitSet;
-        tmpBitSet = b.get(0, bits.size() + 1);
+        BitSet tmpBitSet = (BitSet) b.clone();
         integerToBits(tmpBitSet, 0xFFFFFFFF, XBTProfileDataRanges.getUniqueTag(newMessageType));
         generator.reset();
-        changeEndian(tmpBitSet);
-        generator.update(tmpBitSet.toByteArray());
+        generator.update(toByteArray(tmpBitSet));
         integerToBits(b, (int) (generator.getValue()), XBTProfileDataRanges.getUniqueTag(newMessageType));
     }
 
