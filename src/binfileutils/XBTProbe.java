@@ -313,6 +313,7 @@ public final class XBTProbe {
                 A = SIPPICAN_T4_OLD_COEFFICIENT_A;
                 break;
             case SIPPICAN_T4:
+                A = SIPPICAN_T4_COEFFICIENT_A;
                 break;
             case SIPPICAN_T5:
                 A = SIPPICAN_T5_COEFFICIENT_A;
@@ -441,6 +442,7 @@ public final class XBTProbe {
                 B = SIPPICAN_T4_OLD_COEFFICIENT_B;
                 break;
             case SIPPICAN_T4:
+                B = SIPPICAN_T4_COEFFICIENT_B;
                 break;
             case SIPPICAN_T5:
                 B = SIPPICAN_T5_COEFFICIENT_B;
@@ -568,6 +570,7 @@ public final class XBTProbe {
                 maxDepth = SIPPICAN_T4_OLD_MAX_DEPTH;
                 break;
             case SIPPICAN_T4:
+                maxDepth = SIPPICAN_T4_MAX_DEPTH;
                 break;
             case SIPPICAN_T5:
                 maxDepth = SIPPICAN_T5_MAX_DEPTH;
